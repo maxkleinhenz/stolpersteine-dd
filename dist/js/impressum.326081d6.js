@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["impressum"],{cafb:function(n,e,c){"use strict";c.r(e);var r=c("7a23"),s=Object(r["g"])("h1",null,"Impressum",-1),t=[s];function u(n,e){return Object(r["w"])(),Object(r["f"])("div",null,t)}var a=c("6b0d"),b=c.n(a);const i={},o=b()(i,[["render",u]]);e["default"]=o}}]);
+//# sourceMappingURL=impressum.326081d6.js.map
