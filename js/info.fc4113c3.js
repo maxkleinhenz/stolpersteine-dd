@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["info"],{"686e":function(n,e,i){"use strict";i.r(e);var o=i("7a23");function t(n,e){return Object(o["w"])(),Object(o["f"])("h1",null,"This is an info page")}var a=i("d959"),c=i.n(a);const r={},s=c()(r,[["render",t]]);e["default"]=s}}]);
+//# sourceMappingURL=info.fc4113c3.js.map

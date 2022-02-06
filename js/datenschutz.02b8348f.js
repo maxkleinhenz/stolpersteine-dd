@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["datenschutz"],{bcf6:function(n,t,c){"use strict";c.r(t);var e=c("7a23"),u=Object(e["g"])("h1",null,"Datenschutz",-1),a=[u];function r(n,t){return Object(e["w"])(),Object(e["f"])("div",null,a)}var s=c("d959"),d=c.n(s);const o={},w=d()(o,[["render",r]]);t["default"]=w}}]);
+//# sourceMappingURL=datenschutz.02b8348f.js.map
