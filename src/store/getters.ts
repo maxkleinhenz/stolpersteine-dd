@@ -1,14 +1,21 @@
+import { Device } from "@/enums/device.enum";
 import Stolperstein from "@/models/stolperstein.model";
 import { GetterTree } from "vuex";
 import { State } from "./state";
 
 export type Getters = {
+  currentDevice(state: State): Device;
   filteredStolpersteine(state: State): Array<Stolperstein>;
-  selectedStolperstein(state: State): Stolperstein | null;
+  selectedStolpersteine(state: State): Array<Stolperstein> | undefined;
 };
 
 //getters
 export const getters: GetterTree<State, State> & Getters = {
+  currentDevice: (state: State) => {
+    if (state.windowsWidth <= 768) return Device.Mobile;
+    if (state.windowsWidth <= 992) return Device.Tablet;
+    return Device.Desktop;
+  },
   filteredStolpersteine: (state) => {
     if (state.stolpersteineSearchText.length <= 0) {
       return state.stolpersteine;
@@ -19,30 +26,17 @@ export const getters: GetterTree<State, State> & Getters = {
         .toLowerCase()
         .includes(state.stolpersteineSearchText.toLowerCase());
 
-      const containsStrasse = s.strasse
-        ? s.strasse
+      const anschrift = `${s.strasse} ${s.hausnummer} ${s.plz}`;
+      const containAnschrift = anschrift
+        ? anschrift
             .toLowerCase()
             .includes(state.stolpersteineSearchText.toLowerCase())
         : false;
 
-      const containsHausnummer = s.hausnummer
-        ? s.hausnummer
-            .toString()
-            .includes(state.stolpersteineSearchText.toLowerCase())
-        : false;
-
-      const containsPlz = s.plz
-        ? s.plz
-            .toLowerCase()
-            .includes(state.stolpersteineSearchText.toLowerCase())
-        : false;
-
-      return (
-        containsName || containsStrasse || containsPlz || containsHausnummer
-      );
+      return containsName || containAnschrift;
     });
   },
-  selectedStolperstein: (state) => {
-    return state.selectedStolperstein;
+  selectedStolpersteine: (state) => {
+    return state.selectedStolpersteine;
   },
 };

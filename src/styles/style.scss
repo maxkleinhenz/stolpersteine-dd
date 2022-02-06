@@ -1,0 +1,30 @@
+@import "~bootstrap/scss/functions";
+
+@import "_variables.scss";
+
+@import "./bs-override";
+
+@import "~bootstrap/scss/bootstrap";
+
+.app-bg {
+  background-color: $app-background-color;
+  // background-color: #e1dbd8;
+  // background-color: #fff8f3;
+  //background-color: #ded3c5;
+}
+
+.app-shadow {
+  box-shadow: 0 3px 8px #0000001f;
+}
+
+.stolperstein-marker {
+  width: 1.5em;
+  height: 1.5em;
+  background-color: $stolperstein-color;
+  border-radius: $stolperstein-border-radius;
+
+  &:focus,
+  &:hover {
+    background-color: color.scale($stolperstein-color, $lightness: -20%);
+  }
+}

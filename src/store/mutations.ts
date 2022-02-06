@@ -3,14 +3,14 @@ import { MutationTree } from "vuex";
 import { State } from "./state";
 
 export enum MutationTypes {
-  INC_COUNTER = "SET_COUNTER",
+  SET_WINDOW_WIDTH = "SET_WINDOW_WIDTH",
   SET_STOLPERSTEINE = "SET_STOLPERSTEINE",
   SET_STOLPERSTEINE_SEARCH_TEXT = "SET_STOLPERSTEINE_SEARCH_TEXT",
-  SELECT_STOLPERSTEIN = "SELECT_STOLPERSTEIN",
+  SELECT_STOLPERSTEINE = "SELECT_STOLPERSTEINE",
 }
 
 export type Mutations<S = State> = {
-  [MutationTypes.INC_COUNTER](state: S, payload: number): void;
+  [MutationTypes.SET_WINDOW_WIDTH](state: S, payload: number): void;
   [MutationTypes.SET_STOLPERSTEINE](
     state: S,
     payload: Array<Stolperstein>
@@ -19,13 +19,16 @@ export type Mutations<S = State> = {
     state: S,
     payload: string
   ): void;
-  [MutationTypes.SELECT_STOLPERSTEIN](state: S, payload: Stolperstein): void;
+  [MutationTypes.SELECT_STOLPERSTEINE](
+    state: S,
+    payload: Array<Stolperstein> | undefined
+  ): void;
 };
 
 //define mutations
 export const mutations: MutationTree<State> & Mutations = {
-  [MutationTypes.INC_COUNTER](state: State, payload: number) {
-    state.counter += payload;
+  [MutationTypes.SET_WINDOW_WIDTH](state: State, payload: number) {
+    state.windowsWidth = payload;
   },
   [MutationTypes.SET_STOLPERSTEINE](
     state: State,
@@ -34,9 +37,12 @@ export const mutations: MutationTree<State> & Mutations = {
     state.stolpersteine = payload;
   },
   [MutationTypes.SET_STOLPERSTEINE_SEARCH_TEXT](state: State, payload: string) {
-    state.stolpersteineSearchText = payload;
+    state.stolpersteineSearchText = payload.trim();
   },
-  [MutationTypes.SELECT_STOLPERSTEIN](state: State, payload: Stolperstein) {
-    state.selectedStolperstein = payload;
+  [MutationTypes.SELECT_STOLPERSTEINE](
+    state: State,
+    payload: Array<Stolperstein> | undefined
+  ) {
+    state.selectedStolpersteine = payload;
   },
 };

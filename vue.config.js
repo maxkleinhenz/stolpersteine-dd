@@ -5,7 +5,10 @@ module.exports = {
         // sassOptions?: {
         //   indentedSyntax: true,
         // },
-        prependData: '@import "@/styles/_variables.scss";',
+        prependData: `
+          @use "sass:color";
+          @import "@/styles/_variables.scss";
+        `,
       },
     },
   },

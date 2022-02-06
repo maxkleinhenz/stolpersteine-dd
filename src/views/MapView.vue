@@ -7,8 +7,8 @@
         :class="{ hidden: isSidebarHidden }"
       >
         <SidebarComponent />
-        <div
-          class="sidebar-toggler d-inline-flex justify-content-center align-items-center bg-white"
+        <button
+          class="btn btn-default sidebar-toggler d-inline-flex justify-content-center align-items-center"
           @click="toggleSidebar()"
         >
           <font-awesome-icon
@@ -19,7 +19,7 @@
             :icon="['fas', 'chevron-right']"
             v-if="isSidebarHidden"
           />
-        </div>
+        </button>
       </div>
       <div
         class="map-container col"
@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref, watch } from "vue";
+import { defineComponent, onBeforeUnmount, onMounted, ref, watch } from "vue";
 import SidebarComponent from "@/components/SidebarComponent.vue";
 import MapComponent from "@/components/MapComponent.vue";
 import { useStore } from "@/store";
@@ -49,14 +49,26 @@ export default defineComponent({
     const isSidebarHidden = ref<boolean>(false);
     const map = ref<HTMLElement | any>(null);
 
+    let resizeMapTimeout: number;
+
     onMounted(async () => {
       await reloadStolpersteine();
     });
 
+    onBeforeUnmount(() => {
+      clearResizeMapTimeout();
+    });
+
     watch(
-      () => store.getters.selectedStolperstein,
-      (stolperstein) => {
-        window.alert(stolperstein?.name);
+      () => store.getters.selectedStolpersteine,
+      (stolpersteine) => {
+        if (stolpersteine) {
+          let message = "";
+          stolpersteine.forEach((stolperstein) => {
+            message += `${stolperstein.name}\n`;
+          });
+          window.alert(message);
+        }
       }
     );
 
@@ -65,10 +77,16 @@ export default defineComponent({
     }
 
     function toggleSidebar() {
+      clearResizeMapTimeout();
+
       isSidebarHidden.value = !isSidebarHidden.value;
-      setTimeout(function () {
+      resizeMapTimeout = setTimeout(function () {
         map.value.invalidateMapSize();
       }, 400);
+    }
+
+    function clearResizeMapTimeout(): void {
+      clearTimeout(resizeMapTimeout);
     }
 
     return {
@@ -83,13 +101,9 @@ export default defineComponent({
 <style lang="scss" scoped>
 $sidebar-width: 450px;
 
-.root {
-  background-color: $background-color;
-}
-
 .sidebar {
   flex: 0 0 $sidebar-width;
-  max-height: calc(100vh - $navbar-height);
+  max-height: 100%;
   z-index: 100;
   transition: margin 0.3s ease-in-out;
 }
@@ -104,6 +118,12 @@ $sidebar-width: 450px;
   width: 3em;
   border-radius: 0 0.5rem 0.5rem 0;
   cursor: pointer;
+  background-color: $app-background-color;
+
+  &:hover,
+  &:focus {
+    background-color: $app-background-color-dark-05;
+  }
 
   > svg {
     height: 1.5em !important;
@@ -118,7 +138,7 @@ $sidebar-width: 450px;
 }
 
 .width-sidebar {
-  margin-left: -$sidebar-width / 2;
-  margin-right: -$sidebar-width / 2;
+  margin-left: calc($sidebar-width * (-1) / 2);
+  margin-right: calc($sidebar-width * (-1) / 2);
 }
 </style>

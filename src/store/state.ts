@@ -1,15 +1,15 @@
 import Stolperstein from "@/models/stolperstein.model";
 
 export type State = {
-  counter: number;
+  windowsWidth: number;
   stolpersteine: Array<Stolperstein>;
   stolpersteineSearchText: string;
-  selectedStolperstein: Stolperstein | null;
+  selectedStolpersteine: Array<Stolperstein> | undefined;
 };
 
 export const state: State = {
-  counter: 0,
+  windowsWidth: 0,
   stolpersteine: [],
   stolpersteineSearchText: "",
-  selectedStolperstein: null,
+  selectedStolpersteine: [],
 };

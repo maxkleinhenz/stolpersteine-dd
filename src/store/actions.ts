@@ -12,24 +12,16 @@ type AugmentedActionContext = {
 } & Omit<ActionContext<State, State>, "commit">;
 
 export enum ActionTypes {
-  INC_COUNTER = "SET_COUNTER",
   LOAD_STOLPERSTEINE = "LOAD_STOLPERSTEINE",
 }
 
 export interface Actions {
-  [ActionTypes.INC_COUNTER](
-    { commit }: AugmentedActionContext,
-    payload: number
-  ): void;
   [ActionTypes.LOAD_STOLPERSTEINE]({
     commit,
   }: AugmentedActionContext): Promise<void>;
 }
 
 export const actions: ActionTree<State, State> & Actions = {
-  [ActionTypes.INC_COUNTER]({ commit }, payload: number) {
-    commit(MutationTypes.INC_COUNTER, payload);
-  },
   [ActionTypes.LOAD_STOLPERSTEINE]({ commit }) {
     return new Promise<void>((resolve) => {
       axios

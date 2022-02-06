@@ -8,7 +8,7 @@ const routes: Array<RouteRecordRaw> = [
     component: Home,
   },
   {
-    path: "/map",
+    path: "/karte",
     name: "Map",
     component: () =>
       import(/* webpackChunkName: "map" */ "../views/MapView.vue"),
@@ -18,6 +18,26 @@ const routes: Array<RouteRecordRaw> = [
     name: "About",
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+  },
+  {
+    path: "/info",
+    name: "Info",
+    component: () =>
+      import(/* webpackChunkName: "info" */ "../views/InfoView.vue"),
+  },
+  {
+    path: "/impressum",
+    name: "Impressum",
+    component: () =>
+      import(/* webpackChunkName: "impressum" */ "../views/ImpressumView.vue"),
+  },
+  {
+    path: "/datenschutz",
+    name: "Datenschutz",
+    component: () =>
+      import(
+        /* webpackChunkName: "datenschutz" */ "../views/DatenschutzView.vue"
+      ),
   },
 ];
 

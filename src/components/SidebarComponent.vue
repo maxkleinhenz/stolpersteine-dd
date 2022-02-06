@@ -1,9 +1,9 @@
 <template>
   <div
-    class="sidebar-container d-flex flex-column align-items-stretch flex-shrink-0 bg-white"
+    class="sidebar-container d-flex flex-column align-items-stretch flex-shrink-0 app-bg"
   >
     <div
-      class="sidebar-header d-flex flex-column flex-shrink-0 p-4 link-dark text-decoration-none border-bottom"
+      class="sidebar-header d-flex flex-column flex-shrink-0 p-4 link-dark text-decoration-none border-primary border-bottom"
     >
       <h2 class="mb-0">Stolpersteine</h2>
       <p class="text-muted">Es waren unsere Nachbarn</p>
@@ -11,7 +11,7 @@
       <div class="search-area">
         <div class="input-group">
           <input
-            class="form-control rounded-pill"
+            class="form-control bg-light rounded-pill app-shadow"
             type="search"
             v-model="searchText"
             placeholder="Suche"
@@ -41,9 +41,11 @@
         </div>
       </div>
     </div>
-    <div class="sidebar-list list-group list-group-flush border-bottom">
+    <div
+      class="sidebar-list list-group list-group-flush border-primary border-bottom"
+    >
       <div
-        class="list-group-item list-group-item-action py-3 px-4 lh-tight"
+        class="list-group-item list-group-item-action py-3 px-4 lh-tight border-primary app-bg"
         v-for="stolperstein in stolpersteine"
         :key="stolperstein.id"
       >
@@ -112,6 +114,15 @@ export default defineComponent({
 
 .sidebar-list {
   overflow: auto !important;
+
+  .list-group-item {
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+      border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  }
+
+  .list-group-item:hover {
+    background-color: $app-background-color-dark-05;
+  }
 }
 
 input[type="search"]::-webkit-search-decoration,
