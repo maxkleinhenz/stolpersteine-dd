@@ -28,6 +28,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 footer {
   height: $footer-height;
+  border-top: 1px solid $app-primary-color;
 
   .nav-link {
     color: black !important;

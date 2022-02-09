@@ -67,7 +67,8 @@ main {
     padding-bottom: $footer-height;
   }
   &.mobile {
-    padding-bottom: $navbar-mobile-height;
+    // padding-bottom: $navbar-mobile-height;
+    padding-bottom: $footer-height;
   }
 }
 </style>

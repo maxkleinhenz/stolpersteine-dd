@@ -1,32 +1,23 @@
 <template>
-  <div class="root container-fluid p-0 h-100">
-    <div class="row g-0 h-100 flex-nowrap">
-      <div
-        class="col sidebar"
-        id="sidebard"
-        :class="{ hidden: isSidebarHidden }"
+  <div class="map-view">
+    <div class="sidebar-wrapper" id="sidebar">
+      <transition name="sidebar">
+        <div class="sidebar-root" v-show="showSidebar">
+          <SidebarComponent />
+        </div>
+      </transition>
+
+      <button
+        class="toggler btn btn-default d-inline-flex justify-content-center align-items-center"
+        @click="toggleSidebar()"
       >
-        <SidebarComponent />
-        <button
-          class="btn btn-default sidebar-toggler d-inline-flex justify-content-center align-items-center"
-          @click="toggleSidebar()"
-        >
-          <font-awesome-icon
-            :icon="['fas', 'chevron-left']"
-            v-if="!isSidebarHidden"
-          />
-          <font-awesome-icon
-            :icon="['fas', 'chevron-right']"
-            v-if="isSidebarHidden"
-          />
-        </button>
-      </div>
-      <div
-        class="map-container col"
-        :class="{ 'width-sidebar': !isSidebarHidden }"
-      >
-        <MapComponent ref="map" :controlOffset="isSidebarHidden ? 0 : 225" />
-      </div>
+        <font-awesome-icon :icon="['fas', 'chevron-left']" v-if="showSidebar" />
+        <font-awesome-icon :icon="['fas', 'chevron-right']" v-else />
+      </button>
+    </div>
+
+    <div class="map-wrapper" :class="{ 'with-sidebar': showSidebar }">
+      <MapComponent ref="map" :withSidebar="showSidebar" />
     </div>
   </div>
 </template>
@@ -46,7 +37,7 @@ export default defineComponent({
   },
   setup() {
     const store = useStore();
-    const isSidebarHidden = ref<boolean>(false);
+    const showSidebar = ref(true);
     const map = ref<HTMLElement | any>(null);
 
     let resizeMapTimeout: number;
@@ -77,9 +68,9 @@ export default defineComponent({
     }
 
     function toggleSidebar() {
-      clearResizeMapTimeout();
+      showSidebar.value = !showSidebar.value;
 
-      isSidebarHidden.value = !isSidebarHidden.value;
+      clearResizeMapTimeout();
       resizeMapTimeout = setTimeout(function () {
         map.value.invalidateMapSize();
       }, 400);
@@ -90,8 +81,8 @@ export default defineComponent({
     }
 
     return {
+      showSidebar,
       map,
-      isSidebarHidden,
       toggleSidebar,
     };
   },
@@ -99,46 +90,62 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-$sidebar-width: 450px;
-
-.sidebar {
-  flex: 0 0 $sidebar-width;
-  max-height: 100%;
-  z-index: 100;
-  transition: margin 0.3s ease-in-out;
-}
-.hidden {
-  margin-left: -$sidebar-width;
-}
-.sidebar-toggler {
-  position: relative;
-  top: calc(-100vh + 9em);
-  left: 450px;
-  height: 5em;
-  width: 3em;
-  border-radius: 0 0.5rem 0.5rem 0;
-  cursor: pointer;
-  background-color: $app-background-color;
-
-  &:hover,
-  &:focus {
-    background-color: $app-background-color-dark-05;
-  }
-
-  > svg {
-    height: 1.5em !important;
-    width: 1.5em !important;
-  }
-}
-.map-container {
+.map-view {
   height: 100%;
   width: 100%;
-  z-index: 1;
-  transition: margin 0.3s ease-in-out;
 }
 
-.width-sidebar {
-  margin-left: calc($sidebar-width * (-1) / 2);
-  margin-right: calc($sidebar-width * (-1) / 2);
+.sidebar-wrapper {
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 3.5em;
+  max-height: 100%;
+  z-index: 1;
+  // transition: margin 0.3s ease-in-out;
+
+  .toggler {
+    border-radius: 0 0.5rem 0.5rem 0;
+    background-color: $app-background-color;
+    margin-top: 3em;
+    height: 5em;
+    width: 3em;
+
+    &:hover,
+    &:focus {
+      background-color: $app-background-color-dark-05;
+    }
+
+    > svg {
+      height: 1.5em !important;
+      width: 1.5em !important;
+    }
+  }
+}
+
+.map-wrapper {
+  height: 100%;
+  width: 100%;
+  transition: transform 0.3s ease-in-out;
+
+  &.with-sidebar {
+    transform: translateX(calc($app-map-sidebar-width / 2));
+  }
+}
+
+.sidebar-enter-from,
+.sidebar-leave-to {
+  margin-left: -$app-map-sidebar-width;
+}
+
+.sidebar-leave-active,
+.sidebar-enter-active {
+  transition: all 0.3s ease-in-out;
+}
+
+.sidebar-enter-to,
+.sidebar-leave-from {
+  margin-left: 0px;
 }
 </style>

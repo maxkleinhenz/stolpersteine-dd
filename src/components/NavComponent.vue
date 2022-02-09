@@ -96,7 +96,7 @@ export default defineComponent({
   padding: 0;
   justify-content: center;
   font-size: 0.9em;
-  height: $navbar-mobile-height;
+  height: $footer-height;
   background-color: $app-background-color;
   border-top: 1px solid $app-primary-color;
 
@@ -110,7 +110,6 @@ export default defineComponent({
 
       &:hover,
       &:focus {
-        text-decoration: underline;
         color: $app-dark-color;
         background-color: $stolperstein-color-light;
       }
@@ -120,7 +119,7 @@ export default defineComponent({
       text-align: center;
       padding: 0.5em;
       border-radius: $stolperstein-border-radius;
-      width: $navbar-mobile-height;
+      width: $footer-height;
 
       &.router-link-exact-active,
       &.router-link-exact-active:hover,

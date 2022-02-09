@@ -3,7 +3,7 @@
     <a
       href="https://www.maptiler.com"
       class="watermark"
-      :style="{ left: controlOffset + 'px' }"
+      :class="{ 'with-sidebar': withSidebar }"
       ><img
         src="https://api.maptiler.com/resources/logo.svg"
         alt="MapTiler logo"
@@ -30,10 +30,10 @@ export default defineComponent({
   name: "MapComponent",
   components: {},
   props: {
-    controlOffset: {
+    withSidebar: {
       required: false,
-      type: Number,
-      default: 0,
+      type: Boolean,
+      default: false,
     },
   },
   setup(props) {
@@ -65,7 +65,7 @@ export default defineComponent({
       map.addControl(attributionControl, "bottom-right");
       map.addControl(navigationControl, "bottom-right");
 
-      setPositionMapControls(props.controlOffset);
+      setPositionMapControls(props.withSidebar);
     });
 
     onBeforeUnmount(() => {
@@ -74,7 +74,7 @@ export default defineComponent({
     });
 
     watch(
-      () => props.controlOffset,
+      () => props.withSidebar,
       (value) => {
         setPositionMapControls(value);
       }
@@ -140,17 +140,10 @@ export default defineComponent({
         '<a href="https://maplibre.org/" target="_blank">© MapLibre</a>',
     });
 
-    function setPositionMapControls(widthSidebar: number) {
+    function setPositionMapControls(withSidebar: boolean) {
       const navigationParent = navigationControl?._container?.parentElement;
       if (navigationParent) {
-        navigationParent.style.right = `${widthSidebar}px`;
-        navigationParent.style.transition = "all 0.3s ease-in-out";
-      }
-
-      const attributionParent = attributionControl?._container?.parentElement;
-      if (attributionParent) {
-        attributionParent.style.right = `${widthSidebar}px`;
-        attributionParent.style.transition = "all 0.3s ease-in-out";
+        navigationParent.classList.toggle("with-sidebar", withSidebar);
       }
     }
 
@@ -158,6 +151,15 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="scss">
+.mapboxgl-ctrl-bottom-right {
+  transition: all 0.3s ease-in-out;
+  &.with-sidebar {
+    right: calc($app-map-sidebar-width / 2);
+  }
+}
+</style>
 
 <style lang="scss" scoped>
 @import "~maplibre-gl/dist/maplibre-gl.css";
@@ -176,8 +178,12 @@ export default defineComponent({
 .watermark {
   position: absolute;
   bottom: 0;
-  right: 0;
+  left: 0;
   z-index: 100;
   transition: all 0.3s ease-in-out;
+
+  &.with-sidebar {
+    left: calc($app-map-sidebar-width / 2);
+  }
 }
 </style>
