@@ -1,36 +1,48 @@
 <template>
-  <div class="container-fliud">
-    <div class="row g-2">
-      <div class="col">
-        <p class="fs-5 fw-bold my-0 text-wrap">{{ stolperstein.name }}</p>
-        <p class="my-0 text-wrap">
-          {{ stolperstein.strasse }} {{ stolperstein.hausnummer }}
-        </p>
-        <p class="my-0 text-wrap">
-          {{ stolperstein.plz }} {{ stolperstein.ort }}
-        </p>
-      </div>
-      <div class="col-auto bg-secondary rounded-circle image"></div>
-    </div>
-    <div class="row mt-4">
-      <div class="col">
-        <button type="button" class="btn btn-primary px-4 app-shadow">
-          Zeige Stein
-          <span class="d-inline-block ml-2">
-            <font-awesome-icon :icon="['fas', 'chevron-right']" />
-          </span>
-        </button>
-      </div>
-    </div>
-  </div>
+  <q-item clickable v-ripple class="item q-pa-lg">
+    <q-item-section top avatar>
+      <q-avatar size="64px">
+        <img src="https://cdn.quasar.dev/img/avatar2.jpg" />
+      </q-avatar>
+    </q-item-section>
+
+    <q-item-section>
+      <q-item-label class="text-body1 text-weight-bold">{{
+        stolperstein.name
+      }}</q-item-label>
+      <q-item-label class="text-body2">
+        {{ stolperstein.strasse }} {{ stolperstein.hausnummer }}
+      </q-item-label>
+      <q-item-label class="text-body2">
+        {{ stolperstein.plz }} {{ stolperstein.ort }}
+      </q-item-label>
+
+      <!-- <div class="row">
+        <div class="col">
+          <q-btn
+            class="q-mt-md q-px-md"
+            rounded
+            color="primary"
+            label="zum Stein"
+            :icon-right="matChevronRight"
+          />
+        </div>
+      </div> -->
+    </q-item-section>
+
+    <q-item-section side>
+      <q-icon :name="matChevronRight" color="black" />
+    </q-item-section>
+  </q-item>
 </template>
 
 <script lang="ts">
-import Stolptersein from "@/models/stolperstein.model";
-import { defineComponent, PropType } from "vue";
+import Stolptersein from 'src/models/stolperstein.model';
+import { defineComponent, PropType } from 'vue';
+import { matChevronRight } from '@quasar/extras/material-icons';
 
 export default defineComponent({
-  name: "StolpersteinListItem",
+  name: 'StolpersteinListItem',
   props: {
     stolperstein: {
       required: true,
@@ -38,12 +50,14 @@ export default defineComponent({
     },
   },
   components: {},
+  setup() {
+    return { matChevronRight };
+  },
 });
 </script>
 
 <style lang="scss" scoped>
-.image {
-  height: 75px;
-  width: 75px;
+.item:not(:first-child) {
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
 }
 </style>
