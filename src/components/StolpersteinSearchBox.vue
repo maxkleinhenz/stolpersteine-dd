@@ -7,6 +7,7 @@
     Placeholder="Suche"
     aria-placeholder="Suche nach Stolpersteinen"
     bg-color="white"
+    @click.stop
     @keyup.enter="searchStolpersteine()"
     @keyup.esc="clearSearch()"
   >

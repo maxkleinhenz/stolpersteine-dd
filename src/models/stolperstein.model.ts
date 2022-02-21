@@ -1,4 +1,12 @@
-import Point from './point.model';
+export interface StolpersteinFeature {
+  stolperstein: Stolperstein;
+  geometry: Geometry;
+}
+
+interface Geometry {
+  type: string;
+  coordinates: [number, number];
+}
 
 export default interface Stolperstein {
   id: number;
@@ -9,5 +17,4 @@ export default interface Stolperstein {
   plz: string;
   ort: string;
   url: string;
-  point: Point;
 }

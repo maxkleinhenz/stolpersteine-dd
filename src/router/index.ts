@@ -1,5 +1,5 @@
 import { route } from 'quasar/wrappers';
-import { RootState } from 'src/store';
+import { RootState } from 'src/store/state';
 import {
   createMemoryHistory,
   createRouter,

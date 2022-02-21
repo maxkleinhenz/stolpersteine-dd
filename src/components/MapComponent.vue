@@ -14,19 +14,13 @@ import {
   defineComponent,
   onMounted,
   onBeforeUnmount,
-  watch,
-  computed,
-  ref,
   onActivated,
+  onDeactivated,
+  computed,
+  watch,
 } from 'vue';
-import {
-  Map as MaplibreMap,
-  NavigationControl,
-  Marker,
-  LngLat,
-  AttributionControl,
-} from 'maplibre-gl';
-import Stolperstein from 'src/models/stolperstein.model';
+import { Map as MaplibreMap, LngLat } from 'maplibre-gl';
+import { useStolpersteinMap } from 'src/common/StolpersteinMap';
 import { useStore } from 'src/store';
 
 export default defineComponent({
@@ -34,137 +28,57 @@ export default defineComponent({
   components: {},
   setup() {
     const store = useStore();
-    const mapContainer = ref<HTMLDivElement>();
-    let canvas: HTMLCanvasElement | undefined;
+    const { createMap, resize, setLayer, setStolpersteinSource } =
+      useStolpersteinMap();
+
+    const dresden = new LngLat(13.7372621, 51.0504088);
+    const apiKey = process.env.MAPTILER_API_KEY ?? '';
+
     let map: MaplibreMap;
     let mapInitializeTimer: NodeJS.Timeout;
 
-    const stolpersteine = ref(
-      computed(() => store.getters.filteredStolpersteine())
-    );
-
-    const dresden = new LngLat(13.7372621, 51.0504088);
-    const stolersteineMarkers = new Map<
-      string,
-      {
-        marker: Marker;
-        stolpersteine: Array<Stolperstein>;
-      }
-    >();
-
-    onMounted(() => {
-      console.log('onMounted');
-
-      mapInitializeTimer = setTimeout(function () {
-        const apiKey = process.env.MAPTILER_API_KEY ?? '';
-        map = new MaplibreMap({
-          container: 'map',
-          style: `https://api.maptiler.com/maps/e79c1d05-b6e6-4dcd-8aad-05d3ec97c7d5/style.json?key=${apiKey}`,
-          center: dresden,
-          zoom: 12,
-          trackResize: true,
-          attributionControl: false,
-        });
-        map.addControl(
-          new AttributionControl({
-            customAttribution:
-              '<a href="https://maplibre.org/" target="_blank">© MapLibre</a>',
-          }),
-          'bottom-right'
-        );
-        map.addControl(
-          new NavigationControl({
-            showCompass: true,
-            showZoom: true,
-          }),
-          'bottom-right'
-        );
-
-        setMarker(stolpersteine.value);
-        map.resize();
-
-        canvas = mapContainer.value?.querySelectorAll('canvas')?.item(0);
-        window.addEventListener('resize', onResize);
-      }, 400);
-    });
-
-    onActivated(() => {
-      onResize();
-    });
-
-    onBeforeUnmount(() => {
-      console.log('onBeforeUnmount');
-
-      clearTimeout(mapInitializeTimer);
-      window.removeEventListener('resize', onResize);
-      clearMarkers();
-      map?.remove();
-    });
-
+    const stolpersteine = computed(() => store.getters.filteredStolpersteine());
     watch(
       () => store.getters.filteredStolpersteine(),
       (stolpersteine) => {
-        setMarker(stolpersteine);
+        if (map?.isStyleLoaded()) {
+          setStolpersteinSource(map, stolpersteine);
+        }
       }
     );
 
-    const setMarker = (stolpersteine: Array<Stolperstein>) => {
-      clearMarkers();
+    onMounted(() => {
+      mapInitializeTimer = setTimeout(function () {
+        map = createMap(apiKey, dresden);
+        map.on('load', () => {
+          setStolpersteinSource(map, stolpersteine.value);
+          setLayer(map);
+          //markers = setMarker(map, stolpersteine.value);
+          map.resize();
+        });
+      }, 400);
+    });
 
-      if (map == null) return;
+    onBeforeUnmount(() => {
+      clearTimeout(mapInitializeTimer);
 
-      // set new markers
-      stolpersteine.forEach((stolperstein) => {
-        var m = stolersteineMarkers.get(
-          `${stolperstein.point.lon},${stolperstein.point.lat}`
-        );
-        if (m) {
-          m.stolpersteine.push(stolperstein);
-        } else {
-          var markerElement = document.createElement('button');
-          markerElement.className =
-            'stolperstein-marker q-btn--actionable q-focusable q-hoverable';
-          // markerElement.onclick = function () {
-          //   store.commit(
-          //     MutationTypes.SELECT_STOLPERSTEINE,
-          //     stolersteineMarkers.get(
-          //       `${stolperstein.point.lon},${stolperstein.point.lat}`
-          //     )?.stolpersteine
-          //   );
-          // };
+      map?.remove();
+    });
 
-          const marker = new Marker({ element: markerElement })
-            .setLngLat([stolperstein.point.lon, stolperstein.point.lat])
-            .addTo(map);
-          stolersteineMarkers.set(
-            `${stolperstein.point.lon},${stolperstein.point.lat}`,
-            {
-              marker: marker,
-              stolpersteine: [stolperstein],
-            }
-          );
-        }
-      });
-    };
+    onActivated(() => {
+      window.addEventListener('resize', onResize);
+      onResize();
+    });
 
-    const clearMarkers = () => {
-      stolersteineMarkers.forEach((marker) => {
-        marker.marker.remove();
-      });
-      stolersteineMarkers.clear();
-    };
+    onDeactivated(() => {
+      window.removeEventListener('resize', onResize);
+    });
 
     const onResize = () => {
-      setTimeout(() => {
-        if (canvas) {
-          canvas.height = mapContainer.value?.clientHeight ?? 0;
-          canvas.width = mapContainer.value?.clientWidth ?? 0;
-          map?.resize();
-        }
-      }, 400);
+      resize(map);
     };
 
-    return { mapContainer };
+    return {};
   },
 });
 </script>

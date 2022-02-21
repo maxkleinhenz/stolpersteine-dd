@@ -2,32 +2,22 @@
   <q-item clickable v-ripple class="item q-pa-lg">
     <q-item-section top avatar>
       <q-avatar size="64px">
-        <img src="https://cdn.quasar.dev/img/avatar2.jpg" />
+        <q-img ratio="1" src="Josef_Altbach_Stolperstein_Dresden.JPG" />
       </q-avatar>
     </q-item-section>
 
     <q-item-section>
       <q-item-label class="text-body1 text-weight-bold">{{
-        stolperstein.name
+        stolpersteinFeature.stolperstein.name
       }}</q-item-label>
       <q-item-label class="text-body2">
-        {{ stolperstein.strasse }} {{ stolperstein.hausnummer }}
+        {{ stolpersteinFeature.stolperstein.strasse }}
+        {{ stolpersteinFeature.stolperstein.hausnummer }}
       </q-item-label>
       <q-item-label class="text-body2">
-        {{ stolperstein.plz }} {{ stolperstein.ort }}
+        {{ stolpersteinFeature.stolperstein.plz }}
+        {{ stolpersteinFeature.stolperstein.ort }}
       </q-item-label>
-
-      <!-- <div class="row">
-        <div class="col">
-          <q-btn
-            class="q-mt-md q-px-md"
-            rounded
-            color="primary"
-            label="zum Stein"
-            :icon-right="matChevronRight"
-          />
-        </div>
-      </div> -->
     </q-item-section>
 
     <q-item-section side>
@@ -37,16 +27,16 @@
 </template>
 
 <script lang="ts">
-import Stolptersein from 'src/models/stolperstein.model';
+import { StolpersteinFeature } from 'src/models/stolperstein.model';
 import { defineComponent, PropType } from 'vue';
 import { matChevronRight } from '@quasar/extras/material-icons';
 
 export default defineComponent({
   name: 'StolpersteinListItem',
   props: {
-    stolperstein: {
+    stolpersteinFeature: {
       required: true,
-      type: Object as PropType<Stolptersein>,
+      type: Object as PropType<StolpersteinFeature>,
     },
   },
   components: {},
