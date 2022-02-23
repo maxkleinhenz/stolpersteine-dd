@@ -117,7 +117,7 @@ const setStolpersteinSource = (
 const setLayer = (map: MaplibreMap) => {
   if (!map) return;
 
-  map.loadImage('icons/stolperstein-glyph.png', (error, image) => {
+  map.loadImage('images/stolperstein-glyph.png', (error, image) => {
     if (error) {
       console.log('error loadimage', error);
       return;
@@ -169,56 +169,6 @@ const setLayer = (map: MaplibreMap) => {
     });
   });
 };
-
-// const setMarker = (
-//   map: MaplibreMap,
-//   stolpersteine: Array<Stolperstein>
-// ): Map<string, StolpersteinMarker> => {
-//   if (!map) return new Map<string, StolpersteinMarker>();
-
-//   const stolersteineMarkers = new Map<string, StolpersteinMarker>();
-
-//   // set new markers
-//   stolpersteine.forEach((stolperstein) => {
-//     const m = stolersteineMarkers.get(
-//       `${stolperstein.point.lon},${stolperstein.point.lat}`
-//     );
-//     if (m) {
-//       m.stolpersteine.push(stolperstein);
-//     } else {
-//       const markerElement = document.createElement('button');
-//       markerElement.className =
-//         'stolperstein-marker q-btn--actionable q-focusable q-hoverable';
-//       // markerElement.onclick = function () {
-//       //   store.commit(
-//       //     MutationTypes.SELECT_STOLPERSTEINE,
-//       //     stolersteineMarkers.get(
-//       //       `${stolperstein.point.lon},${stolperstein.point.lat}`
-//       //     )?.stolpersteine
-//       //   );
-//       // };
-
-//       const marker = new Marker({ element: markerElement })
-//         .setLngLat([stolperstein.point.lon, stolperstein.point.lat])
-//         .addTo(map);
-//       stolersteineMarkers.set(
-//         `${stolperstein.point.lon},${stolperstein.point.lat}`,
-//         {
-//           marker: marker,
-//           stolpersteine: [stolperstein],
-//         }
-//       );
-//     }
-//   });
-
-//   return stolersteineMarkers;
-// };
-
-// const clearMarkers = (markers: Array<StolpersteinMarker>) => {
-//   markers?.forEach((marker) => {
-//     marker?.marker?.remove();
-//   });
-// };
 
 const resize = (map: MaplibreMap) => {
   setTimeout(() => {

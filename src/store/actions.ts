@@ -16,10 +16,11 @@ export class RootActions extends Actions<
       return this.state.stolpersteine;
     }
 
+    //   axios.get<StolpersteinResult>(
+    //     'https://kommisdd.dresden.de/net4/public/ogcapi/collections/L1223/items?limit=500'
+    // )
     return await axios
-      .get<StolpersteinResult>(
-        'https://kommisdd.dresden.de/net4/public/ogcapi/collections/L1223/items?limit=500'
-      )
+      .get<StolpersteinResult>('data/stolpersteine.json')
       .then((response) => {
         const stolpersteineFeatures: Array<StolpersteinFeature> = [];
         response.data.features.forEach((responseFeature) => {
