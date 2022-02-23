@@ -2,7 +2,7 @@
   <q-item clickable v-ripple class="item q-pa-lg">
     <q-item-section top avatar>
       <q-avatar size="64px">
-        <q-img ratio="1" src="Josef_Altbach_Stolperstein_Dresden.JPG" />
+        <q-img ratio="1" src="images/Josef_Altbach_Stolperstein_Dresden.JPG" />
       </q-avatar>
     </q-item-section>
 

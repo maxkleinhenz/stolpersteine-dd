@@ -1,17 +1,17 @@
 <template>
   <q-layout view="hHh lpR fFf">
-    <TopNavComponent></TopNavComponent>
+    <TopNavComponent v-show="quasar.screen.gt.sm"></TopNavComponent>
 
     <!-- show-if-above -->
     <q-drawer
-      v-if="quasar.screen.gt.sm && route.name === 'Map'"
+      v-if="quasar.screen.gt.sm"
       :model-value="quasar.screen.gt.sm && route.name === 'Map'"
       :width="370"
       elevated
       class="app-bg text-black"
       behavior="desktop"
     >
-      <StolpersteinList></StolpersteinList>
+      <StolpersteinSidebar></StolpersteinSidebar>
     </q-drawer>
 
     <q-page-container>
@@ -22,12 +22,12 @@
       </router-view>
     </q-page-container>
 
-    <BottomSheet
-      v-if="quasar.screen.lt.md && route.name === 'Map'"
+    <StolpersteinListBottomSheet
       class="lt-md"
+      v-if="quasar.screen.lt.md"
+      :show="quasar.screen.lt.md && route.name === 'Map'"
     >
-      <StolpersteinList></StolpersteinList>
-    </BottomSheet>
+    </StolpersteinListBottomSheet>
 
     <q-footer bordered class="footer lt-md app-bg text-black">
       <q-tabs class="text-black" dense align="center">
@@ -63,17 +63,19 @@ import {
   outlinedInfo,
 } from '@quasar/extras/material-icons-outlined';
 import { useRoute } from 'vue-router';
-import StolpersteinList from 'src/components/StolpersteinList.vue';
 import TopNavComponent from 'src/components/TopNavComponent.vue';
-import BottomSheet from 'src/components/StolpersteinListBottomSheet.vue';
 import { useQuasar } from 'quasar';
 import { useStore } from 'src/store';
+import StolpersteinListBottomSheet from 'src/components/StolpersteinBottomSheet.vue';
+import StolpersteinBottomSheet from 'src/components/StolpersteinBottomSheet.vue';
+import StolpersteinSidebar from 'src/components/StolpersteinSidebar.vue';
 
 export default defineComponent({
   components: {
     TopNavComponent,
-    StolpersteinList,
-    BottomSheet,
+    StolpersteinListBottomSheet,
+    StolpersteinBottomSheet,
+    StolpersteinSidebar,
   },
   setup() {
     const store = useStore();
