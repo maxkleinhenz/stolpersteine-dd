@@ -131,6 +131,7 @@ export default defineComponent({
 
 <style scoped lang="scss">
 $header-height: 78px;
+$list-height: $header-height - 15px;
 
 .stolperstein-list__draggable {
   width: 3em;
@@ -142,7 +143,8 @@ $header-height: 78px;
 
 .stolperstein-list {
   background-color: $app-background-color;
-  height: calc(100% - #{$header-height});
+  height: calc(100% - #{$list-height});
+
   margin-top: calc(#{$header-height} - 15px);
 }
 

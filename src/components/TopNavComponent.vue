@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="top-nav fixed-top-right, absolute-top-right row q-my-lg q-mr-xl q-px-lg"
-  >
+  <div class="top-nav fixed-top-right row q-my-lg q-mr-xl q-px-lg">
     <div class="col q-pa-lg">
       <router-link :to="{ name: 'Home' }" class="nav-link">
         <span>Start</span>

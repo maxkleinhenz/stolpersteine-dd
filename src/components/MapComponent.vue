@@ -47,6 +47,14 @@ export default defineComponent({
       }
     );
 
+    const toggle = computed(() => store.state.isStolpersteinSidebarVisible);
+    watch(
+      () => toggle.value,
+      () => {
+        resize(map);
+      }
+    );
+
     onMounted(() => {
       mapInitializeTimer = setTimeout(function () {
         map = createMap(apiKey, dresden);

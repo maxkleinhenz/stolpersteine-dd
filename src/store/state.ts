@@ -4,7 +4,7 @@ import Stolperstein, {
 
 export class RootState {
   windowsWidth = 0;
-  isMapSidebarVisible = false;
+  isStolpersteinSidebarVisible = false;
   stolpersteine: Array<StolpersteinFeature> = [];
   stolpersteineSearchText = '';
   selectedStolpersteine: Array<Stolperstein> | undefined = undefined;

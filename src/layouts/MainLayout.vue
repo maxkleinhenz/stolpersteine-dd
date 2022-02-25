@@ -1,15 +1,14 @@
 <template>
   <q-layout view="hHh lpR fFf">
-    <TopNavComponent v-show="quasar.screen.gt.sm"></TopNavComponent>
+    <TopNavComponent class="gt-sm"></TopNavComponent>
 
-    <!-- show-if-above -->
     <q-drawer
-      v-if="quasar.screen.gt.sm"
-      :model-value="quasar.screen.gt.sm && route.name === 'Map'"
+      v-if="quasar.screen.gt.xs"
+      v-model="sidebarOpen"
       :width="370"
+      :behavior="quasar.screen.gt.sm ? 'desktop' : 'mobile'"
       elevated
       class="app-bg text-black"
-      behavior="desktop"
     >
       <StolpersteinSidebar></StolpersteinSidebar>
     </q-drawer>
@@ -24,8 +23,8 @@
 
     <StolpersteinListBottomSheet
       class="lt-md"
-      v-if="quasar.screen.lt.md"
-      :show="quasar.screen.lt.md && route.name === 'Map'"
+      v-if="quasar.screen.lt.sm"
+      :show="route.name === 'Map'"
     >
     </StolpersteinListBottomSheet>
 
@@ -55,7 +54,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted } from 'vue';
+import { computed, defineComponent, onMounted } from 'vue';
 import { matHome, matMap, matInfo } from '@quasar/extras/material-icons';
 import {
   outlinedHome,
@@ -82,6 +81,18 @@ export default defineComponent({
     const quasar = useQuasar();
     const route = useRoute();
 
+    const sidebarOpen = computed({
+      get() {
+        return (
+          route.name === 'Map' &&
+          (store.state.isStolpersteinSidebarVisible || quasar.screen.gt.sm)
+        );
+      },
+      set(value: boolean): void {
+        store.mutations.setStolpersteinSidebarVisibility(value);
+      },
+    });
+
     onMounted(async () => {
       await store.actions.loadStolpersteineFeatures();
     });
@@ -89,6 +100,7 @@ export default defineComponent({
     return {
       quasar,
       route,
+      sidebarOpen,
       matHome,
       matMap,
       matInfo,

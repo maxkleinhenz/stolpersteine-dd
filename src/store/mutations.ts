@@ -14,4 +14,11 @@ export class RootMutations extends Mutations<RootState> {
   selectStolpersteine(payload: Array<Stolperstein> | undefined) {
     this.state.selectedStolpersteine = payload;
   }
+  setStolpersteinSidebarVisibility(payload: boolean) {
+    this.state.isStolpersteinSidebarVisible = payload;
+  }
+  toggleStolpersteinSidebarVisibility() {
+    this.state.isStolpersteinSidebarVisible =
+      !this.state.isStolpersteinSidebarVisible;
+  }
 }
