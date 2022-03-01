@@ -1,24 +1,26 @@
 <template>
   <div class="top-nav fixed-top-right row q-my-lg q-mr-xl q-px-lg">
     <div class="col q-pa-lg">
-      <router-link :to="{ name: 'Home' }" class="nav-link">
+      <router-link :to="{ name: routeNames.home }" class="nav-link">
         <span>Start</span>
       </router-link>
     </div>
     <div class="col q-pa-lg">
-      <router-link :to="{ name: 'Map' }" class="nav-link">
+      <router-link :to="{ name: routeNames.map }" class="nav-link">
         <span>Karte</span>
       </router-link>
     </div>
     <div class="col q-pa-lg">
-      <router-link :to="{ name: 'Info' }" class="nav-link">
+      <router-link :to="{ name: routeNames.info }" class="nav-link">
         <span>Info</span>
       </router-link>
     </div>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { routeNames } from 'src/router/routes';
+</script>
 
 <style lang="scss" scoped>
 .top-nav {

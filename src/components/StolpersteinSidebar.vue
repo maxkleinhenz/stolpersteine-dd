@@ -20,17 +20,9 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
 import SearchBoxComponent from './StolpersteinSearchBox.vue';
 import StolpersteinList from './StolpersteinList.vue';
-
-export default defineComponent({
-  components: {
-    SearchBoxComponent,
-    StolpersteinList,
-  },
-});
 </script>
 
 <style lang="scss" scoped>

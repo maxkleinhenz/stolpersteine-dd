@@ -1,11 +1,9 @@
-import Stolperstein, {
-  StolpersteinFeature,
-} from 'src/models/stolperstein.model';
+import { StolpersteinFeature } from 'src/models/stolperstein.model';
 
 export class RootState {
   windowsWidth = 0;
   isStolpersteinSidebarVisible = false;
   stolpersteine: Array<StolpersteinFeature> = [];
   stolpersteineSearchText = '';
-  selectedStolpersteine: Array<Stolperstein> | undefined = undefined;
+  selectedStolpersteine: Array<StolpersteinFeature> | undefined = undefined;
 }

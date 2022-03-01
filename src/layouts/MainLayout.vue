@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHh lpR fFf">
+  <q-layout view="hHh LpR fFf">
     <TopNavComponent class="gt-sm"></TopNavComponent>
 
     <q-drawer
@@ -31,30 +31,30 @@
     <q-footer bordered class="footer lt-md app-bg text-black">
       <q-tabs class="text-black" dense align="center">
         <q-route-tab
-          name="home"
-          :icon="route.name === 'Home' ? matHome : outlinedHome"
+          :name="routeNames.home"
+          :icon="route.name === routeNames.home ? matHome : outlinedHome"
           label="Start"
-          :to="{ name: 'Home' }"
+          :to="{ name: routeNames.home }"
         />
         <q-route-tab
-          name="map"
-          :icon="route.name === 'Map' ? matMap : outlinedMap"
+          :name="routeNames.map"
+          :icon="route.name === routeNames.map ? matMap : outlinedMap"
           label="Karte"
-          :to="{ name: 'Map' }"
+          :to="{ name: routeNames.map }"
         />
         <q-route-tab
-          name="info"
-          :icon="route.name === 'Info' ? matInfo : outlinedInfo"
+          :name="routeNames.info"
+          :icon="route.name === routeNames.info ? matInfo : outlinedInfo"
           label="Info"
-          :to="{ name: 'Info' }"
+          :to="{ name: routeNames.info }"
         />
       </q-tabs>
     </q-footer>
   </q-layout>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent, onMounted } from 'vue';
+<script setup lang="ts">
+import { computed, onMounted } from 'vue';
 import { matHome, matMap, matInfo } from '@quasar/extras/material-icons';
 import {
   outlinedHome,
@@ -66,49 +66,26 @@ import TopNavComponent from 'src/components/TopNavComponent.vue';
 import { useQuasar } from 'quasar';
 import { useStore } from 'src/store';
 import StolpersteinListBottomSheet from 'src/components/StolpersteinBottomSheet.vue';
-import StolpersteinBottomSheet from 'src/components/StolpersteinBottomSheet.vue';
 import StolpersteinSidebar from 'src/components/StolpersteinSidebar.vue';
+import { routeNames } from 'src/router/routes';
 
-export default defineComponent({
-  components: {
-    TopNavComponent,
-    StolpersteinListBottomSheet,
-    StolpersteinBottomSheet,
-    StolpersteinSidebar,
+const store = useStore();
+const quasar = useQuasar();
+const route = useRoute();
+
+const sidebarOpen = computed({
+  get() {
+    // show drawer only on map page
+    if (!route.name?.toString().startsWith(routeNames.map)) return false;
+    return store.state.isStolpersteinSidebarVisible || quasar.screen.gt.sm;
   },
-  setup() {
-    const store = useStore();
-    const quasar = useQuasar();
-    const route = useRoute();
-
-    const sidebarOpen = computed({
-      get() {
-        return (
-          route.name === 'Map' &&
-          (store.state.isStolpersteinSidebarVisible || quasar.screen.gt.sm)
-        );
-      },
-      set(value: boolean): void {
-        store.mutations.setStolpersteinSidebarVisibility(value);
-      },
-    });
-
-    onMounted(async () => {
-      await store.actions.loadStolpersteineFeatures();
-    });
-
-    return {
-      quasar,
-      route,
-      sidebarOpen,
-      matHome,
-      matMap,
-      matInfo,
-      outlinedHome,
-      outlinedMap,
-      outlinedInfo,
-    };
+  set(value: boolean): void {
+    store.mutations.setStolpersteinSidebarVisibility(value);
   },
+});
+
+onMounted(async () => {
+  await store.actions.loadStolpersteineFeatures();
 });
 </script>
 

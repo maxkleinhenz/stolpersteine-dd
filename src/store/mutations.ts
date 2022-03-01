@@ -1,6 +1,4 @@
-import Stolperstein, {
-  StolpersteinFeature,
-} from 'src/models/stolperstein.model';
+import { StolpersteinFeature } from 'src/models/stolperstein.model';
 import { Mutations } from 'vuex-smart-module';
 import { RootState } from './state';
 
@@ -11,7 +9,7 @@ export class RootMutations extends Mutations<RootState> {
   setStolpersteinSearchText(payload: string) {
     this.state.stolpersteineSearchText = payload.trim();
   }
-  selectStolpersteine(payload: Array<Stolperstein> | undefined) {
+  selectStolpersteine(payload: Array<StolpersteinFeature> | undefined) {
     this.state.selectedStolpersteine = payload;
   }
   setStolpersteinSidebarVisibility(payload: boolean) {

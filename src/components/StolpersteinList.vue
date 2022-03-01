@@ -1,9 +1,5 @@
 <template>
-  <q-virtual-scroll
-    class="full-width full-height"
-    :items="stolpersteine"
-    separator
-  >
+  <q-virtual-scroll class="full-width full-height" :items="stolpersteine">
     <template v-slot="{ item }">
       <StolpersteinListItem
         :key="item.id"
@@ -14,20 +10,11 @@
   </q-virtual-scroll>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { useStore } from 'src/store';
-import { computed, defineComponent } from 'vue';
+import { computed } from 'vue';
 import StolpersteinListItem from './StolpersteinListItem.vue';
 
-export default defineComponent({
-  components: {
-    StolpersteinListItem,
-  },
-  setup() {
-    const store = useStore();
-    const stolpersteine = computed(() => store.getters.filteredStolpersteine());
-
-    return { stolpersteine };
-  },
-});
+const store = useStore();
+const stolpersteine = computed(() => store.getters.filteredStolpersteine());
 </script>

@@ -1,5 +1,10 @@
 <template>
-  <q-item clickable v-ripple class="item q-pa-lg">
+  <q-item
+    clickable
+    v-ripple
+    class="item q-ma-md q-pa-md app-card-bg"
+    @click="showDetails()"
+  >
     <q-item-section top avatar>
       <q-avatar size="64px">
         <q-img ratio="1" src="images/Josef_Altbach_Stolperstein_Dresden.JPG" />
@@ -10,7 +15,10 @@
       <q-item-label class="text-body1 text-weight-bold">{{
         stolpersteinFeature.stolperstein.name
       }}</q-item-label>
-      <q-item-label class="text-body2">
+      <q-item-label
+        class="text-body2"
+        v-if="stolpersteinFeature.stolperstein.strasse"
+      >
         {{ stolpersteinFeature.stolperstein.strasse }}
         {{ stolpersteinFeature.stolperstein.hausnummer }}
       </q-item-label>
@@ -26,28 +34,34 @@
   </q-item>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { StolpersteinFeature } from 'src/models/stolperstein.model';
-import { defineComponent, PropType } from 'vue';
+import { PropType } from 'vue';
 import { matChevronRight } from '@quasar/extras/material-icons';
+import { useRouter } from 'vue-router';
+import { routeNames } from 'src/router/routes';
 
-export default defineComponent({
-  name: 'StolpersteinListItem',
-  props: {
-    stolpersteinFeature: {
-      required: true,
-      type: Object as PropType<StolpersteinFeature>,
-    },
-  },
-  components: {},
-  setup() {
-    return { matChevronRight };
+const props = defineProps({
+  stolpersteinFeature: {
+    required: true,
+    type: Object as PropType<StolpersteinFeature>,
   },
 });
+
+const router = useRouter();
+const showDetails = async () => {
+  await router.push({
+    name: routeNames.mapDetails,
+    params: { id: props.stolpersteinFeature.stolperstein.id },
+  });
+};
 </script>
 
 <style lang="scss" scoped>
-.item:not(:first-child) {
-  border-top: 1px solid rgba(0, 0, 0, 0.12);
+.item {
+  border-radius: 15px;
 }
+// .item:not(:first-child) {
+//   border-top: 1px solid rgba(0, 0, 0, 0.12);
+// }
 </style>

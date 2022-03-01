@@ -33,36 +33,24 @@
   </q-input>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { useStore } from 'src/store';
-import { defineComponent, onBeforeUnmount, ref } from 'vue';
+import { onBeforeUnmount, ref } from 'vue';
 
-export default defineComponent({
-  name: 'StolpersteinSearchBoxComponent',
-  setup() {
-    const store = useStore();
+const store = useStore();
+const state = ref(store.state);
+const searchText = ref(state.value.stolpersteineSearchText);
 
-    const state = ref(store.state);
-    const searchText = ref(state.value.stolpersteineSearchText);
-
-    onBeforeUnmount(() => {
-      clearSearch();
-    });
-
-    const searchStolpersteine = () => {
-      store.mutations.setStolpersteinSearchText(searchText.value);
-    };
-
-    const clearSearch = () => {
-      searchText.value = '';
-      searchStolpersteine();
-    };
-
-    return {
-      searchText,
-      clearSearch,
-      searchStolpersteine,
-    };
-  },
+onBeforeUnmount(() => {
+  clearSearch();
 });
+
+const searchStolpersteine = () => {
+  store.mutations.setStolpersteinSearchText(searchText.value);
+};
+
+const clearSearch = () => {
+  searchText.value = '';
+  searchStolpersteine();
+};
 </script>

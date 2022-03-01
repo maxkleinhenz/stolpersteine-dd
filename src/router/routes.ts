@@ -1,5 +1,12 @@
 import { RouteRecordRaw } from 'vue-router';
 
+export const routeNames = {
+  home: 'Home',
+  map: 'Map',
+  mapDetails: 'Map.Details',
+  info: 'Info',
+};
+
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
@@ -7,9 +14,16 @@ const routes: RouteRecordRaw[] = [
     children: [
       { path: '', name: 'Home', component: () => import('pages/HomePage.vue') },
       {
-        path: '/karte',
+        path: 'karte',
         name: 'Map',
         component: () => import('pages/MapPage.vue'),
+        children: [
+          {
+            path: ':id',
+            name: 'Map.Details',
+            component: () => import('pages/MapPage.vue'),
+          },
+        ],
       },
       {
         path: 'info',

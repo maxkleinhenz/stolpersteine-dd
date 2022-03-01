@@ -29,7 +29,7 @@ export default defineComponent({
     });
 
     onBeforeUnmount(async () => {
-      if (cupertino.value) await cupertino.value.destroy();
+      if (!!cupertino.value) await cupertino.value.destroy();
     });
 
     return { cupertino };
