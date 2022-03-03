@@ -9,7 +9,7 @@
   >
     <div class="dialog-content app-bg">
       <q-btn
-        class="dialog-close absolute-top-right q-pa-md q-mx-md q-my-sm"
+        class="dialog-close absolute-top-right q-pa-md q-ma-md"
         unelevated
         round
         text-color="black"
@@ -67,7 +67,6 @@ const navigateToMap = async () => {
 };
 
 const setDetailStolperstein = (stolpersteinId: number) => {
-  console.log('setDetailStolperstein', stolpersteinId);
   if (stolpersteinId === NaN) {
     detailStolperstein.value = undefined;
     return;
@@ -76,8 +75,6 @@ const setDetailStolperstein = (stolpersteinId: number) => {
   const stolperstein = store.state.stolpersteine.filter((s) => {
     return s.stolperstein.id === stolpersteinId;
   });
-
-  console.log('setDetailStolperstein', stolperstein);
 
   if (stolperstein?.length) {
     detailStolperstein.value = stolperstein[0];
@@ -108,7 +105,7 @@ watch(
 }
 
 .dialog-content {
-  width: min(100vw, 650px);
+  width: min(100vw, #{$stolperstein-details-width});
 }
 
 .dialog-close {

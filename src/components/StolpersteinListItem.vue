@@ -2,7 +2,7 @@
   <q-item
     clickable
     v-ripple
-    class="item q-ma-md q-pa-md app-card-bg"
+    class="app-card q-ma-md q-pa-md"
     @click="showDetails()"
   >
     <q-item-section top avatar>
@@ -56,12 +56,3 @@ const showDetails = async () => {
   });
 };
 </script>
-
-<style lang="scss" scoped>
-.item {
-  border-radius: 15px;
-}
-// .item:not(:first-child) {
-//   border-top: 1px solid rgba(0, 0, 0, 0.12);
-// }
-</style>

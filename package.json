@@ -17,6 +17,7 @@
     "cupertino-pane": "^1.2.82",
     "dotenv": "^16.0.0",
     "maplibre-gl": "^2.1.6",
+    "node-html-parser": "^5.2.0",
     "quasar": "^2.0.0",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0",

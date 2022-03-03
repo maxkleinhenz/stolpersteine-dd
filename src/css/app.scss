@@ -12,6 +12,11 @@
   background-color: $app-background-color;
 }
 
+.app-card {
+  background-color: $app-card-background-color;
+  border-radius: $app-card-border-radius;
+}
+
 .app-card-bg {
   background-color: $app-card-background-color;
 }
