@@ -84,19 +84,6 @@ module.exports = configure(function (ctx) {
       },
       port: 8080,
       open: true, // opens browser window automatically
-      proxy: {
-        '/api': {
-          target: 'http://stolpersteine-dresden.de/',
-          changeOrigin: true,
-          pathRewrite: {
-            '^/api': '',
-          },
-        },
-      },
-      // allowedHosts: ['http://stolpersteine-dresden.de'],
-      // headers: {
-      //   'Access-Control-Allow-Origin': '*',
-      // },
     },
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-framework
