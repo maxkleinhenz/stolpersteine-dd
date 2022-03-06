@@ -1,29 +1,22 @@
+import { Point } from 'geojson';
 import {
   Map as MaplibreMap,
-  NavigationControl,
-  Marker,
   AttributionControl,
   LngLatLike,
   GeoJSONSource,
   GeoJSONSourceSpecification,
 } from 'maplibre-gl';
-import Stolperstein, {
-  StolpersteinFeature,
-} from 'src/models/stolperstein.model';
+import { StolpersteinFeature } from 'src/models/stolperstein.model';
+import { ref } from 'vue';
 
 const StolpersteinSourceName = 'stolpersteine';
 const StolpersteinClusterLayer = 'clusters';
 const StolpersteinClusterCountLayer = 'cluster-count';
-const StolpersteinLayer = 'stolperstein-point';
-
-export interface StolpersteinMarker {
-  marker: Marker;
-  stolpersteine: Array<Stolperstein>;
-}
+const StolpersteinPointLayer = 'stolperstein-point';
 
 interface Feature {
   type: 'Feature';
-  properties: Array<Stolperstein>;
+  properties: Array<StolpersteinFeature>;
   geometry: {
     type: string;
     coordinates: [number, number];
@@ -31,8 +24,16 @@ interface Feature {
 }
 
 export function useStolpersteinMap() {
-  return { createMap, resize, setLayer, setStolpersteinSource };
+  return {
+    createMap,
+    resize,
+    setLayer,
+    setStolpersteinSource,
+    selectedStolpersteine,
+  };
 }
+
+const selectedStolpersteine = ref<StolpersteinFeature[] | undefined>(undefined);
 
 const createMap = (apiKey: string, center: LngLatLike): MaplibreMap => {
   const map = new MaplibreMap({
@@ -44,18 +45,14 @@ const createMap = (apiKey: string, center: LngLatLike): MaplibreMap => {
     attributionControl: false,
   });
 
+  map.dragRotate.disable();
+  map.touchZoomRotate.disableRotation();
+  map.touchPitch.disable();
+
   map.addControl(
     new AttributionControl({
       customAttribution:
         '<a href="https://maplibre.org/" target="_blank">© MapLibre</a>',
-    }),
-    'bottom-right'
-  );
-
-  map.addControl(
-    new NavigationControl({
-      showCompass: true,
-      showZoom: true,
     }),
     'bottom-right'
   );
@@ -85,11 +82,11 @@ const setStolpersteinSource = (
     // when feature exists append stolperstein to proterties
     // otherwise create new feature
     if (existsFeature?.length > 0) {
-      existsFeature[0].properties.push(stolpersteinFeature.stolperstein);
+      existsFeature[0].properties.push(stolpersteinFeature);
     } else {
       features.push({
         type: 'Feature',
-        properties: [stolpersteinFeature.stolperstein],
+        properties: [stolpersteinFeature],
         geometry: stolpersteinFeature.geometry,
       });
     }
@@ -108,7 +105,7 @@ const setStolpersteinSource = (
 
   const source = map.getSource(StolpersteinSourceName) as GeoJSONSource;
   if (source) {
-    source.setData(sourceSpec.data);
+    source.setData(sourceSpec.data as GeoJSON.GeoJSON);
   } else {
     map.addSource(StolpersteinSourceName, sourceSpec);
   }
@@ -158,14 +155,68 @@ const setLayer = (map: MaplibreMap) => {
     });
 
     map.addLayer({
-      id: StolpersteinLayer,
+      id: StolpersteinPointLayer,
       type: 'symbol',
       source: StolpersteinSourceName,
       filter: ['!', ['has', 'point_count']],
       layout: {
         'icon-image': 'stolperstein-glyph',
         'icon-size': 0.2,
+        'icon-allow-overlap': true,
       },
+    });
+
+    // click handeler are executed in order there are registered
+    // click on "empty" map -> reset selected stolpersteine
+    // click on stolperstein point layer -> set selected stolpersteine
+    map.on('click', () => {
+      selectedStolpersteine.value = undefined;
+    });
+
+    map.on('click', StolpersteinClusterLayer, function (e) {
+      const features = map.queryRenderedFeatures(e.point, {
+        layers: [StolpersteinClusterLayer],
+      }) as GeoJSON.GeoJSON[];
+
+      const feature = features[0] as GeoJSON.Feature;
+      const clusterId = feature?.properties?.cluster_id as number;
+      const source = map?.getSource(StolpersteinSourceName) as GeoJSONSource;
+      source.getClusterExpansionZoom(clusterId, function (err, zoom) {
+        if (err) return;
+
+        map.easeTo({
+          center: (feature.geometry as Point).coordinates as LngLatLike,
+          zoom: zoom ?? 14,
+        });
+      });
+    });
+
+    map.on('click', StolpersteinPointLayer, function (e) {
+      if (!e.features) return;
+      e.originalEvent.cancelBubble = true;
+      const stolpersteine = <StolpersteinFeature[]>[];
+
+      const proxy = e.features[0].properties as string[];
+      const keys = Object.keys(proxy);
+      keys.forEach((key) => {
+        const e = proxy[key as unknown as number];
+        stolpersteine.push(JSON.parse(e) as StolpersteinFeature);
+      });
+      selectedStolpersteine.value = stolpersteine;
+    });
+
+    map.on('mouseenter', StolpersteinClusterLayer, function () {
+      map.getCanvas().style.cursor = 'pointer';
+    });
+    map.on('mouseleave', StolpersteinClusterLayer, function () {
+      map.getCanvas().style.cursor = '';
+    });
+
+    map.on('mouseenter', StolpersteinPointLayer, function () {
+      map.getCanvas().style.cursor = 'pointer';
+    });
+    map.on('mouseleave', StolpersteinPointLayer, function () {
+      map.getCanvas().style.cursor = '';
     });
   });
 };

@@ -1,11 +1,13 @@
 <template>
   <q-virtual-scroll class="full-width full-height" :items="stolpersteine">
     <template v-slot="{ item }">
-      <StolpersteinListItem
-        :key="item.id"
-        :stolperstein-feature="item"
-        @click.stop
-      ></StolpersteinListItem>
+      <div class="q-ma-md">
+        <StolpersteinListItem
+          :key="item.id"
+          :stolperstein-feature="item"
+          @click.stop
+        ></StolpersteinListItem>
+      </div>
     </template>
   </q-virtual-scroll>
 </template>

@@ -26,7 +26,7 @@ import { routeNames } from 'src/router/routes';
 .top-nav {
   z-index: 999;
   background-color: white;
-  border-radius: 69px;
+  border-radius: 72px;
   box-shadow: 0 3px 8px #0000001f;
 }
 

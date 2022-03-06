@@ -42,6 +42,7 @@ export default defineComponent({
     const buttomSheet = ref<typeof BottomSheet>();
 
     const settings = <CupertinoSettings>{
+      parentElement: '.map-wrapper',
       breaks: {
         bottom: { enabled: true, height: 78, bounce: false },
       },

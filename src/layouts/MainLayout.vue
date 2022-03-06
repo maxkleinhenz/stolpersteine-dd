@@ -21,13 +21,6 @@
       </router-view>
     </q-page-container>
 
-    <StolpersteinListBottomSheet
-      class="lt-md"
-      v-if="quasar.screen.lt.sm"
-      :show="route.name === 'Map'"
-    >
-    </StolpersteinListBottomSheet>
-
     <q-footer bordered class="footer lt-md app-bg text-black">
       <q-tabs class="text-black" dense narrow-indicator>
         <q-route-tab
@@ -65,7 +58,6 @@ import { useRoute } from 'vue-router';
 import TopNavComponent from 'src/components/TopNavComponent.vue';
 import { useQuasar } from 'quasar';
 import { useStore } from 'src/store';
-import StolpersteinListBottomSheet from 'src/components/StolpersteinBottomSheet.vue';
 import StolpersteinSidebar from 'src/components/StolpersteinSidebar.vue';
 import { routeNames } from 'src/router/routes';
 

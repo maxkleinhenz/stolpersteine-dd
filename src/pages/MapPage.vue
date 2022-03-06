@@ -10,7 +10,6 @@
     <div class="dialog-content app-bg">
       <q-btn
         class="dialog-close absolute-top-right q-pa-md q-ma-md"
-        unelevated
         round
         text-color="black"
         color="white"
@@ -25,22 +24,45 @@
     </div>
   </q-dialog>
 
-  <q-page class="relative-position">
-    <div class="absolute-top-left row q-my-lg q-px-lg" style="z-index: 100">
+  <q-page class="map-page relative-position">
+    <div class="absolute-top-left row q-ma-lg">
       <q-btn
-        unelevated
         round
+        size="md"
         text-color="black"
         color="white"
-        :icon="roundMenu"
+        icon="menu"
         class="datails-toggler sm q-pa-lg"
-        @click="toggle"
+        @click="toggleStolpersteinSidebar"
       />
     </div>
 
     <div class="map-wrapper absolute full-height full-width">
       <MapComponent ref="map" />
     </div>
+
+    <StolpersteinListBottomSheet
+      class="lt-md"
+      v-if="quasar.screen.lt.sm"
+      :show="
+        route.name === routeNames.map || route.name === routeNames.mapDetails
+      "
+    >
+    </StolpersteinListBottomSheet>
+
+    <transition
+      enter-active-class="animated slideInUp"
+      leave-active-class="animated slideOutDown"
+    >
+      <div
+        class="stolperstein-slider-container absolute-bottom"
+        v-show="showSelectedSlide"
+      >
+        <SelectedStolpersteineSlider
+          :stolpersteine="selectedStolpersteine"
+        ></SelectedStolpersteineSlider>
+      </div>
+    </transition>
   </q-page>
 </template>
 
@@ -48,19 +70,42 @@
 import { onActivated, onMounted, ref, watch } from 'vue';
 import MapComponent from 'components/MapComponent.vue';
 import { useStore } from 'src/store';
-import { roundMenu } from '@quasar/extras/material-icons-round';
 import { useRoute, useRouter } from 'vue-router';
 import StolpersteinDetail from 'src/components/StolpersteinDetail.vue';
 import { StolpersteinFeature } from 'src/models/stolperstein.model';
 import { routeNames } from 'src/router/routes';
+import StolpersteinListBottomSheet from 'src/components/StolpersteinBottomSheet.vue';
+import SelectedStolpersteineSlider from 'src/components/StolpersteinSlider.vue';
+import { useQuasar } from 'quasar';
 
 const store = useStore();
 const router = useRouter();
 const route = useRoute();
+const quasar = useQuasar();
 
 const detailStolperstein = ref<StolpersteinFeature | undefined>(undefined);
+const showSelectedSlide = ref(false);
+const selectedStolpersteine = ref<StolpersteinFeature[] | undefined>();
+watch(
+  () => store.state.selectedStolpersteine,
+  async (value) => {
+    if (!value?.length) {
+      showSelectedSlide.value = false;
+    } else if (value.length === 1) {
+      showSelectedSlide.value = false;
+      await router.push({
+        name: routeNames.mapDetails,
+        params: { id: value[0].stolperstein.id },
+      });
+    } else {
+      showSelectedSlide.value = true;
+      selectedStolpersteine.value = value;
+    }
+  }
+);
 
-const toggle = store.mutations.toggleStolpersteinSidebarVisibility;
+const toggleStolpersteinSidebar =
+  store.mutations.toggleStolpersteinSidebarVisibility;
 
 const navigateToMap = async () => {
   await router.push({ name: routeNames.map });
@@ -100,8 +145,12 @@ watch(
 </script>
 
 <style lang="scss" scoped>
+.map-page {
+  overflow: hidden;
+}
+
 .datails-toggler {
-  box-shadow: 0 3px 8px #0000001f;
+  z-index: 2;
 }
 
 .dialog-content {
@@ -110,6 +159,14 @@ watch(
 
 .dialog-close {
   z-index: 1;
-  box-shadow: 0 3px 8px #0000001f;
+}
+
+.stolperstein-slider-container {
+  z-index: 3;
+  margin-bottom: 80px;
+
+  @media (min-width: $breakpoint-sm-min) {
+    margin-bottom: 16px;
+  }
 }
 </style>

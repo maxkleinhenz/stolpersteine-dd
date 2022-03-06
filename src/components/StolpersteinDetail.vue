@@ -8,7 +8,7 @@
         <q-card-section class="row q-gutter-y-md">
           <div class="col-12 col-sm">
             <div class="card-header">
-              <h3 class="text-weight-bold q-my-sm">
+              <h3 class="title text-weight-bold q-my-sm">
                 {{ props.stolperstein?.stolperstein.name }}
               </h3>
             </div>
@@ -33,9 +33,16 @@
 
         <q-card-section class="row q-gutter-y-md">
           <div class="col-12 col-sm">
-            <q-btn class="q-mr-md" outline round color="primary" icon="share">
+            <q-btn
+              class="action-btn q-mr-md"
+              outline
+              round
+              color="primary"
+              icon="share"
+            >
               <q-tooltip
                 class="bg-primary text-body2"
+                :delay="300"
                 transition-show="jump-right"
                 transition-hide="jump-left"
                 anchor="center right"
@@ -45,7 +52,7 @@
               </q-tooltip>
             </q-btn>
             <q-btn
-              class="q-mr-md"
+              class="action-btn q-mr-md"
               outline
               round
               color="primary"
@@ -53,6 +60,7 @@
             >
               <q-tooltip
                 class="bg-primary text-body2"
+                :delay="300"
                 transition-show="jump-right"
                 transition-hide="jump-left"
                 anchor="center right"
@@ -64,15 +72,16 @@
           </div>
           <div class="col-12 col-sm-auto">
             <q-btn
+              class="action-btn full-width"
               outline
               rounded
               color="primary"
               icon="fireplace"
               label="12 Kerzen angezündet"
-              class="full-width"
             >
               <q-tooltip
                 class="bg-primary text-body2"
+                :delay="300"
                 :transition-show="
                   quasar.screen.gt.sm ? 'jump-right' : 'jump-down'
                 "
@@ -93,7 +102,9 @@
       <q-card class="app-card">
         <q-card-section>
           <div class="card-header">
-            <h3 class="text-weight-bold q-my-sm">Inschrift</h3>
+            <h3 class="title text-center text-weight-bold q-my-sm">
+              Inschrift
+            </h3>
           </div>
           <div class="inscription column items-center text-weight-medium">
             <q-spinner
@@ -112,9 +123,11 @@
 
     <section class="biography-section" aria-labelledby="">
       <q-card class="app-card">
-        <q-card-section class="row q-mt-lg">
+        <q-card-section>
           <div class="card-header">
-            <h3 class="text-weight-bold q-my-sm">Biografie</h3>
+            <h3 class="title text-center text-weight-bold q-my-sm">
+              Biografie
+            </h3>
           </div>
           <div class="card-content">
             <div class="text q-pa-md">
@@ -137,13 +150,16 @@
 
     <section class="image-section" aria-labelledby="">
       <q-card class="app-card">
-        <q-card-section class="q-mt-lg">
+        <q-card-section>
           <div class="card-header">
-            <h3 class="text-weight-bold q-my-sm">Bilder</h3>
+            <h3 class="title text-center text-weight-bold q-my-sm">
+              Bildergalerie
+            </h3>
           </div>
           <div class="card-content">
             <div class="text q-pa-md">
               <q-carousel
+                class="image-carousel"
                 swipeable
                 animated
                 v-model="imageSlide"
@@ -171,7 +187,7 @@
     </section>
 
     <section class="feedback-section">
-      <q-btn rounded>
+      <q-btn class="action-btn" rounded>
         <q-icon name="mail_outline" /> Feedback zum Stolperstein</q-btn
       >
     </section>
@@ -251,7 +267,7 @@ section {
   }
 }
 
-.card-header > * {
+.title {
   font-size: 2em;
 }
 
@@ -270,6 +286,10 @@ section {
   }
 }
 
+.image-carousel {
+  border-radius: $app-card-border-radius;
+}
+
 .feedback-section {
   button {
     box-sizing: border-box;
@@ -281,5 +301,9 @@ section {
       margin-right: 10px;
     }
   }
+}
+
+.action-btn {
+  min-height: 3em;
 }
 </style>

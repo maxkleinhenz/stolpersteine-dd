@@ -5,9 +5,11 @@ import { RootState } from './state';
 export class RootMutations extends Mutations<RootState> {
   setStolpersteine(payload: StolpersteinFeature[]) {
     this.state.stolpersteine = payload;
+    this.state.selectedStolpersteine = undefined;
   }
   setStolpersteinSearchText(payload: string) {
     this.state.stolpersteineSearchText = payload.trim();
+    this.state.selectedStolpersteine = undefined;
   }
   selectStolpersteine(payload: Array<StolpersteinFeature> | undefined) {
     this.state.selectedStolpersteine = payload;

@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
+    "@splidejs/vue-splide": "^0.5.18",
+    "@types/geojson": "^7946.0.8",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "cupertino-pane": "^1.2.82",

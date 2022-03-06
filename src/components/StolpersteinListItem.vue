@@ -2,7 +2,8 @@
   <q-item
     clickable
     v-ripple
-    class="app-card q-ma-md q-pa-md"
+    class="app-card q-pa-md"
+    :class="{ 'shadow-3': showShadow }"
     @click="showDetails()"
   >
     <q-item-section top avatar>
@@ -13,39 +14,41 @@
 
     <q-item-section>
       <q-item-label class="text-body1 text-weight-bold">{{
-        stolpersteinFeature.stolperstein.name
+        props.stolpersteinFeature.stolperstein.name
       }}</q-item-label>
       <q-item-label
         class="text-body2"
-        v-if="stolpersteinFeature.stolperstein.strasse"
+        v-if="props.stolpersteinFeature.stolperstein.strasse"
       >
-        {{ stolpersteinFeature.stolperstein.strasse }}
-        {{ stolpersteinFeature.stolperstein.hausnummer }}
+        {{ props.stolpersteinFeature.stolperstein.strasse }}
+        {{ props.stolpersteinFeature.stolperstein.hausnummer }}
       </q-item-label>
       <q-item-label class="text-body2">
-        {{ stolpersteinFeature.stolperstein.plz }}
-        {{ stolpersteinFeature.stolperstein.ort }}
+        {{ props.stolpersteinFeature.stolperstein.plz }}
+        {{ props.stolpersteinFeature.stolperstein.ort }}
       </q-item-label>
     </q-item-section>
 
-    <q-item-section side>
-      <q-icon :name="matChevronRight" color="black" />
+    <q-item-section v-show="props.showArrow" side>
+      <q-icon name="chevron_right" color="black" />
     </q-item-section>
   </q-item>
 </template>
 
 <script setup lang="ts">
 import { StolpersteinFeature } from 'src/models/stolperstein.model';
-import { PropType } from 'vue';
-import { matChevronRight } from '@quasar/extras/material-icons';
 import { useRouter } from 'vue-router';
 import { routeNames } from 'src/router/routes';
 
-const props = defineProps({
-  stolpersteinFeature: {
-    required: true,
-    type: Object as PropType<StolpersteinFeature>,
-  },
+interface Props {
+  stolpersteinFeature: StolpersteinFeature;
+  showArrow?: boolean;
+  showShadow?: boolean;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  showArrow: true,
+  showShadow: false,
 });
 
 const router = useRouter();
