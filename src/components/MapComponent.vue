@@ -9,7 +9,7 @@
     <div class="map-controls column absolute-bottom-right">
       <q-btn
         class="q-my-sm"
-        size="lg"
+        :size="quasar.screen.gt.xs ? 'lg' : 'md'"
         round
         color="white"
         text-color="black"
@@ -18,7 +18,7 @@
       ></q-btn>
       <q-btn
         class="q-my-sm"
-        size="lg"
+        :size="quasar.screen.gt.xs ? 'lg' : 'md'"
         round
         color="white"
         text-color="black"
@@ -41,7 +41,9 @@ import {
 import { Map as MaplibreMap, LngLat } from 'maplibre-gl';
 import { useStolpersteinMap } from 'src/common/StolpersteinMap';
 import { useStore } from 'src/store';
+import { useQuasar } from 'quasar';
 
+const quasar = useQuasar();
 const store = useStore();
 const {
   createMap,
@@ -147,14 +149,14 @@ const zoomOut = () => {
 }
 
 .map-controls {
-  margin: 90px 20px;
+  margin: 90px 15px;
 
   @media (min-width: $breakpoint-sm-min) {
-    margin: 40px 20px;
+    margin: 30px 20px;
   }
 
   @media (min-width: $breakpoint-md-min) {
-    margin: 40px 48px;
+    margin: 30px 48px;
   }
 }
 </style>

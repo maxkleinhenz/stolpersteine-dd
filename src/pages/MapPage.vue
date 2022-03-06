@@ -28,11 +28,11 @@
     <div class="absolute-top-left row q-ma-lg">
       <q-btn
         round
-        size="md"
+        size="lg"
         text-color="black"
         color="white"
-        icon="menu"
-        class="datails-toggler sm q-pa-lg"
+        icon="r_menu"
+        class="datails-toggler sm"
         @click="toggleStolpersteinSidebar"
       />
     </div>
