@@ -1,12 +1,17 @@
 <template>
-  <div>
-    <q-page class="full-width">
-      <div class="page-container column items-center q-pa-md">
+  <q-page class="full-width column items-center">
+    <article class="full-width">
+      <section
+        class="header-container column justify-center items-center q-px-xl q-py-lg"
+      >
         <h1><strong>Stolpersteine</strong> Dresden</h1>
         <p class="subtitle">Es waren unsere Nachbarn</p>
 
-        <div class="map-btn-container column items-center">
-          <p>Erkunde fast 300 Stolpersteine in Dresden</p>
+        <div class="map-container column items-center">
+          <p>
+            Erkunde fast 300 Stolpersteine in Dresden und erfahre welche
+            Lebensgeschichten dahinter stehen
+          </p>
           <q-btn
             class="map-btn q-py-md q-px-lg"
             color="white"
@@ -17,14 +22,22 @@
             @click="navigateToMap"
           ></q-btn>
         </div>
+      </section>
+
+      <div class="column items-center">
+        <q-icon name="expand_more" size="lg"></q-icon>
+      </div>
+
+      <section
+        class="timeline-container column justify-center items-center q-px-xl q-py-lg"
+      >
+        <h2>Verlegungen</h2>
 
         <q-timeline
           color="secondary"
-          class="verlegungen-timeline q-pa-md"
+          class="stolperstein-timeline q-pa-md"
           :layout="quasar.screen.gt.xs ? 'comfortable' : 'dense'"
         >
-          <q-timeline-entry heading>Verlegungen</q-timeline-entry>
-
           <q-timeline-entry
             title="Ersten fünf Stolpersteine wurden verlegt"
             subtitle="November 2009"
@@ -114,9 +127,9 @@
           >
           </q-timeline-entry>
         </q-timeline>
-      </div>
-    </q-page>
-  </div>
+      </section>
+    </article>
+  </q-page>
 </template>
 
 <script setup lang="ts">
@@ -132,19 +145,14 @@ const navigateToMap = async () => {
 };
 </script>
 
-<style lang="scss">
-.verlegungen-timeline {
-  max-width: 1000px;
-  padding-top: clamp(4em, 8vh, 10em);
-  h3 {
-    font-size: clamp(1.5em, 5vw, 2em);
-  }
-}
-</style>
-
 <style scoped lang="scss">
-.page-container {
-  padding-top: 15vh;
+section {
+  min-height: calc(100vh - 10em);
+}
+
+.header-container {
+  // padding-top: 4em;
+  // padding-bottom: 4em;
 }
 
 h1 {
@@ -152,7 +160,6 @@ h1 {
   text-align: center;
   line-height: 1em;
   margin-bottom: 0.5em;
-  padding: 0 1em;
   strong {
     font-weight: 500;
   }
@@ -163,13 +170,29 @@ h1 {
   padding: 0 1em;
 }
 
-.map-btn-container {
-  margin-top: 4em;
+.map-container {
+  margin: 4em 0 0 0;
+  max-width: 600px;
   font-size: clamp(1.2em, 4vw, 1.5em);
   text-align: center;
 }
 
 .map-btn {
   margin-top: 0.5em;
+}
+
+.timeline-container {
+  width: 100%;
+  background-color: $app-background-color-light;
+
+  h2 {
+    font-size: clamp(2em, 5vw, 4em);
+    text-align: center;
+    margin-bottom: 0em;
+  }
+
+  .stolperstein-timeline {
+    max-width: 1024px;
+  }
 }
 </style>
