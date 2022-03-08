@@ -2,7 +2,7 @@
   <q-page class="full-width column items-center">
     <article class="full-width">
       <section
-        class="header-container column justify-center items-center q-px-xl q-py-lg"
+        class="header-container column justify-center items-center q-px-lg q-py-lg"
       >
         <h1><strong>Stolpersteine</strong> Dresden</h1>
         <p class="subtitle">Es waren unsere Nachbarn</p>
@@ -147,7 +147,7 @@ const navigateToMap = async () => {
 
 <style scoped lang="scss">
 section {
-  min-height: calc(100vh - 10em);
+  min-height: calc(100vh - 15em);
 }
 
 .header-container {
@@ -159,7 +159,9 @@ h1 {
   font-size: clamp(3em, 7vw, 5em);
   text-align: center;
   line-height: 1em;
+  margin-top: 0.5em;
   margin-bottom: 0.5em;
+
   strong {
     font-weight: 500;
   }

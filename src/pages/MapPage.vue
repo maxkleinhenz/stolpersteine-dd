@@ -71,7 +71,7 @@ import { onActivated, onMounted, ref, watch } from 'vue';
 import MapComponent from 'components/MapComponent.vue';
 import { useStore } from 'src/store';
 import { useRoute, useRouter } from 'vue-router';
-import StolpersteinDetail from 'src/components/StolpersteinDetail.vue';
+import StolpersteinDetail from 'src/components/StolpersteinDetails.vue';
 import { StolpersteinFeature } from 'src/models/stolperstein.model';
 import { routeNames } from 'src/router/routes';
 import StolpersteinListBottomSheet from 'src/components/StolpersteinBottomSheet.vue';

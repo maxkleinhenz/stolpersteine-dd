@@ -260,7 +260,7 @@ const loadBiography = async (stolperstein: StolpersteinFeature | undefined) => {
 
 <style lang="scss" scoped>
 section {
-  margin: 32px 12px;
+  margin: 12px 12px 32px 12px;
 
   @media (min-width: $stolperstein-details-width) {
     margin: 32px;
