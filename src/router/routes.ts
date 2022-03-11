@@ -5,6 +5,14 @@ export const routeNames = {
   map: 'Map',
   mapDetails: 'Map.Details',
   info: 'Info',
+  infoMenu: 'Info.Menu',
+  infoVerein: 'Info.Verein',
+  infoStolpersteine: 'Info.Stolpersteine',
+  infoResearch: 'Info.Research',
+  infoHelp: 'Info.Help',
+  infoContact: 'Info.Contact',
+  infoPrivacy: 'Info.Privacy',
+  infoImprint: 'Info.Imprint',
 };
 
 const routes: RouteRecordRaw[] = [
@@ -12,23 +20,70 @@ const routes: RouteRecordRaw[] = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', name: 'Home', component: () => import('pages/HomePage.vue') },
+      {
+        path: '',
+        name: routeNames.home,
+        component: () => import('pages/HomePage.vue'),
+      },
       {
         path: 'karte',
-        name: 'Map',
+        name: routeNames.map,
         component: () => import('pages/MapPage.vue'),
         children: [
           {
             path: ':id',
-            name: 'Map.Details',
+            name: routeNames.mapDetails,
             component: () => import('pages/MapPage.vue'),
           },
         ],
       },
       {
         path: 'info',
-        name: 'Info',
-        component: () => import('pages/InfoPage.vue'),
+        name: routeNames.info,
+        component: () => import('src/pages/InfoPage.vue'),
+        children: [
+          {
+            path: '',
+            name: routeNames.infoMenu,
+            component: () => import('components/InfoMenuList.vue'),
+          },
+          {
+            path: 'ueber-stolpersteine-fuer-dresden',
+            name: routeNames.infoVerein,
+            component: () =>
+              import('components/InfoUeberStolpersteinVerein.vue'),
+          },
+          {
+            path: 'stolpersteine',
+            name: routeNames.infoStolpersteine,
+            component: () => import('components/InfoStolpersteine.vue'),
+          },
+          {
+            path: 'recherche',
+            name: routeNames.infoResearch,
+            component: () => import('components/InfoResearch.vue'),
+          },
+          {
+            path: 'hilfe-und-faq',
+            name: routeNames.infoHelp,
+            component: () => import('components/InfoHelp.vue'),
+          },
+          {
+            path: 'kontakt',
+            name: routeNames.infoContact,
+            component: () => import('components/InfoContact.vue'),
+          },
+          {
+            path: 'datenschutz',
+            name: routeNames.infoPrivacy,
+            component: () => import('components/InfoPrivacy.vue'),
+          },
+          {
+            path: 'impressum',
+            name: routeNames.infoImprint,
+            component: () => import('components/InfoImprint.vue'),
+          },
+        ],
       },
     ],
   },

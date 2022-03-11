@@ -96,8 +96,6 @@ const onStolpersteineRefresh = () => {
 
     const allVisible = slideSize < listSize;
 
-    console.log('allVisible', allVisible);
-
     options.value.arrows = !allVisible && quasar.screen.gt.xs;
     options.value.wheel = !allVisible;
     options.value.drag = !allVisible;

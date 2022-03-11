@@ -8,6 +8,7 @@
       :width="370"
       :behavior="quasar.screen.gt.sm ? 'desktop' : 'mobile'"
       elevated
+      no-swipe-open
       class="app-bg text-black"
     >
       <StolpersteinSidebar></StolpersteinSidebar>
@@ -25,19 +26,31 @@
       <q-tabs class="text-black" dense narrow-indicator>
         <q-route-tab
           :name="routeNames.home"
-          :icon="route.name === routeNames.home ? matHome : outlinedHome"
+          :icon="
+            route.name?.toString().startsWith(routeNames.home)
+              ? matHome
+              : outlinedHome
+          "
           label="Start"
           :to="{ name: routeNames.home }"
         />
         <q-route-tab
           :name="routeNames.map"
-          :icon="route.name === routeNames.map ? matMap : outlinedMap"
+          :icon="
+            route.name?.toString().startsWith(routeNames.map)
+              ? matMap
+              : outlinedMap
+          "
           label="Karte"
           :to="{ name: routeNames.map }"
         />
         <q-route-tab
           :name="routeNames.info"
-          :icon="route.name === routeNames.info ? matInfo : outlinedInfo"
+          :icon="
+            route.name?.toString().startsWith(routeNames.info)
+              ? matInfo
+              : outlinedInfo
+          "
           label="Info"
           :to="{ name: routeNames.info }"
         />

@@ -9,7 +9,8 @@
   >
     <div class="dialog-content app-bg">
       <q-btn
-        class="dialog-close absolute-top-right q-pa-md q-ma-md"
+        class="dialog-close absolute-top-right q-ma-md"
+        :size="quasar.screen.gt.sm ? 'lg' : 'md'"
         round
         text-color="black"
         color="white"
