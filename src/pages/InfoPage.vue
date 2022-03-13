@@ -14,11 +14,11 @@
       </div>
       <div class="col-12 col-md">
         <div class="fit">
-          <transition name="fadeIn">
-            <router-view v-slot="{ Component }">
+          <router-view v-slot="{ Component }">
+            <transition name="fade" mode="out-in">
               <component :is="Component" />
-            </router-view>
-          </transition>
+            </transition>
+          </router-view>
         </div>
       </div>
     </div>
@@ -93,20 +93,29 @@ const isInfoOrInfoMenuRoute = () => {
   min-width: 350px;
 }
 
-.fadeIn-enter-active,
-.fadeIn-leave-active {
+.fade-enter-active,
+.fade-leave-active {
   transition: opacity 0.2s ease-out, transform 0.2s ease-out;
 }
-
-.fadeIn-enter-from,
-.fadeIn-leave-to {
+.fade-enter-from {
   opacity: 0;
   transform: translateY(150px);
 }
 
-.fadeIn-enter-to,
-.fadeIn-leave-from {
-  opacity: 1;
-  transform: translateY(0);
-}
+// .fadeIn-enter-active,
+// .fadeIn-leave-active {
+//   transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+// }
+
+// .fadeIn-enter-from,
+// .fadeIn-leave-to {
+//   opacity: 0;
+//   // transform: translateY(150px);
+// }
+
+// .fadeIn-enter-to,
+// .fadeIn-leave-from {
+//   opacity: 1;
+//   // transform: translateY(0);
+// }
 </style>
