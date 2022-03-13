@@ -1,20 +1,5 @@
 <template>
-  <q-page class="column">
-    <transition
-      enter-active-class="animated fadeIn"
-      leave-active-class="animated fadeOut"
-    >
-      <q-btn
-        v-show="quasar.screen.lt.md && route.name !== routeNames.infoMenu"
-        class="back-button"
-        size="md"
-        round
-        text-color="black"
-        color="white"
-        icon="arrow_back"
-        @click="router.push({ name: routeNames.infoMenu })"
-      />
-    </transition>
+  <q-page class="page column">
     <div
       class="header text-center"
       v-show="quasar.screen.gt.sm || route.name === routeNames.infoMenu"
@@ -23,20 +8,18 @@
     </div>
     <div class="content-container row">
       <div class="column">
-        <div class="menu-list-container col-auto gt-sm">
+        <div class="menu-list-container col-auto full-height gt-sm">
           <InfoMenuListComponentVue></InfoMenuListComponentVue>
         </div>
       </div>
       <div class="col-12 col-md">
-        <q-scroll-area class="fit">
-          <div class="content q-mx-md q-mb-xl">
+        <div class="fit">
+          <transition name="fadeIn">
             <router-view v-slot="{ Component }">
-              <transition enter-active-class="animated fadeInUp">
-                <component :is="Component" />
-              </transition>
+              <component :is="Component" />
             </router-view>
-          </div>
-        </q-scroll-area>
+          </transition>
+        </div>
       </div>
     </div>
   </q-page>
@@ -92,11 +75,8 @@ const isInfoOrInfoMenuRoute = () => {
 </script>
 
 <style scoped lang="scss">
-.back-button {
-  position: fixed;
-  top: 2em;
-  left: 2em;
-  z-index: 11;
+.page {
+  overflow: hidden;
 }
 
 .header {
@@ -107,15 +87,26 @@ const isInfoOrInfoMenuRoute = () => {
 
 .content-container {
   flex: 1;
-
-  .content {
-    @media (max-width: $breakpoint-sm-max) {
-      padding-top: 3rem;
-    }
-  }
 }
 
 .menu-list-container {
   min-width: 350px;
+}
+
+.fadeIn-enter-active,
+.fadeIn-leave-active {
+  transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+}
+
+.fadeIn-enter-from,
+.fadeIn-leave-to {
+  opacity: 0;
+  transform: translateY(150px);
+}
+
+.fadeIn-enter-to,
+.fadeIn-leave-from {
+  opacity: 1;
+  transform: translateY(0);
 }
 </style>
