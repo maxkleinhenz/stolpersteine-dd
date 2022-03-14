@@ -45,14 +45,14 @@
           :to="{ name: routeNames.map }"
         />
         <q-route-tab
-          :name="routeNames.info"
+          :name="routeNames.infoMenu"
           :icon="
-            route.name?.toString().startsWith(routeNames.info)
+            route.name?.toString().startsWith(routeNames.infoMenu)
               ? matInfo
               : outlinedInfo
           "
           label="Info"
-          :to="{ name: routeNames.info }"
+          :to="{ name: routeNames.infoMenu }"
         />
       </q-tabs>
     </q-footer>

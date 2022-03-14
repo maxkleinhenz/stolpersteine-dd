@@ -4,11 +4,12 @@ export const routeNames = {
   home: 'Home',
   map: 'Map',
   mapDetails: 'Map.Details',
-  info: 'Info',
-  infoMenu: 'Info.Menu',
+  // info: 'Info',
+  infoMenu: 'Info',
   infoVerein: 'Info.Verein',
   infoStolpersteine: 'Info.Stolpersteine',
   infoResearch: 'Info.Research',
+  infoGlossary: 'Info.Glossary',
   infoHelp: 'Info.Help',
   infoContact: 'Info.Contact',
   infoPrivacy: 'Info.Privacy',
@@ -39,13 +40,12 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: 'info',
-        name: routeNames.info,
         component: () => import('src/pages/InfoPage.vue'),
         children: [
           {
             path: '',
             name: routeNames.infoMenu,
-            component: () => import('components/InfoMenuList.vue'),
+            component: () => import('src/components/InfoMenu.vue'),
           },
           {
             path: 'ueber-stolpersteine-fuer-dresden',
@@ -62,6 +62,11 @@ const routes: RouteRecordRaw[] = [
             path: 'recherche',
             name: routeNames.infoResearch,
             component: () => import('components/InfoResearch.vue'),
+          },
+          {
+            path: 'glossar',
+            name: routeNames.infoGlossary,
+            component: () => import('components/InfoGlossary.vue'),
           },
           {
             path: 'hilfe-und-faq',

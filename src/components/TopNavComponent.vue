@@ -1,21 +1,45 @@
 <template>
-  <div class="top-nav fixed-top-right row q-my-lg q-mr-xl q-px-lg">
+  <nav
+    class="top-nav fixed-top-right row q-my-lg q-mr-xl q-px-lg"
+    role="navigation"
+    aria-label="Hauptmenu"
+  >
     <div class="col q-pa-lg">
-      <router-link :to="{ name: routeNames.home }" class="nav-link">
+      <router-link
+        :to="{ name: routeNames.home }"
+        class="nav-link"
+        :class="{
+          'link-active': $route.name?.toString().startsWith(routeNames.home),
+        }"
+      >
         <span>Start</span>
       </router-link>
     </div>
     <div class="col q-pa-lg">
-      <router-link :to="{ name: routeNames.map }" class="nav-link">
+      <router-link
+        :to="{ name: routeNames.map }"
+        class="nav-link"
+        :class="{
+          'link-active': $route.name?.toString().startsWith(routeNames.map),
+        }"
+      >
         <span>Karte</span>
       </router-link>
     </div>
     <div class="col q-pa-lg">
-      <router-link :to="{ name: routeNames.info }" class="nav-link">
+      <router-link
+        :to="{ name: routeNames.infoMenu }"
+        class="nav-link"
+        :class="{
+          'link-active': $route.name
+            ?.toString()
+            .startsWith(routeNames.infoMenu),
+        }"
+      >
         <span>Info</span>
       </router-link>
     </div>
-  </div>
+  </nav>
 </template>
 
 <script setup lang="ts">
@@ -40,7 +64,7 @@ import { routeNames } from 'src/router/routes';
     text-decoration: underline;
   }
 
-  &.router-link-exact-active {
+  &.link-active {
     text-decoration: underline;
   }
 }

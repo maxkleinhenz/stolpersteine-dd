@@ -1,22 +1,45 @@
 <template>
   <div class="full-height">
-    <InfoBackButton></InfoBackButton>
     <q-scroll-area class="full-height">
-      <div class="content full-height q-px-md q-pb-xl">
-        <slot></slot>
+      <div class="column items-center">
+        <div class="content q-px-md q-pb-xl">
+          <!-- q-px-md q-py-xl -->
+          <q-btn
+            v-show="$route.name !== routeNames.infoMenu"
+            class="back-button"
+            size="md"
+            round
+            text-color="black"
+            color="white"
+            icon="arrow_back"
+            @click="$router.push({ name: routeNames.infoMenu })"
+          />
+          <slot></slot>
+        </div>
       </div>
     </q-scroll-area>
   </div>
 </template>
 
 <script setup lang="ts">
-import InfoBackButton from './InfoBackButton.vue';
+import { routeNames } from 'src/router/routes';
 </script>
 
 <style scoped lang="scss">
 .content {
-  @media (max-width: $breakpoint-sm-max) {
-    padding-top: 3rem;
+  max-width: $breakpoint-md-min;
+  padding-top: 2rem;
+
+  @media (min-width: $breakpoint-sm-min) {
+    padding-left: 32px;
+    padding-right: 32px;
   }
+}
+
+.back-button {
+  position: sticky;
+  top: 2rem;
+  left: 2rem;
+  z-index: 11;
 }
 </style>

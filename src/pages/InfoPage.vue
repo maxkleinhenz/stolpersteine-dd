@@ -1,96 +1,26 @@
 <template>
   <q-page class="page column">
-    <div
-      class="header text-center"
-      v-show="quasar.screen.gt.sm || route.name === routeNames.infoMenu"
-    >
-      <h1>Informationen</h1>
-    </div>
     <div class="content-container row">
-      <div class="column">
-        <div class="menu-list-container col-auto full-height gt-sm">
-          <InfoMenuListComponentVue></InfoMenuListComponentVue>
-        </div>
-      </div>
-      <div class="col-12 col-md">
-        <div class="fit">
-          <router-view v-slot="{ Component }">
-            <transition name="fade" mode="out-in">
-              <component :is="Component" />
-            </transition>
-          </router-view>
-        </div>
+      <div class="col-12">
+        <router-view v-slot="{ Component }">
+          <transition name="fade" mode="out-in">
+            <component :is="Component" />
+          </transition>
+        </router-view>
       </div>
     </div>
   </q-page>
 </template>
 
-<script setup lang="ts">
-import InfoMenuListComponentVue from 'src/components/InfoMenuList.vue';
-import { useRoute, useRouter } from 'vue-router';
-import { routeNames } from 'src/router/routes';
-import { useQuasar } from 'quasar';
-import { onActivated, onDeactivated, ref, watch } from 'vue';
-
-const quasar = useQuasar();
-const router = useRouter();
-const route = useRoute();
-
-const isActive = ref(false);
-
-onActivated(async () => {
-  isActive.value = true;
-  if (route.name === routeNames.info) {
-    if (quasar.screen.gt.sm) await router.push({ name: routeNames.infoVerein });
-    else await router.push({ name: routeNames.infoMenu });
-  }
-});
-
-onDeactivated(() => {
-  isActive.value = false;
-});
-
-watch(
-  () => quasar.screen.gt.sm,
-  async (value) => {
-    if (!isActive.value) return;
-
-    if (value && isInfoOrInfoMenuRoute()) {
-      await router.push({ name: routeNames.infoVerein });
-    } else if (!value && isInfoRoute()) {
-      await router.push({ name: routeNames.infoMenu });
-    }
-  }
-);
-
-const isInfoRoute = () => {
-  return route.name === routeNames.info;
-};
-
-const isInfoOrInfoMenuRoute = () => {
-  return [routeNames.info, routeNames.infoMenu].includes(
-    route.name?.toString() ?? ''
-  );
-};
-</script>
+<script setup lang="ts"></script>
 
 <style scoped lang="scss">
 .page {
   overflow: hidden;
 }
 
-.header {
-  h1 {
-    font-size: clamp(3rem, 5vw, 5rem);
-  }
-}
-
 .content-container {
   flex: 1;
-}
-
-.menu-list-container {
-  min-width: 350px;
 }
 
 .fade-enter-active,
@@ -99,7 +29,20 @@ const isInfoOrInfoMenuRoute = () => {
 }
 .fade-enter-from {
   opacity: 0;
-  transform: translateY(150px);
+  transform: translateY(50px);
+}
+
+.fade-enter-to {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade-leave-to {
+  opacity: 0;
+}
+
+.fade-leave-from {
+  opacity: 1;
 }
 
 // .fadeIn-enter-active,

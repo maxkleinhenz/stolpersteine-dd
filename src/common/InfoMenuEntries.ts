@@ -19,6 +19,10 @@ export const menuEntries = <MenuEntry[]>[
     to: routeNames.infoResearch,
   },
   {
+    name: 'Glossar',
+    to: routeNames.infoGlossary,
+  },
+  {
     name: 'Hilfe und FAQ',
     to: routeNames.infoHelp,
   },
