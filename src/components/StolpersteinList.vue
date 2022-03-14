@@ -1,5 +1,9 @@
 <template>
-  <q-virtual-scroll class="full-width full-height" :items="stolpersteine">
+  <q-virtual-scroll
+    class="full-width full-height"
+    :items="stolpersteine"
+    virtual-scroll-item-size="96"
+  >
     <template v-slot="{ item }">
       <div class="q-ma-md">
         <StolpersteinListItem

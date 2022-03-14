@@ -53,7 +53,7 @@ const jsSplide = ref<JsSplide | undefined>();
 
 const options = ref<SplideOption>({
   type: 'slide',
-  arrows: false,
+  arrows: !quasar.platform.has.touch,
   fixedWidth: 'min(100%, 350px)',
   autoHeight: true,
   gap: '1em',
@@ -76,9 +76,6 @@ onMounted(() => {
 watch(
   () => props.stolpersteine,
   () => {
-    options.value.arrows = false;
-    jsSplide.value?.refresh();
-
     setTimeout(() => {
       onStolpersteineRefresh();
     }, 200);
@@ -89,19 +86,20 @@ const onStolpersteineRefresh = () => {
   if (jsSplide.value) {
     jsSplide.value.go(0);
 
-    // total width
-    const slideSize = jsSplide.value.Components.Layout.sliderSize() ?? 0;
-    // visible width
-    const listSize = jsSplide.value.Components.Layout.listSize() ?? 0;
+    // // total width
+    // const slideSize = jsSplide.value.Components.Layout.sliderSize() ?? 0;
+    // // visible width
+    // const listSize = jsSplide.value.Components.Layout.listSize() ?? 0;
 
-    const allVisible = slideSize < listSize;
+    // const allVisible = slideSize < listSize;
 
-    options.value.arrows = !allVisible && quasar.screen.gt.xs;
-    options.value.wheel = !allVisible;
-    options.value.drag = !allVisible;
-    jsSplide.value.options = options.value;
+    // // options.value.arrows = !allVisible && quasar.screen.gt.xs;
+    // options.value.wheel = !allVisible;
+    // options.value.drag = !allVisible;
+    // jsSplide.value.options = options.value;
 
-    jsSplide.value.refresh();
+    // console.log('refresh');
+    // jsSplide.value.refresh();
   }
 };
 </script>

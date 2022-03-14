@@ -34,7 +34,7 @@ const routes: RouteRecordRaw[] = [
           {
             path: ':id',
             name: routeNames.mapDetails,
-            component: () => import('pages/MapPage.vue'),
+            component: () => import('components/StolpersteinDetailsDialog.vue'),
           },
         ],
       },

@@ -44,21 +44,4 @@
 .fade-leave-from {
   opacity: 1;
 }
-
-// .fadeIn-enter-active,
-// .fadeIn-leave-active {
-//   transition: opacity 0.2s ease-out, transform 0.2s ease-out;
-// }
-
-// .fadeIn-enter-from,
-// .fadeIn-leave-to {
-//   opacity: 0;
-//   // transform: translateY(150px);
-// }
-
-// .fadeIn-enter-to,
-// .fadeIn-leave-from {
-//   opacity: 1;
-//   // transform: translateY(0);
-// }
 </style>

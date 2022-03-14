@@ -1,30 +1,4 @@
 <template>
-  <q-dialog
-    class="dialog"
-    :model-value="!!detailStolperstein"
-    full-height
-    maximized
-    position="left"
-    @before-hide="navigateToMap()"
-  >
-    <div class="dialog-content app-bg">
-      <q-btn
-        class="dialog-close absolute-top-right q-ma-md"
-        :size="quasar.screen.gt.sm ? 'lg' : 'md'"
-        round
-        text-color="black"
-        color="white"
-        icon="close"
-        v-close-popup
-      />
-      <q-scroll-area class="full-width full-height">
-        <StolpersteinDetail
-          :stolperstein="detailStolperstein"
-        ></StolpersteinDetail>
-      </q-scroll-area>
-    </div>
-  </q-dialog>
-
   <q-page class="map-page relative-position">
     <div class="absolute-top-left row q-ma-lg">
       <q-btn
@@ -34,7 +8,7 @@
         color="white"
         icon="r_menu"
         class="datails-toggler sm"
-        @click="toggleStolpersteinSidebar"
+        @click="store.mutations.toggleStolpersteinSidebarVisibility"
       />
     </div>
 
@@ -64,15 +38,28 @@
         ></SelectedStolpersteineSlider>
       </div>
     </transition>
+
+    <transition name="backdrop" mode="out-in">
+      <div class="backdrop" @click="goToMap()" v-show="$route.params.id"></div>
+    </transition>
+
+    <router-view v-slot="{ Component }">
+      <transition
+        enter-active-class="animated slideInLeft"
+        leave-active-class="animated slideOutLeft"
+      >
+        <component :is="Component" />
+      </transition>
+    </router-view>
   </q-page>
 </template>
 
 <script setup lang="ts">
-import { onActivated, onMounted, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
 import MapComponent from 'components/MapComponent.vue';
 import { useStore } from 'src/store';
 import { useRoute, useRouter } from 'vue-router';
-import StolpersteinDetail from 'src/components/StolpersteinDetails.vue';
+
 import { StolpersteinFeature } from 'src/models/stolperstein.model';
 import { routeNames } from 'src/router/routes';
 import StolpersteinListBottomSheet from 'src/components/StolpersteinBottomSheet.vue';
@@ -84,9 +71,9 @@ const router = useRouter();
 const route = useRoute();
 const quasar = useQuasar();
 
-const detailStolperstein = ref<StolpersteinFeature | undefined>(undefined);
 const showSelectedSlide = ref(false);
 const selectedStolpersteine = ref<StolpersteinFeature[] | undefined>();
+
 watch(
   () => store.state.selectedStolpersteine,
   async (value) => {
@@ -105,47 +92,14 @@ watch(
   }
 );
 
-const toggleStolpersteinSidebar =
-  store.mutations.toggleStolpersteinSidebarVisibility;
-
-const navigateToMap = async () => {
+const goToMap = async () => {
   await router.push({ name: routeNames.map });
 };
-
-const setDetailStolperstein = (stolpersteinId: number) => {
-  if (stolpersteinId === NaN) {
-    detailStolperstein.value = undefined;
-    return;
-  }
-  // find detail stolperstein
-  const stolperstein = store.state.stolpersteine.filter((s) => {
-    return s.stolperstein.id === stolpersteinId;
-  });
-
-  if (stolperstein?.length) {
-    detailStolperstein.value = stolperstein[0];
-  } else {
-    detailStolperstein.value = undefined;
-  }
-};
-
-onMounted(() => {
-  setDetailStolperstein(Number(route.params.id));
-});
-
-onActivated(() => {
-  setDetailStolperstein(Number(route.params.id));
-});
-
-watch(
-  () => route.params.id,
-  (value) => {
-    setDetailStolperstein(Number(value));
-  }
-);
 </script>
 
 <style lang="scss" scoped>
+$backdrop-opacity: 0.5;
+
 .map-page {
   overflow: hidden;
 }
@@ -154,20 +108,37 @@ watch(
   z-index: 2;
 }
 
-.dialog-content {
-  width: min(100vw, #{$stolperstein-details-width});
-}
-
-.dialog-close {
-  z-index: 1;
-}
-
 .stolperstein-slider-container {
   z-index: 3;
   margin-bottom: 80px;
 
   @media (min-width: $breakpoint-sm-min) {
     margin-bottom: 16px;
+  }
+}
+
+.backdrop {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 7000;
+  background-color: $dark;
+  opacity: $backdrop-opacity;
+
+  .backdrop-enter-active,
+  .backdrop-leave-active {
+    transition: opacity 0.2s ease-out;
+  }
+  .backdrop-enter-from,
+  .backdrop-leave-to {
+    opacity: 0;
+  }
+
+  .backdrop-enter-to,
+  .backdrop-leave-from {
+    opacity: $backdrop-opacity;
   }
 }
 </style>

@@ -17,4 +17,5 @@ export default interface Stolperstein {
   plz: string;
   ort: string;
   url: string;
+  sortValue: string;
 }

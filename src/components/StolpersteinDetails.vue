@@ -197,13 +197,13 @@
 <script setup lang="ts">
 import axios from 'axios';
 import { StolpersteinFeature } from 'src/models/stolperstein.model';
-import { onMounted, PropType, ref } from 'vue';
+import { onMounted, PropType, ref, watch } from 'vue';
 import { parse } from 'node-html-parser';
 import { useQuasar } from 'quasar';
 const props = defineProps({
   stolperstein: {
-    type: Object as PropType<StolpersteinFeature | undefined>,
-    required: true,
+    type: Object as PropType<StolpersteinFeature>,
+    required: false,
   },
 });
 
@@ -212,6 +212,13 @@ const quasar = useQuasar();
 onMounted(async () => {
   await loadBiography(props.stolperstein);
 });
+
+watch(
+  () => props.stolperstein,
+  async (value) => {
+    await loadBiography(value);
+  }
+);
 
 const inscription = ref<Array<string>>([]);
 const imageSlide = ref(1);

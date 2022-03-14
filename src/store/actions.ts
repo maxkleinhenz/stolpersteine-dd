@@ -35,6 +35,7 @@ export class RootActions extends Actions<
               plz: responseFeature.properties.plz,
               ort: 'Dresden',
               url: responseFeature.properties.url,
+              sortValue: responseFeature.properties.einrichtung.toLowerCase(),
             },
             geometry: responseFeature.geometry,
           };
@@ -43,7 +44,7 @@ export class RootActions extends Actions<
 
         // sort by name
         return stolpersteineFeatures.sort((a, b) =>
-          a.stolperstein.name < b.stolperstein.name ? -1 : 1
+          a.stolperstein.sortValue < b.stolperstein.sortValue ? -1 : 1
         );
       })
       .then((stolpersteineFeatures) => {
