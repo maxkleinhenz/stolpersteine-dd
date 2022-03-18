@@ -13,7 +13,7 @@
     >
       <q-card-section
         class="draggable-container full-width q-pa-none"
-        v-touch-pan.mouse.vertical="slideDrawer"
+        v-touch-pan.mouse.vertical.prevent="slideDrawer"
         @click="cycleDrawer"
       >
         <div class="draggable q-mt-xs"></div>
