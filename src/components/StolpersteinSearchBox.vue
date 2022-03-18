@@ -5,7 +5,7 @@
     dense
     v-model="searchText"
     Placeholder="Suche"
-    aria-placeholder="Suche nach Stolpersteinen"
+    aria-placeholder="Durchsuche Stolpersteine"
     bg-color="white"
     @click.stop
     @keyup.enter="searchStolpersteine()"

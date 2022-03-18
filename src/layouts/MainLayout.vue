@@ -22,7 +22,7 @@
       </router-view>
     </q-page-container>
 
-    <q-footer bordered class="footer lt-md app-bg text-black">
+    <q-footer bordered class="footer lt-md app-bg text-black z-top">
       <q-tabs class="text-black" dense narrow-indicator>
         <q-route-tab
           :name="routeNames.home"

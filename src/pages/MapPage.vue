@@ -16,14 +16,8 @@
       <MapComponent ref="map" />
     </div>
 
-    <StolpersteinListBottomSheet
-      class="lt-md"
-      v-if="quasar.screen.lt.sm"
-      :show="
-        route.name === routeNames.map || route.name === routeNames.mapDetails
-      "
-    >
-    </StolpersteinListBottomSheet>
+    <StolpersteinBottomSheet v-if="quasar.screen.lt.sm">
+    </StolpersteinBottomSheet>
 
     <transition
       enter-active-class="animated slideInUp"
@@ -58,17 +52,16 @@
 import { ref, watch } from 'vue';
 import MapComponent from 'components/MapComponent.vue';
 import { useStore } from 'src/store';
-import { useRoute, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 
 import { StolpersteinFeature } from 'src/models/stolperstein.model';
 import { routeNames } from 'src/router/routes';
-import StolpersteinListBottomSheet from 'src/components/StolpersteinBottomSheet.vue';
-import SelectedStolpersteineSlider from 'src/components/StolpersteinSlider.vue';
 import { useQuasar } from 'quasar';
+import StolpersteinBottomSheet from 'src/components/StolpersteinBottomSheet.vue';
+import SelectedStolpersteineSlider from 'src/components/StolpersteinSlider.vue';
 
 const store = useStore();
 const router = useRouter();
-const route = useRoute();
 const quasar = useQuasar();
 
 const showSelectedSlide = ref(false);
