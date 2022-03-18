@@ -1,44 +1,56 @@
 <template>
-  <Splide :options="options" ref="splideRef">
-    <template v-slot:before-track>
-      <div class="splide__arrows">
-        <q-btn
-          class="splide__arrow splide__arrow--prev your_class"
-          icon="chevron_left"
-          unelevated
-          round
-          color="primary"
-        >
-        </q-btn>
-        <q-btn
-          class="splide__arrow splide__arrow--next your_class"
-          icon="chevron_right"
-          unelevated
-          round
-          color="primary"
-        ></q-btn>
-      </div>
-    </template>
-    <SplideSlide
+  <Swiper
+    class="stolperstein-swiper"
+    :slidesPerView="'auto'"
+    :centered-slides="quasar.screen.xs"
+    :mousewheel="quasar.screen.gt.xs"
+    :modules="[Navigation, Mousewheel]"
+    @swiper="onSwiper"
+  >
+    <template v-slot:container-start v-if="showNavigation">
+      <q-btn
+        class="arrow prev"
+        icon="chevron_left"
+        unelevated
+        round
+        color="primary"
+        @click="swiper?.slidePrev()"
+      >
+      </q-btn
+    ></template>
+    <template v-slot:container-end v-if="showNavigation"
+      ><q-btn
+        class="arrow next"
+        icon="chevron_right"
+        unelevated
+        round
+        color="primary"
+        @click="swiper?.slideNext()"
+      ></q-btn
+    ></template>
+
+    <SwiperSlide
       v-for="stolperstein in props.stolpersteine"
       :key="stolperstein.stolperstein.id"
+      class="stolperstein-slide"
     >
       <StolpersteinListItem
         :stolperstein-feature="stolperstein"
         :show-arrow="false"
         :show-shadow="true"
       ></StolpersteinListItem>
-    </SplideSlide>
-  </Splide>
+    </SwiperSlide>
+  </Swiper>
 </template>
 
 <script setup lang="ts">
-import { Splide as JsSplide, Options as SplideOption } from '@splidejs/splide';
-import { Splide, SplideSlide } from '@splidejs/vue-splide';
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import { Navigation, Mousewheel } from 'swiper';
+import { Swiper as SwiperType } from 'swiper/types';
 import { useQuasar } from 'quasar';
 import StolpersteinListItem from 'src/components/StolpersteinListItem.vue';
 import { StolpersteinFeature } from 'src/models/stolperstein.model';
-import { onMounted, PropType, ref, watch } from 'vue';
+import { computed, PropType, ref } from 'vue';
 
 const props = defineProps({
   stolpersteine: {
@@ -47,72 +59,49 @@ const props = defineProps({
 });
 
 const quasar = useQuasar();
+const swiper = ref<SwiperType>();
 
-const splideRef = ref<typeof Splide>();
-const jsSplide = ref<JsSplide | undefined>();
-
-const options = ref<SplideOption>({
-  type: 'slide',
-  arrows: !quasar.platform.has.touch,
-  fixedWidth: 'min(100%, 350px)',
-  autoHeight: true,
-  gap: '1em',
-  padding: {
-    left: '3em',
-    right: '3em',
-  },
-  pagination: false,
-  trimSpace: false,
-  wheel: true,
-  waitForTransition: true,
-});
-
-onMounted(() => {
-  jsSplide.value = splideRef.value?.splide as JsSplide;
-  // jsSplide.value.on('mounted', () => console.log('mounted'));
-  // jsSplide.value.on('refresh', onRefresh);
-});
-
-watch(
-  () => props.stolpersteine,
-  () => {
-    setTimeout(() => {
-      onStolpersteineRefresh();
-    }, 200);
-  }
-);
-
-const onStolpersteineRefresh = () => {
-  if (jsSplide.value) {
-    jsSplide.value.go(0);
-
-    // // total width
-    // const slideSize = jsSplide.value.Components.Layout.sliderSize() ?? 0;
-    // // visible width
-    // const listSize = jsSplide.value.Components.Layout.listSize() ?? 0;
-
-    // const allVisible = slideSize < listSize;
-
-    // // options.value.arrows = !allVisible && quasar.screen.gt.xs;
-    // options.value.wheel = !allVisible;
-    // options.value.drag = !allVisible;
-    // jsSplide.value.options = options.value;
-
-    // console.log('refresh');
-    // jsSplide.value.refresh();
-  }
+const onSwiper = (swiperType: SwiperType) => {
+  swiper.value = swiperType;
 };
+
+const showNavigation = computed(() => {
+  if (quasar.screen.xs) {
+    return false;
+  }
+
+  // show arrows when slideable -> more slides then width
+  return swiper.value?.allowSlidePrev || swiper.value?.allowSlideNext;
+});
 </script>
 
 <style lang="scss">
-@import '@splidejs/splide/dist/css/splide.min.css';
+@import 'swiper/scss';
+@import 'swiper/scss/navigation';
 
-.splide__track {
-  padding-top: 20px;
-  padding-bottom: 20px;
+.stolperstein-swiper {
+  @media (min-width: $breakpoint-sm-min) {
+    padding-left: 64px;
+    padding-right: 64px;
+  }
 }
 
-.splide__list {
-  align-items: center;
+.stolperstein-slide {
+  max-width: min(80%, 350px);
+  padding: 12px 8px;
+}
+
+.arrow {
+  position: absolute;
+  top: calc(50% - 21px);
+  z-index: 2;
+
+  &.prev {
+    left: 8px;
+  }
+
+  &.next {
+    right: 8px;
+  }
 }
 </style>

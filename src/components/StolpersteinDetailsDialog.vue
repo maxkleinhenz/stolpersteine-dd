@@ -18,7 +18,7 @@
 <script setup lang="ts">
 import { StolpersteinFeature } from 'src/models/stolperstein.model';
 import StolpersteinDetail from 'src/components/StolpersteinDetails.vue';
-import { onActivated, onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { useStore } from 'src/store';
 import { routeNames } from 'src/router/routes';
@@ -28,12 +28,7 @@ const route = useRoute();
 
 const stolperstein = ref<StolpersteinFeature | undefined>(undefined);
 
-onActivated(() => {
-  console.log('onActivated');
-});
-
 onMounted(() => {
-  console.log('onMounted');
   setDetailStolperstein(Number(route.params.id));
 });
 

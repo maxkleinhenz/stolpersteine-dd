@@ -25,11 +25,11 @@
     >
       <div
         class="stolperstein-slider-container absolute-bottom"
-        v-show="showSelectedSlide"
+        v-if="showSelectedSlide"
       >
-        <SelectedStolpersteineSlider
+        <StolpersteinSlider
           :stolpersteine="selectedStolpersteine"
-        ></SelectedStolpersteineSlider>
+        ></StolpersteinSlider>
       </div>
     </transition>
 
@@ -58,7 +58,7 @@ import { StolpersteinFeature } from 'src/models/stolperstein.model';
 import { routeNames } from 'src/router/routes';
 import { useQuasar } from 'quasar';
 import StolpersteinBottomSheet from 'src/components/StolpersteinBottomSheet.vue';
-import SelectedStolpersteineSlider from 'src/components/StolpersteinSlider.vue';
+import StolpersteinSlider from 'src/components/StolpersteinSlider.vue';
 
 const store = useStore();
 const router = useRouter();
