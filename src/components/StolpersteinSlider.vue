@@ -11,7 +11,7 @@
       <q-btn
         class="arrow prev"
         icon="chevron_left"
-        unelevated
+        elevated
         round
         color="primary"
         @click="swiper?.slidePrev()"
@@ -22,7 +22,7 @@
       ><q-btn
         class="arrow next"
         icon="chevron_right"
-        unelevated
+        elevated
         round
         color="primary"
         @click="swiper?.slideNext()"
@@ -80,6 +80,10 @@ const showNavigation = computed(() => {
 @import 'swiper/scss/navigation';
 
 .stolperstein-swiper {
+  > .swiper-wrapper {
+    align-items: center;
+  }
+
   @media (min-width: $breakpoint-sm-min) {
     padding-left: 64px;
     padding-right: 64px;

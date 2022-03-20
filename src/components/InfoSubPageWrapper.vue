@@ -3,16 +3,20 @@
     <q-scroll-area class="full-height">
       <div class="column items-center">
         <div class="content q-px-md q-pb-xl">
-          <!-- q-px-md q-py-xl -->
           <q-btn
-            v-show="$route.name !== routeNames.infoMenu"
+            v-show="$route.name !== routeNames.info"
             class="back-button"
             size="md"
             round
             text-color="black"
             color="white"
             icon="arrow_back"
-            @click="$router.push({ name: routeNames.infoMenu })"
+            @click="
+              $router.push({
+                name: routeNames.info,
+                params: { navWithRoute: withTransitionParam },
+              })
+            "
           />
           <slot></slot>
         </div>
@@ -23,6 +27,7 @@
 
 <script setup lang="ts">
 import { routeNames } from 'src/router/routes';
+import { withTransitionParam } from 'src/router/routes';
 </script>
 
 <style scoped lang="scss">
@@ -39,7 +44,6 @@ import { routeNames } from 'src/router/routes';
 .back-button {
   position: sticky;
   top: 2rem;
-  left: 2rem;
   z-index: 11;
 }
 </style>

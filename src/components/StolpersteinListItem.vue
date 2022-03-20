@@ -38,7 +38,7 @@
 <script setup lang="ts">
 import { StolpersteinFeature } from 'src/models/stolperstein.model';
 import { useRouter } from 'vue-router';
-import { routeNames } from 'src/router/routes';
+import { routeNames, withTransitionParam } from 'src/router/routes';
 
 interface Props {
   stolpersteinFeature: StolpersteinFeature;
@@ -55,7 +55,7 @@ const router = useRouter();
 const showDetails = async () => {
   await router.push({
     name: routeNames.mapDetails,
-    params: { id: props.stolpersteinFeature.stolperstein.id },
+    params: { id: props.stolpersteinFeature.stolperstein.id, withTransitionParam },
   });
 };
 </script>

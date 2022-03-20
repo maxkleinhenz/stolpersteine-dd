@@ -33,18 +33,20 @@
       </div>
     </transition>
 
-    <transition name="backdrop" mode="out-in">
-      <div class="backdrop" @click="goToMap()" v-show="$route.params.id"></div>
-    </transition>
+    <div>
+      <transition name="backdrop" mode="out-in">
+        <div
+          class="backdrop"
+          @click="goToMap()"
+          v-show="$route.params.id"
+        ></div>
+      </transition>
 
-    <router-view v-slot="{ Component }">
-      <transition
+      <RouterViewTransistion
         enter-active-class="animated slideInLeft"
         leave-active-class="animated slideOutLeft"
-      >
-        <component :is="Component" />
-      </transition>
-    </router-view>
+      ></RouterViewTransistion>
+    </div>
   </q-page>
 </template>
 
@@ -55,10 +57,11 @@ import { useStore } from 'src/store';
 import { useRouter } from 'vue-router';
 
 import { StolpersteinFeature } from 'src/models/stolperstein.model';
-import { routeNames } from 'src/router/routes';
+import { routeNames, withTransitionParam } from 'src/router/routes';
 import { useQuasar } from 'quasar';
 import StolpersteinBottomSheet from 'src/components/StolpersteinBottomSheet.vue';
 import StolpersteinSlider from 'src/components/StolpersteinSlider.vue';
+import RouterViewTransistion from 'src/plugins/RouterViewTransistion.vue';
 
 const store = useStore();
 const router = useRouter();
@@ -76,7 +79,7 @@ watch(
       showSelectedSlide.value = false;
       await router.push({
         name: routeNames.mapDetails,
-        params: { id: value[0].stolperstein.id },
+        params: { id: value[0].stolperstein.id, withTransitionParam },
       });
     } else {
       showSelectedSlide.value = true;
@@ -86,7 +89,7 @@ watch(
 );
 
 const goToMap = async () => {
-  await router.push({ name: routeNames.map });
+  await router.push({ name: routeNames.map, params: { withTransitionParam } });
 };
 </script>
 

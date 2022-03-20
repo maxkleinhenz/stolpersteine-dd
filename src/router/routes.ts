@@ -1,11 +1,12 @@
 import { RouteRecordRaw } from 'vue-router';
 
+export const withTransitionParam = 'withTransitionParam';
+
 export const routeNames = {
   home: 'Home',
   map: 'Map',
   mapDetails: 'Map.Details',
-  // info: 'Info',
-  infoMenu: 'Info',
+  info: 'Info',
   infoVerein: 'Info.Verein',
   infoStolpersteine: 'Info.Stolpersteine',
   infoResearch: 'Info.Research',
@@ -44,7 +45,7 @@ const routes: RouteRecordRaw[] = [
         children: [
           {
             path: '',
-            name: routeNames.infoMenu,
+            name: routeNames.info,
             component: () => import('src/components/InfoMenu.vue'),
           },
           {

@@ -28,12 +28,10 @@
     </div>
     <div class="col q-pa-lg">
       <router-link
-        :to="{ name: routeNames.infoMenu }"
+        :to="{ name: routeNames.info }"
         class="nav-link"
         :class="{
-          'link-active': $route.name
-            ?.toString()
-            .startsWith(routeNames.infoMenu),
+          'link-active': $route.name?.toString().startsWith(routeNames.info),
         }"
       >
         <span>Info</span>

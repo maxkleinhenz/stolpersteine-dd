@@ -19,7 +19,7 @@
             rounded
             icon-right="chevron_right"
             label="Zur interaktiven Karte"
-            @click="navigateToMap"
+            @click="$router.push({ name: routeNames.map })"
           ></q-btn>
         </div>
       </section>
@@ -135,24 +135,13 @@
 <script setup lang="ts">
 import { useQuasar } from 'quasar';
 import { routeNames } from 'src/router/routes';
-import { useRouter } from 'vue-router';
 
 const quasar = useQuasar();
-const router = useRouter();
-
-const navigateToMap = async () => {
-  await router.push({ name: routeNames.map });
-};
 </script>
 
 <style scoped lang="scss">
 section {
   min-height: calc(100vh - 15em);
-}
-
-.header-container {
-  // padding-top: 4em;
-  // padding-bottom: 4em;
 }
 
 h1 {

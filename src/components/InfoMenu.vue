@@ -9,9 +9,11 @@
         :key="entry.to"
         class="text-center q-px-md q-py-lg"
       >
-        <router-link class="info-link" :to="{ name: entry.to }">{{
-          entry.name
-        }}</router-link>
+        <router-link
+          class="info-link"
+          :to="{ name: entry.to, params: { withTransitionParam } }"
+          >{{ entry.name }}</router-link
+        >
       </div>
     </nav>
   </q-scroll-area>
@@ -19,6 +21,7 @@
 
 <script setup lang="ts">
 import { menuEntries } from 'src/common/InfoMenuEntries';
+import { withTransitionParam } from 'src/router/routes';
 </script>
 
 <style scoped lang="scss">

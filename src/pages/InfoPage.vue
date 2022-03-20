@@ -2,17 +2,15 @@
   <q-page class="page column">
     <div class="content-container row">
       <div class="col-12">
-        <router-view v-slot="{ Component }">
-          <transition name="fade" mode="out-in">
-            <component :is="Component" />
-          </transition>
-        </router-view>
+        <RouterViewTransistion :name="'fade'"></RouterViewTransistion>
       </div>
     </div>
   </q-page>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import RouterViewTransistion from 'src/plugins/RouterViewTransistion.vue';
+</script>
 
 <style scoped lang="scss">
 .page {

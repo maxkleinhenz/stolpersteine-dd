@@ -7,7 +7,9 @@
       text-color="black"
       color="white"
       icon="close"
-      @click="$router.push({ name: routeNames.map })"
+      @click="
+        $router.push({ name: routeNames.map, params: { withTransitionParam } })
+      "
     />
     <q-scroll-area class="full-width full-height">
       <StolpersteinDetail :stolperstein="stolperstein"></StolpersteinDetail>
@@ -21,7 +23,7 @@ import StolpersteinDetail from 'src/components/StolpersteinDetails.vue';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { useStore } from 'src/store';
-import { routeNames } from 'src/router/routes';
+import { routeNames, withTransitionParam } from 'src/router/routes';
 
 const store = useStore();
 const route = useRoute();
