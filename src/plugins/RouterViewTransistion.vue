@@ -39,15 +39,15 @@ const quasar = useQuasar();
 const displayTransition = ref(true);
 
 const onBeforeLeave = (el: HTMLElement) => {
-  if (displayTransition.value) el.style.display = 'unset';
+  if (displayTransition.value) el.style.display = 'block';
   else el.style.display = 'none';
 };
 
 onBeforeRouteUpdate((to: RouteLocationNormalized) => {
-  const hasNavParam = Object.keys(to.params).some(
+  const hasTransitionParam = Object.keys(to.params).some(
     (key) => key === withTransitionParam
   );
-  displayTransition.value = hasNavParam || !quasar.platform.is.ios;
+  displayTransition.value = hasTransitionParam || !quasar.platform.is.ios;
 });
 </script>
 

@@ -14,7 +14,7 @@
             @click="
               $router.push({
                 name: routeNames.info,
-                params: { navWithRoute: withTransitionParam },
+                params: { withTransitionParam },
               })
             "
           />
