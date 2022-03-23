@@ -43,8 +43,14 @@
       </transition>
 
       <RouterViewTransistion
-        enter-active-class="animated slideInLeft"
-        leave-active-class="animated slideOutLeft"
+        :enter-active-class="
+          quasar.screen.gt.xs ? 'animated slideInLeft' : 'animated slideInRight'
+        "
+        :leave-active-class="
+          quasar.screen.gt.xs
+            ? 'animated slideOutLeft'
+            : 'animated slideOutRight'
+        "
       ></RouterViewTransistion>
     </div>
   </q-page>
@@ -58,7 +64,7 @@ import { useRouter } from 'vue-router';
 
 import { StolpersteinFeature } from 'src/models/stolperstein.model';
 import { routeNames, withTransitionParam } from 'src/router/routes';
-import { useQuasar } from 'quasar';
+import { useMeta, useQuasar } from 'quasar';
 import StolpersteinBottomSheet from 'src/components/StolpersteinBottomSheet.vue';
 import StolpersteinSlider from 'src/components/StolpersteinSlider.vue';
 import RouterViewTransistion from 'src/plugins/RouterViewTransistion.vue';
@@ -69,6 +75,10 @@ const quasar = useQuasar();
 
 const showSelectedSlide = ref(false);
 const selectedStolpersteine = ref<StolpersteinFeature[] | undefined>();
+
+useMeta({
+  title: 'Karte',
+});
 
 watch(
   () => store.state.selectedStolpersteine,
@@ -119,7 +129,7 @@ $backdrop-opacity: 0.5;
   right: 0;
   top: 0;
   bottom: 0;
-  z-index: 7000;
+  z-index: 100;
   background-color: $dark;
   opacity: $backdrop-opacity;
 

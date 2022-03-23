@@ -2,7 +2,7 @@
   <InfoSubPageWrapper>
     <article>
       <section>
-        <h3>Stolpersteine für Dresden e. V.</h3>
+        <h3>{{ title }}</h3>
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius ratione
           debitis doloribus aperiam vel aut magnam quis quidem mollitia, magni
@@ -74,7 +74,14 @@
 </template>
 
 <script setup lang="ts">
+import { useMeta } from 'quasar';
 import InfoSubPageWrapper from './InfoSubPageWrapper.vue';
+
+const title = 'Stolpersteine für Dresden e. V.';
+
+useMeta({
+  title: title,
+});
 </script>
 
 <style scoped lang="scss"></style>

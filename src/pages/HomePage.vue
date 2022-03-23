@@ -10,7 +10,7 @@
         <div class="map-container column items-center">
           <p>
             Erkunde fast 300 Stolpersteine in Dresden und erfahre welche
-            Lebensgeschichten dahinter stehen
+            Lebensgeschichten hinter den Steinen stehen
           </p>
           <q-btn
             class="map-btn q-py-md q-px-lg"
@@ -133,10 +133,13 @@
 </template>
 
 <script setup lang="ts">
-import { useQuasar } from 'quasar';
+import { useMeta, useQuasar } from 'quasar';
 import { routeNames } from 'src/router/routes';
 
 const quasar = useQuasar();
+useMeta({
+  title: 'Startseite',
+});
 </script>
 
 <style scoped lang="scss">

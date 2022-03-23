@@ -22,7 +22,7 @@
       </router-view>
     </q-page-container>
 
-    <q-footer bordered class="footer lt-md app-bg text-black z-top">
+    <q-footer bordered class="footer lt-md app-bg text-black">
       <q-tabs class="text-black" dense narrow-indicator>
         <q-route-tab
           :name="routeNames.home"
@@ -69,13 +69,17 @@ import {
 } from '@quasar/extras/material-icons-outlined';
 import { useRoute } from 'vue-router';
 import TopNavComponent from 'src/components/TopNavComponent.vue';
-import { useQuasar } from 'quasar';
+import { useMeta, useQuasar } from 'quasar';
 import { useStore } from 'src/store';
 import StolpersteinSidebar from 'src/components/StolpersteinSidebar.vue';
 import { routeNames } from 'src/router/routes';
 
 const store = useStore();
 const quasar = useQuasar();
+useMeta({
+  titleTemplate: (title) => `${title} - Stolpersteine Dresden`,
+  title: 'Startseite',
+});
 const route = useRoute();
 
 const sidebarOpen = computed({

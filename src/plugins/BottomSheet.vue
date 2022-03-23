@@ -8,7 +8,7 @@
     ></div>
 
     <q-card
-      class="slide-drawer app-bg slide-drawer--bottom fixed-bottom column no-wrap z-top"
+      class="slide-drawer app-bg slide-drawer--bottom fixed-bottom column no-wrap"
       :style="drawerStyle"
     >
       <q-card-section
@@ -178,6 +178,7 @@ onBeforeUnmount(() => {
 <style lang="scss" scoped>
 .slide-drawer {
   border-radius: 20px 20px 0 0;
+  z-index: 100;
 }
 
 .draggable-container {

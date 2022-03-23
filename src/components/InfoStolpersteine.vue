@@ -2,7 +2,7 @@
   <InfoSubPageWrapper>
     <article>
       <section>
-        <h3>Die Stolpersteine</h3>
+        <h3>{{ title }}</h3>
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius ratione
           debitis doloribus aperiam vel aut magnam quis quidem mollitia, magni
@@ -22,7 +22,14 @@
 </template>
 
 <script setup lang="ts">
+import { useMeta } from 'quasar';
 import InfoSubPageWrapper from './InfoSubPageWrapper.vue';
+
+const title = 'Die Stolpersteine';
+
+useMeta({
+  title: title,
+});
 </script>
 
 <style scoped></style>

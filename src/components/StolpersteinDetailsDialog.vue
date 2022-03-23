@@ -8,7 +8,10 @@
       color="white"
       icon="close"
       @click="
-        $router.push({ name: routeNames.map, params: { withTransitionParam } })
+        $router.push({
+          name: routeNames.map,
+          params: { withTransitionParam },
+        })
       "
     />
     <q-scroll-area class="full-width full-height">
@@ -24,6 +27,7 @@ import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { useStore } from 'src/store';
 import { routeNames, withTransitionParam } from 'src/router/routes';
+import { useMeta } from 'quasar';
 
 const store = useStore();
 const route = useRoute();
@@ -46,6 +50,10 @@ const setDetailStolperstein = (stolpersteinId: number) => {
 
     if (foundStolperstein?.length) {
       stolperstein.value = foundStolperstein[0];
+
+      useMeta({
+        title: foundStolperstein[0].stolperstein.name,
+      });
     } else {
       stolperstein.value = undefined;
     }
