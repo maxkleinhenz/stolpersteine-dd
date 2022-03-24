@@ -1,5 +1,5 @@
 <template>
-  <BottomSheet :open-height-ratio="0.8" :header-height="78" :margin-bottom="56">
+  <BottomSheet :open-height-ratio="0.8" :header-height="96" :margin-bottom="56">
     <template #header>
       <div class="stolperstein-list__header">
         <div class="row q-mt-xs">

@@ -149,14 +149,17 @@ const zoomOut = () => {
 }
 
 .map-controls {
-  margin: 90px 15px;
+  margin-bottom: 120px;
+  margin-right: 15px;
 
   @media (min-width: $breakpoint-sm-min) {
-    margin: 30px 20px;
+    margin-bottom: 30px;
+    margin-right: 20px;
   }
 
   @media (min-width: $breakpoint-md-min) {
-    margin: 30px 48px;
+    margin-bottom: 30px;
+    margin-right: 48px;
   }
 }
 </style>

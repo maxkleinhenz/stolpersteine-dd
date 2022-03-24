@@ -12,11 +12,21 @@
       :style="drawerStyle"
     >
       <q-card-section
-        class="draggable-container full-width q-pa-none"
+        class="header-container full-width q-pa-none"
         v-touch-pan.mouse.vertical.prevent="slideDrawer"
         @click="cycleDrawer"
       >
-        <div class="draggable q-mt-xs"></div>
+        <div class="draggable-container">
+          <div class="draggable-text column items-center app-bg">
+            <q-icon name="expand_less" color="black" />Listenansicht
+          </div>
+          <div
+            class="draggable-handler column items-center q-pt-sm app-bg"
+            :style="draggableTextStyle"
+          >
+            <div></div>
+          </div>
+        </div>
         <slot name="header"></slot>
       </q-card-section>
 
@@ -50,7 +60,7 @@ const props = defineProps({
 
 const quasar = useQuasar();
 
-const drawerOpenRatioHalf = 50;
+const breakpointRatio = 25;
 
 const drawerPos = ref(props.headerHeight);
 
@@ -78,7 +88,7 @@ const drawerStyle = computed(() => {
 });
 
 const drawerMode = computed(() => {
-  if (drawerOpenRatio.value > drawerOpenRatioHalf) {
+  if (drawerOpenRatio.value > breakpointRatio) {
     return 'full';
   }
   return 'handler';
@@ -102,10 +112,23 @@ const backdropStyle = computed(() => {
   };
 });
 
+const draggableTextStyle = computed(() => {
+  console.log('drawerMaxHeight.value', drawerMaxHeight.value);
+  console.log('drawerPos.value', drawerPos.value);
+  console.log(' props.headerHeight', props.headerHeight);
+
+  const opacity =
+    Math.max(0, drawerPos.value - props.headerHeight) /
+    Math.max(1, drawerMaxHeight.value - props.headerHeight);
+  return {
+    opacity: `${opacity}`,
+  };
+});
+
 watch(
   () => quasar.screen.height,
   () => {
-    const aboveHalf = drawerOpenRatio.value > drawerOpenRatioHalf;
+    const aboveHalf = drawerOpenRatio.value > breakpointRatio;
     if (aboveHalf) {
       const targetHeight = drawerMaxHeight.value;
       animateDrawerTo(targetHeight);
@@ -117,6 +140,7 @@ watch(
 );
 
 interface TouchPan {
+  direction: string;
   delta: {
     x: number;
     y: number;
@@ -125,7 +149,7 @@ interface TouchPan {
 }
 
 const slideDrawer = async (ev: TouchPan) => {
-  const { delta, isFinal } = ev;
+  const { direction, delta, isFinal } = ev;
 
   drawerPos.value = Math.max(
     props.headerHeight,
@@ -134,14 +158,20 @@ const slideDrawer = async (ev: TouchPan) => {
 
   if (isFinal === true) {
     await nextTick(() => {
-      const aboveHalf = drawerOpenRatio.value > drawerOpenRatioHalf;
-
-      if (aboveHalf) {
-        const targetHeight = drawerMaxHeight.value;
-        animateDrawerTo(targetHeight);
+      if (direction === 'up') {
+        const afterBreakpoint = drawerOpenRatio.value > breakpointRatio;
+        if (afterBreakpoint) {
+          animateDrawerTo(drawerMaxHeight.value);
+        } else {
+          animateDrawerTo(props.headerHeight);
+        }
       } else {
-        const targetHeight = props.headerHeight;
-        animateDrawerTo(targetHeight);
+        const afterBreakpoint = drawerOpenRatio.value < 100 - breakpointRatio;
+        if (afterBreakpoint) {
+          animateDrawerTo(props.headerHeight);
+        } else {
+          animateDrawerTo(drawerMaxHeight.value);
+        }
       }
     });
   }
@@ -176,20 +206,41 @@ onBeforeUnmount(() => {
 </script>
 
 <style lang="scss" scoped>
+$draggable-width: 3em;
+
 .slide-drawer {
   border-radius: 20px 20px 0 0;
   z-index: 100;
 }
 
-.draggable-container {
+.header-container {
   cursor: grab;
 }
 
-.draggable {
-  width: 3em;
-  height: 3px;
-  background-color: $primary;
-  border-radius: 10px;
-  margin: 8px auto 12px auto;
+.draggable-container {
+  position: relative;
+  height: 35px;
+}
+
+.draggable-handler {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  left: 25%;
+
+  > div {
+    width: $draggable-width;
+    height: 3px;
+    background-color: $primary;
+    border-radius: 10px;
+  }
+}
+
+.draggable-text {
+  position: absolute;
+  height: 100%;
+  width: 50%;
+  left: 25%;
+  font-size: 0.85rem;
 }
 </style>

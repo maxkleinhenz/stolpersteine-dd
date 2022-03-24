@@ -116,7 +116,7 @@ $backdrop-opacity: 0.5;
 
 .stolperstein-slider-container {
   z-index: 3;
-  margin-bottom: 80px;
+  margin-bottom: 100px;
 
   @media (min-width: $breakpoint-sm-min) {
     margin-bottom: 16px;
