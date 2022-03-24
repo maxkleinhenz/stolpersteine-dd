@@ -1,5 +1,5 @@
 <template>
-  <div class="dialog-content full-height app-bg">
+  <div class="dialog-content full-height app-bg z-top">
     <q-btn
       class="dialog-close absolute-top-right q-ma-md"
       :size="$q.screen.gt.sm ? 'lg' : 'md'"
@@ -67,11 +67,14 @@ const setDetailStolperstein = (stolpersteinId: number) => {
 }
 
 .dialog-content {
-  position: fixed;
+  position: absolute;
   left: 0;
   top: 0;
   bottom: 0;
-  z-index: 7000;
   width: min(100vw, #{$stolperstein-details-width});
+
+  @media (min-width: $breakpoint-sm-min) {
+    position: fixed;
+  }
 }
 </style>

@@ -133,6 +133,10 @@ $backdrop-opacity: 0.5;
   background-color: $dark;
   opacity: $backdrop-opacity;
 
+  @media (min-width: $breakpoint-sm-min) {
+    z-index: 7000;
+  }
+
   .backdrop-enter-active,
   .backdrop-leave-active {
     transition: opacity 0.2s ease-out;
