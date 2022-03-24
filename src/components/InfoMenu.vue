@@ -1,20 +1,17 @@
 <template>
-  <div>
+  <div class="menu-container">
     <div class="header text-center">
       <h1>Informationen</h1>
     </div>
+
     <nav role="navigation" aria-label="Info-Menü">
-      <div
+      <router-link
         v-for="entry in menuEntries"
         :key="entry.to"
-        class="text-center q-px-md q-py-lg"
+        class="info-link text-center q-px-md q-py-md q-my-md"
+        :to="{ name: entry.to, params: { withTransitionParam } }"
+        >{{ entry.name }}</router-link
       >
-        <router-link
-          class="info-link"
-          :to="{ name: entry.to, params: { withTransitionParam } }"
-          >{{ entry.name }}</router-link
-        >
-      </div>
     </nav>
   </div>
 </template>
@@ -25,6 +22,11 @@ import { withTransitionParam } from 'src/router/routes';
 </script>
 
 <style scoped lang="scss">
+.menu-container {
+  width: 100%;
+  max-width: 500px;
+}
+
 .header {
   h1 {
     font-size: clamp(3rem, 5vw, 4rem);
@@ -36,16 +38,14 @@ nav {
 }
 
 .info-link {
+  display: block;
   text-decoration: none;
   color: black;
   font-size: 1.2rem;
+  text-align: center;
 
   &:focus,
   &:hover {
-    text-decoration: underline;
-  }
-
-  &.router-link-exact-active {
     text-decoration: underline;
   }
 }
