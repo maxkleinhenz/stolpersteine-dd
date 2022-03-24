@@ -113,10 +113,6 @@ const backdropStyle = computed(() => {
 });
 
 const draggableTextStyle = computed(() => {
-  console.log('drawerMaxHeight.value', drawerMaxHeight.value);
-  console.log('drawerPos.value', drawerPos.value);
-  console.log(' props.headerHeight', props.headerHeight);
-
   const opacity =
     Math.max(0, drawerPos.value - props.headerHeight) /
     Math.max(1, drawerMaxHeight.value - props.headerHeight);
