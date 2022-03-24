@@ -1,5 +1,5 @@
 <template>
-  <q-scroll-area class="full-height">
+  <div>
     <div class="header text-center">
       <h1>Informationen</h1>
     </div>
@@ -16,7 +16,7 @@
         >
       </div>
     </nav>
-  </q-scroll-area>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -47,16 +47,6 @@ nav {
 
   &.router-link-exact-active {
     text-decoration: underline;
-  }
-}
-
-.list-item {
-  font-size: 1rem;
-  padding: 1.5rem 1rem;
-
-  &.active {
-    background-color: $primary;
-    color: white;
   }
 }
 </style>

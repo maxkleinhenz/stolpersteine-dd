@@ -1,27 +1,23 @@
 <template>
-  <div class="full-height">
-    <q-scroll-area class="full-height">
-      <div class="column items-center">
-        <div class="content q-px-md q-pb-xl">
-          <q-btn
-            v-show="$route.name !== routeNames.info"
-            class="back-button"
-            size="md"
-            round
-            text-color="black"
-            color="white"
-            icon="arrow_back"
-            @click="
-              $router.push({
-                name: routeNames.info,
-                params: { withTransitionParam },
-              })
-            "
-          />
-          <slot></slot>
-        </div>
-      </div>
-    </q-scroll-area>
+  <div class="content-container q-px-md q-pb-xl">
+    <q-btn
+      v-show="$route.name !== routeNames.info"
+      class="back-button"
+      size="md"
+      round
+      text-color="black"
+      color="white"
+      icon="arrow_back"
+      @click="
+        $router.push({
+          name: routeNames.info,
+          params: { withTransitionParam },
+        })
+      "
+    />
+    <div class="content">
+      <slot></slot>
+    </div>
   </div>
 </template>
 
@@ -31,7 +27,7 @@ import { withTransitionParam } from 'src/router/routes';
 </script>
 
 <style scoped lang="scss">
-.content {
+.content-container {
   max-width: $breakpoint-md-min;
   padding-top: 2rem;
 

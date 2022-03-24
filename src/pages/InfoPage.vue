@@ -1,9 +1,7 @@
 <template>
   <q-page class="page column">
-    <div class="content-container row">
-      <div class="col-12">
-        <RouterViewTransistion :name="'fade'"></RouterViewTransistion>
-      </div>
+    <div class="column items-center">
+      <RouterViewTransistion :name="'fade'"></RouterViewTransistion>
     </div>
   </q-page>
 </template>
@@ -18,14 +16,6 @@ useMeta({
 </script>
 
 <style scoped lang="scss">
-.page {
-  overflow: hidden;
-}
-
-.content-container {
-  flex: 1;
-}
-
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.2s ease-out, transform 0.2s ease-out;
