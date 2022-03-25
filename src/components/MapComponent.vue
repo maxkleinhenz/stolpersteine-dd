@@ -1,5 +1,6 @@
 <template>
   <div class="map-wrap">
+    <q-resize-observer :debounce="200" @resize="onResize"></q-resize-observer>
     <a href="https://www.maptiler.com" class="watermark q-px-xs"
       ><img
         src="https://api.maptiler.com/resources/logo.svg"
@@ -30,14 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  onMounted,
-  onBeforeUnmount,
-  onActivated,
-  onDeactivated,
-  computed,
-  watch,
-} from 'vue';
+import { onMounted, onBeforeUnmount, computed, watch } from 'vue';
 import { Map as MaplibreMap, LngLat } from 'maplibre-gl';
 import { useStolpersteinMap } from 'src/common/StolpersteinMap';
 import { useStore } from 'src/store';
@@ -100,15 +94,6 @@ onBeforeUnmount(() => {
   clearTimeout(mapInitializeTimer);
 
   map?.remove();
-});
-
-onActivated(() => {
-  window.addEventListener('resize', onResize);
-  onResize();
-});
-
-onDeactivated(() => {
-  window.removeEventListener('resize', onResize);
 });
 
 const onResize = () => {

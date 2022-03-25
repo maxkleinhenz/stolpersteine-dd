@@ -2,12 +2,12 @@ export interface StolpersteinResult {
   features: Array<Feature>;
 }
 
-interface Feature {
+export interface Feature {
   properties: Property;
   geometry: Geometry;
 }
 
-interface Geometry {
+export interface Geometry {
   type: string;
   coordinates: [number, number];
 }

@@ -6,21 +6,20 @@ import {
   GeoJSONSource,
   GeoJSONSourceSpecification,
 } from 'maplibre-gl';
-import { StolpersteinFeature } from 'src/models/stolperstein.model';
+import {
+  GroupedStolpersteinFeature,
+  StolpersteinFeature,
+} from 'src/models/stolperstein.model';
 import { ref } from 'vue';
+import { useStolpersteinUtils } from './StolpersteinUtils';
 
 const StolpersteinSourceName = 'stolpersteine';
 const StolpersteinClusterLayer = 'clusters';
 const StolpersteinClusterCountLayer = 'cluster-count';
 const StolpersteinPointLayer = 'stolperstein-point';
 
-interface Feature {
+interface GroupedGeoJsonFeature extends GroupedStolpersteinFeature {
   type: 'Feature';
-  properties: Array<StolpersteinFeature>;
-  geometry: {
-    type: string;
-    coordinates: [number, number];
-  };
 }
 
 export function useStolpersteinMap() {
@@ -66,30 +65,16 @@ const setStolpersteinSource = (
 ): void => {
   if (!map) return;
 
-  const features: Array<Feature> = [];
+  const { groupStolpersteinByCoords } = useStolpersteinUtils();
 
-  stolpersteinFeatures.forEach((stolpersteinFeature) => {
-    // check whether response stolperstein coordinates already exists in stolpersteinFeatureCollection
-    const existsFeature = features.filter((feature) => {
-      return (
-        feature.geometry.coordinates[0] ===
-          stolpersteinFeature.geometry.coordinates[0] &&
-        feature.geometry.coordinates[1] ===
-          stolpersteinFeature.geometry.coordinates[1]
-      );
+  const features: Array<GroupedGeoJsonFeature> = [];
+  const group = groupStolpersteinByCoords(stolpersteinFeatures);
+  group.forEach((element) => {
+    features.push({
+      type: 'Feature',
+      properties: element.properties,
+      geometry: element.geometry,
     });
-
-    // when feature exists append stolperstein to proterties
-    // otherwise create new feature
-    if (existsFeature?.length > 0) {
-      existsFeature[0].properties.push(stolpersteinFeature);
-    } else {
-      features.push({
-        type: 'Feature',
-        properties: [stolpersteinFeature],
-        geometry: stolpersteinFeature.geometry,
-      });
-    }
   });
 
   const sourceSpec: GeoJSONSourceSpecification = {

@@ -3,12 +3,20 @@ export interface StolpersteinFeature {
   geometry: Geometry;
 }
 
+export interface GroupedStolpersteinFeature {
+  properties: Array<StolpersteinFeature>;
+  geometry: {
+    type: string;
+    coordinates: [number, number];
+  };
+}
+
 interface Geometry {
   type: string;
   coordinates: [number, number];
 }
 
-export default interface Stolperstein {
+export interface Stolperstein {
   id: number;
   name: string;
   strasse: string;

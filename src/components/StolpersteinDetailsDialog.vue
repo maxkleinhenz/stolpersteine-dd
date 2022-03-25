@@ -14,7 +14,7 @@
         })
       "
     />
-    <q-scroll-area class="full-width full-height">
+    <q-scroll-area class="full-width full-height" ref="scrollRef">
       <StolpersteinDetail :stolperstein="stolperstein"></StolpersteinDetail>
     </q-scroll-area>
   </div>
@@ -23,20 +23,28 @@
 <script setup lang="ts">
 import { StolpersteinFeature } from 'src/models/stolperstein.model';
 import StolpersteinDetail from 'src/components/StolpersteinDetails.vue';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useStore } from 'src/store';
 import { routeNames, withTransitionParam } from 'src/router/routes';
-import { useMeta } from 'quasar';
+import { QScrollArea, useMeta } from 'quasar';
 
 const store = useStore();
 const route = useRoute();
 
+const scrollRef = ref<QScrollArea>();
 const stolperstein = ref<StolpersteinFeature | undefined>(undefined);
 
 onMounted(() => {
   setDetailStolperstein(Number(route.params.id));
 });
+
+watch(
+  () => route.params.id,
+  (value) => {
+    setDetailStolperstein(Number(value));
+  }
+);
 
 const setDetailStolperstein = (stolpersteinId: number) => {
   if (stolpersteinId === NaN) {
@@ -50,6 +58,7 @@ const setDetailStolperstein = (stolpersteinId: number) => {
 
     if (foundStolperstein?.length) {
       stolperstein.value = foundStolperstein[0];
+      scrollRef.value?.setScrollPosition('vertical', 0, 200);
 
       useMeta({
         title: foundStolperstein[0].stolperstein.name,

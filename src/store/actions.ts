@@ -1,10 +1,8 @@
-import axios from 'axios';
-import { StolpersteinResult } from 'src/models/stolperstein-result.model';
-import { StolpersteinFeature } from 'src/models/stolperstein.model';
 import { Actions } from 'vuex-smart-module';
 import { RootState } from './state';
 import { RootGetters } from './getters';
 import { RootMutations } from './mutations';
+import { useStolpersteinUtils } from 'src/common/StolpersteinUtils';
 
 export class RootActions extends Actions<
   RootState,
@@ -19,36 +17,9 @@ export class RootActions extends Actions<
     //   axios.get<StolpersteinResult>(
     //     'https://kommisdd.dresden.de/net4/public/ogcapi/collections/L1223/items?limit=500'
     // )
-    return await axios
-      .get<StolpersteinResult>('data/stolpersteine.json')
-      .then((response) => {
-        const stolpersteineFeatures: Array<StolpersteinFeature> = [];
-        response.data.features.forEach((responseFeature) => {
-          // create stolperstein feature from response
-          const newFeature: StolpersteinFeature = {
-            stolperstein: {
-              id: responseFeature.properties.id,
-              name: responseFeature.properties.einrichtung,
-              strasse: responseFeature.properties.strasse,
-              hausnummer: responseFeature.properties.hnr,
-              hausnummerZusatz: responseFeature.properties.hnrz,
-              plz: responseFeature.properties.plz,
-              ort: 'Dresden',
-              url: responseFeature.properties.url,
-              sortValue: responseFeature.properties.einrichtung.toLowerCase(),
-            },
-            geometry: responseFeature.geometry,
-          };
-          stolpersteineFeatures.push(newFeature);
-        });
-
-        // sort by name
-        return stolpersteineFeatures.sort((a, b) =>
-          a.stolperstein.sortValue < b.stolperstein.sortValue ? -1 : 1
-        );
-      })
-      .then((stolpersteineFeatures) => {
-        this.mutations.setStolpersteine(stolpersteineFeatures);
-      });
+    const { loadStolpersteine } = useStolpersteinUtils();
+    return await loadStolpersteine().then((stolpersteineFeatures) => {
+      this.mutations.setStolpersteine(stolpersteineFeatures);
+    });
   }
 }

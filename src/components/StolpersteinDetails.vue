@@ -157,30 +157,51 @@
             </h3>
           </div>
           <div class="card-content">
-            <div class="text q-pa-md">
-              <q-carousel
-                class="image-carousel"
-                swipeable
-                animated
-                v-model="imageSlide"
-                thumbnails
-                infinite
-                arrows
-                control-type="unelevated"
-                control-color="primary"
-                transition-next="slide-left"
-                transition-prev="slide-right"
-              >
-                <q-carousel-slide
-                  :name="1"
-                  img-src="images/Josef_Altbach_Stolperstein_Dresden.JPG"
-                />
-                <q-carousel-slide
-                  :name="2"
-                  img-src="images/portrait-placeholder.png"
-                />
-              </q-carousel>
-            </div>
+            <q-carousel
+              class="image-carousel"
+              swipeable
+              animated
+              v-model="imageSlide"
+              thumbnails
+              infinite
+              arrows
+              control-type="unelevated"
+              control-color="primary"
+              transition-next="slide-left"
+              transition-prev="slide-right"
+            >
+              <q-carousel-slide
+                :name="1"
+                img-src="images/Josef_Altbach_Stolperstein_Dresden.JPG"
+              />
+              <q-carousel-slide
+                :name="2"
+                img-src="images/portrait-placeholder.png"
+              />
+            </q-carousel>
+          </div>
+        </q-card-section>
+      </q-card>
+    </section>
+
+    <section
+      class="other-section"
+      aria-labelledby=""
+      v-if="otherStolpersteine?.length"
+    >
+      <q-card class="app-card">
+        <q-card-section>
+          <div class="card-header">
+            <h3 class="title text-center text-weight-bold q-my-sm">
+              Stolpersteine am gleichen Ort
+            </h3>
+          </div>
+          <div class="card-content">
+            <StolpersteinListItem
+              v-for="stolperstein in otherStolpersteine"
+              :key="stolperstein.stolperstein.id"
+              :stolpersteinFeature="stolperstein"
+            ></StolpersteinListItem>
           </div>
         </q-card-section>
       </q-card>
@@ -197,9 +218,12 @@
 <script setup lang="ts">
 import axios from 'axios';
 import { StolpersteinFeature } from 'src/models/stolperstein.model';
-import { onMounted, PropType, ref, watch } from 'vue';
+import { PropType, ref, watch } from 'vue';
 import { parse } from 'node-html-parser';
 import { useQuasar } from 'quasar';
+import { useStolpersteinUtils } from 'src/common/StolpersteinUtils';
+import StolpersteinListItem from './StolpersteinListItem.vue';
+import { useStore } from 'src/store';
 const props = defineProps({
   stolperstein: {
     type: Object as PropType<StolpersteinFeature>,
@@ -208,24 +232,29 @@ const props = defineProps({
 });
 
 const quasar = useQuasar();
+const store = useStore();
+const { findStolpersteineAtCoords } = useStolpersteinUtils();
 
-onMounted(async () => {
-  await loadBiography(props.stolperstein);
-});
+const otherStolpersteine = ref<StolpersteinFeature[]>();
 
 watch(
   () => props.stolperstein,
-  async (value) => {
-    await loadBiography(value);
+  (value) => {
+    if (value) {
+      void loadBiography(value);
+
+      otherStolpersteine.value = findStolpersteineAtCoords(
+        value.geometry.coordinates,
+        store.state.stolpersteine
+      ).filter((e) => e.stolperstein.id !== value.stolperstein.id);
+    }
   }
 );
 
 const inscription = ref<Array<string>>([]);
 const imageSlide = ref(1);
 
-const loadBiography = async (stolperstein: StolpersteinFeature | undefined) => {
-  if (!stolperstein?.stolperstein.url) return;
-
+const loadBiography = async (stolperstein: StolpersteinFeature) => {
   const code = process.env.FUNCTION_CODE ?? '';
   const url = `https://stolperstein-proxy.azurewebsites.net/api/proxy?code=${code}&url=${stolperstein.stolperstein.url}`;
 
