@@ -1,5 +1,5 @@
 <template>
-  <q-page class="page column">
+  <q-page class="info-page column">
     <div class="column items-center">
       <RouterViewTransistion :name="'fade'"></RouterViewTransistion>
     </div>
