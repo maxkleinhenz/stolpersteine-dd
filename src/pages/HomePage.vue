@@ -2,35 +2,42 @@
   <q-page class="full-width column items-center">
     <article class="full-width">
       <section
-        class="header-container column justify-center items-center q-px-lg q-py-lg"
+        class="header-container column justify-center items-center"
+        :style="fullHeightStyle"
       >
-        <h1><strong>Stolpersteine</strong> Dresden</h1>
-        <p class="subtitle">Es waren unsere Nachbarn</p>
+        <div class="column justify-center items-center col-grow">
+          <h1><strong>Stolpersteine</strong> Dresden</h1>
+          <p class="subtitle">Es waren unsere Nachbarn</p>
 
-        <div class="map-container column items-center">
-          <p>
-            Erkunde fast 300 Stolpersteine in Dresden und erfahre welche
-            Lebensgeschichten hinter den Steinen stehen
-          </p>
+          <div class="map-container">
+            <p>
+              Erkunde fast 300 Stolpersteine in Dresden und erfahre welche
+              Lebensgeschichten hinter den Steinen stehen
+            </p>
+            <q-btn
+              class="map-btn q-py-md q-px-lg"
+              color="white"
+              text-color="black"
+              rounded
+              icon-right="chevron_right"
+              label="Zur interaktiven Karte"
+              @click="$router.push({ name: routeNames.map })"
+            ></q-btn>
+          </div>
+        </div>
+
+        <div class="q-mt-md q-mb-xl">
           <q-btn
-            class="map-btn q-py-md q-px-lg"
-            color="white"
-            text-color="black"
-            rounded
-            icon-right="chevron_right"
-            label="Zur interaktiven Karte"
-            @click="$router.push({ name: routeNames.map })"
-          ></q-btn>
+            icon="expand_more"
+            size="lg"
+            unelevated
+            round
+            @click="onClickExpand"
+          />
         </div>
       </section>
 
-      <div class="column items-center">
-        <q-icon name="expand_more" size="lg"></q-icon>
-      </div>
-
-      <section
-        class="timeline-container column justify-center items-center q-px-xl q-py-lg"
-      >
+      <section class="timeline-container column justify-center items-center">
         <h2>Verlegungen</h2>
 
         <q-timeline
@@ -133,18 +140,41 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from '@vue/reactivity';
 import { useMeta, useQuasar } from 'quasar';
 import { routeNames } from 'src/router/routes';
+import { scroll } from 'quasar';
+import { onMounted, watch } from 'vue';
 
 const quasar = useQuasar();
+const { setVerticalScrollPosition } = scroll;
+
 useMeta({
   title: 'Startseite',
 });
+
+const setFullHeight = () => {
+  return {
+    'min-height': `${window.innerHeight}px`,
+  };
+};
+
+onMounted(() => setFullHeight());
+const fullHeightStyle = ref(setFullHeight());
+
+watch(
+  () => quasar.screen.height,
+  () => (fullHeightStyle.value = setFullHeight())
+);
+
+const onClickExpand = () => {
+  setVerticalScrollPosition(window, window.innerHeight - 200, 200);
+};
 </script>
 
 <style scoped lang="scss">
 section {
-  min-height: calc(100vh - 15em);
+  padding: 12px 24px 12px 24px;
 }
 
 h1 {
@@ -165,7 +195,7 @@ h1 {
 }
 
 .map-container {
-  margin: 4em 0 0 0;
+  margin: 4em auto 0 auto;
   max-width: 600px;
   font-size: clamp(1.2em, 4vw, 1.5em);
   text-align: center;
