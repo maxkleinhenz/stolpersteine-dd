@@ -2,7 +2,7 @@
   <div class="dialog-content full-height app-bg z-top">
     <q-btn
       class="dialog-close absolute-top-right q-ma-md"
-      :size="$q.screen.gt.sm ? 'lg' : 'md'"
+      :size="$q.screen.gt.xs ? 'lg' : 'md'"
       round
       text-color="black"
       color="white"
@@ -15,7 +15,10 @@
       "
     />
     <q-scroll-area class="full-width full-height" ref="scrollRef">
-      <StolpersteinDetail :stolperstein="stolperstein"></StolpersteinDetail>
+      <StolpersteinDetail
+        :stolperstein="stolperstein"
+        @to-top="goToTop()"
+      ></StolpersteinDetail>
     </q-scroll-area>
   </div>
 </template>
@@ -58,7 +61,7 @@ const setDetailStolperstein = (stolpersteinId: number) => {
 
     if (foundStolperstein?.length) {
       stolperstein.value = foundStolperstein[0];
-      scrollRef.value?.setScrollPosition('vertical', 0, 200);
+      goToTop();
 
       useMeta({
         title: foundStolperstein[0].stolperstein.name,
@@ -67,6 +70,10 @@ const setDetailStolperstein = (stolpersteinId: number) => {
       stolperstein.value = undefined;
     }
   }
+};
+
+const goToTop = () => {
+  scrollRef.value?.setScrollPosition('vertical', 0, 200);
 };
 </script>
 

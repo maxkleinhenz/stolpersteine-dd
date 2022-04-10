@@ -5,7 +5,7 @@
     <q-drawer
       v-if="quasar.screen.gt.xs"
       v-model="sidebarOpen"
-      :width="370"
+      :width="400"
       :behavior="quasar.screen.gt.sm ? 'desktop' : 'mobile'"
       elevated
       no-swipe-open

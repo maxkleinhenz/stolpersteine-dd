@@ -5,14 +5,14 @@
         <q-img src="images/Josef_Altbach_Stolperstein_Dresden.JPG" fit="cover">
         </q-img>
 
-        <q-card-section class="row q-gutter-y-md">
+        <q-card-section class="card-content row q-gutter-y-md">
           <div class="col-12 col-sm">
             <div class="card-header">
               <h3 class="title text-weight-bold q-my-sm">
                 {{ props.stolperstein?.stolperstein.name }}
               </h3>
             </div>
-            <div class="card-content row">
+            <div class="row">
               <span>
                 <template v-if="props.stolperstein?.stolperstein.strasse">
                   {{ props.stolperstein.stolperstein.strasse }}
@@ -31,7 +31,7 @@
           </div>
         </q-card-section>
 
-        <q-card-section class="row q-gutter-y-md">
+        <q-card-section class="card-content row q-gutter-y-md">
           <div class="col-12 col-sm">
             <q-btn
               class="action-btn q-mr-md"
@@ -100,12 +100,10 @@
 
     <section class="inscription-section">
       <q-card class="app-card">
-        <q-card-section>
-          <div class="card-header">
-            <h3 class="title text-center text-weight-bold q-my-sm">
-              Inschrift
-            </h3>
-          </div>
+        <q-card-section class="card-header">
+          <h3 class="title text-center text-weight-bold q-my-sm">Inschrift</h3>
+        </q-card-section>
+        <q-card-section class="card-content">
           <div class="inscription column items-center text-weight-medium">
             <q-spinner
               v-if="!inscription?.length"
@@ -123,26 +121,22 @@
 
     <section class="biography-section" aria-labelledby="">
       <q-card class="app-card">
-        <q-card-section>
-          <div class="card-header">
-            <h3 class="title text-center text-weight-bold q-my-sm">
-              Biografie
-            </h3>
-          </div>
-          <div class="card-content">
-            <div class="text q-pa-md">
-              <p>Josef Altbach wurde am 28. Oktober 1886 in Wyszków geboren.</p>
-              <p>
-                Seine zweite Frau Sarah wurde am 5. Juli 1882 geboren. Die Ehe,
-                die nach jüdischem Ritus geschlossen wurde, wurde in Deutschland
-                nicht anerkannt. Josef Altbach lebte seit 1926 in Deutschland
-                und war Inhaber eines Zigarren- und Tabakgeschäfts. Im Zuge der
-                sogenannten Polen-Aktion wurde die Familie am 28. Oktober 1938
-                nach Polen zwangsausgewiesen. Die Familie ging vermutlich über
-                das oberschlesische Beuthen (Bytom) nach Lemberg (Lviv) zu
-                Verwandten. Die genauen Todesumstände der beiden sind unbekannt.
-              </p>
-            </div>
+        <q-card-section class="card-header">
+          <h3 class="title text-center text-weight-bold q-my-sm">Biografie</h3>
+        </q-card-section>
+        <q-card-section class="card-content">
+          <div class="text q-pa-lg">
+            <p>Josef Altbach wurde am 28. Oktober 1886 in Wyszków geboren.</p>
+            <p>
+              Seine zweite Frau Sarah wurde am 5. Juli 1882 geboren. Die Ehe,
+              die nach jüdischem Ritus geschlossen wurde, wurde in Deutschland
+              nicht anerkannt. Josef Altbach lebte seit 1926 in Deutschland und
+              war Inhaber eines Zigarren- und Tabakgeschäfts. Im Zuge der
+              sogenannten Polen-Aktion wurde die Familie am 28. Oktober 1938
+              nach Polen zwangsausgewiesen. Die Familie ging vermutlich über das
+              oberschlesische Beuthen (Bytom) nach Lemberg (Lviv) zu Verwandten.
+              Die genauen Todesumstände der beiden sind unbekannt.
+            </p>
           </div>
         </q-card-section>
       </q-card>
@@ -150,36 +144,34 @@
 
     <section class="image-section" aria-labelledby="">
       <q-card class="app-card">
-        <q-card-section>
-          <div class="card-header">
-            <h3 class="title text-center text-weight-bold q-my-sm">
-              Bildergalerie
-            </h3>
-          </div>
-          <div class="card-content">
-            <q-carousel
-              class="image-carousel"
-              swipeable
-              animated
-              v-model="imageSlide"
-              thumbnails
-              infinite
-              arrows
-              control-type="unelevated"
-              control-color="primary"
-              transition-next="slide-left"
-              transition-prev="slide-right"
-            >
-              <q-carousel-slide
-                :name="1"
-                img-src="images/Josef_Altbach_Stolperstein_Dresden.JPG"
-              />
-              <q-carousel-slide
-                :name="2"
-                img-src="images/portrait-placeholder.png"
-              />
-            </q-carousel>
-          </div>
+        <q-card-section class="card-header">
+          <h3 class="title text-center text-weight-bold q-my-sm">
+            Bildergalerie
+          </h3>
+        </q-card-section>
+        <q-card-section class="card-content">
+          <q-carousel
+            class="image-carousel"
+            swipeable
+            animated
+            v-model="imageSlide"
+            thumbnails
+            infinite
+            arrows
+            control-type="unelevated"
+            control-color="primary"
+            transition-next="slide-left"
+            transition-prev="slide-right"
+          >
+            <q-carousel-slide
+              :name="1"
+              img-src="images/Josef_Altbach_Stolperstein_Dresden.JPG"
+            />
+            <q-carousel-slide
+              :name="2"
+              img-src="images/portrait-placeholder.png"
+            />
+          </q-carousel>
         </q-card-section>
       </q-card>
     </section>
@@ -190,19 +182,17 @@
       v-if="otherStolpersteine?.length"
     >
       <q-card class="app-card">
-        <q-card-section>
-          <div class="card-header">
-            <h3 class="title text-center text-weight-bold q-my-sm">
-              Stolpersteine am gleichen Ort
-            </h3>
-          </div>
-          <div class="card-content">
-            <StolpersteinListItem
-              v-for="stolperstein in otherStolpersteine"
-              :key="stolperstein.stolperstein.id"
-              :stolpersteinFeature="stolperstein"
-            ></StolpersteinListItem>
-          </div>
+        <q-card-section class="card-header">
+          <h3 class="title text-center text-weight-bold q-my-sm">
+            Stolpersteine am gleichen Ort
+          </h3>
+        </q-card-section>
+        <q-card-section class="card-content">
+          <StolpersteinListItem
+            v-for="stolperstein in otherStolpersteine"
+            :key="stolperstein.stolperstein.id"
+            :stolpersteinFeature="stolperstein"
+          ></StolpersteinListItem>
         </q-card-section>
       </q-card>
     </section>
@@ -211,6 +201,18 @@
       <q-btn class="action-btn" rounded>
         <q-icon name="mail_outline" /> Feedback zum Stolperstein</q-btn
       >
+    </section>
+
+    <section class="back-to-top-section">
+      <q-btn
+        class="action-btn"
+        round
+        icon="expand_less"
+        color="white"
+        text-color="dark"
+        size="lg"
+        @click="emit('toTop')"
+      />
     </section>
   </article>
 </template>
@@ -230,6 +232,10 @@ const props = defineProps({
     required: false,
   },
 });
+
+const emit = defineEmits<{
+  (event: 'toTop'): void;
+}>();
 
 const quasar = useQuasar();
 const store = useStore();
@@ -299,7 +305,7 @@ section {
   margin: 12px 12px 32px 12px;
 
   @media (min-width: $stolperstein-details-width) {
-    margin: 32px;
+    margin: 48px 32px;
   }
 }
 
@@ -309,6 +315,11 @@ section {
 
 .card-content {
   font-size: 1rem;
+  padding: 16px;
+
+  @media (min-width: $stolperstein-details-width) {
+    padding: 16px 32px 32px 32px;
+  }
 }
 
 .inscription {
@@ -327,10 +338,14 @@ section {
 }
 
 .feedback-section {
+  margin-top: 64px;
+  display: flex;
+  justify-content: center;
+
   button {
     box-sizing: border-box;
-    width: 100%;
-    padding: 12px;
+    padding: 12px 24px;
+    min-width: 50%;
     background-color: $primary;
     color: white;
     .q-icon {
@@ -341,5 +356,12 @@ section {
 
 .action-btn {
   min-height: 3em;
+}
+
+.back-to-top-section {
+  display: flex;
+  justify-content: center;
+  margin-top: 84px;
+  margin-bottom: 64px;
 }
 </style>
