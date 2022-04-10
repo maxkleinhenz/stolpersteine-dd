@@ -1,10 +1,12 @@
 <template>
   <Swiper
     class="stolperstein-swiper"
+    :class="{ 'centered-swiper': !isSlideable }"
     :slidesPerView="'auto'"
     :centered-slides="quasar.screen.xs"
     :mousewheel="quasar.screen.gt.xs"
     :modules="[Navigation, Mousewheel]"
+    :initial-slide="0"
     @swiper="onSwiper"
   >
     <template v-slot:container-start v-if="showNavigation">
@@ -63,6 +65,10 @@ const swiper = ref<SwiperType>();
 
 const onSwiper = (swiperType: SwiperType) => {
   swiper.value = swiperType;
+
+  swiper.value.on('update', (swiper: SwiperType) => {
+    swiper.slideTo(0);
+  });
 };
 
 const showNavigation = computed(() => {
@@ -70,6 +76,10 @@ const showNavigation = computed(() => {
     return false;
   }
 
+  return isSlideable.value;
+});
+
+const isSlideable = computed(() => {
   // show arrows when slideable -> more slides then width
   return swiper.value?.allowSlidePrev || swiper.value?.allowSlideNext;
 });
@@ -87,6 +97,12 @@ const showNavigation = computed(() => {
   @media (min-width: $breakpoint-sm-min) {
     padding-left: 64px;
     padding-right: 64px;
+  }
+}
+
+.centered-swiper {
+  > .swiper-wrapper {
+    justify-content: center;
   }
 }
 
