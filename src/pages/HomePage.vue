@@ -2,8 +2,8 @@
   <q-page class="full-width column items-center">
     <article class="full-width">
       <section
-        class="header-container column justify-center items-center"
-        :style="fullHeightStyle"
+        class="header-section column justify-center items-center"
+        :style="{ 'min-height': landingPageHeightCss }"
       >
         <div class="column justify-center items-center col-grow">
           <h1><strong>Stolpersteine</strong> Dresden</h1>
@@ -37,7 +37,10 @@
         </div>
       </section>
 
-      <section class="timeline-container column justify-center items-center">
+      <section
+        class="timeline-section column justify-center items-center"
+        ref="timelineSectionRef"
+      >
         <h2>Verlegungen</h2>
 
         <q-timeline
@@ -140,41 +143,37 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from '@vue/reactivity';
 import { useMeta, useQuasar } from 'quasar';
 import { routeNames } from 'src/router/routes';
 import { scroll } from 'quasar';
-import { onMounted, watch } from 'vue';
+import { useLandingPageHeight } from 'src/common/LandingPageUtils';
+import { ref } from 'vue';
 
 const quasar = useQuasar();
 const { setVerticalScrollPosition } = scroll;
+const { landingPageHeightCss } = useLandingPageHeight();
 
 useMeta({
   title: 'Startseite',
 });
 
-const setFullHeight = () => {
-  return {
-    'min-height': `${window.innerHeight}px`,
-  };
-};
-
-onMounted(() => setFullHeight());
-const fullHeightStyle = ref(setFullHeight());
-
-watch(
-  () => quasar.screen.height,
-  () => (fullHeightStyle.value = setFullHeight())
-);
+const timelineSectionRef = ref<HTMLElement>();
 
 const onClickExpand = () => {
-  setVerticalScrollPosition(window, window.innerHeight - 200, 200);
+  const duration = 200;
+
+  const offset = timelineSectionRef.value?.offsetTop ?? window.innerHeight;
+  setVerticalScrollPosition(window, offset, duration);
 };
 </script>
 
 <style scoped lang="scss">
 section {
   padding: 12px 24px 12px 24px;
+}
+
+.header-section {
+  padding-top: 4rem;
 }
 
 h1 {
@@ -205,7 +204,7 @@ h1 {
   margin-top: 0.5em;
 }
 
-.timeline-container {
+.timeline-section {
   width: 100%;
   background-color: $app-background-color-light;
 
