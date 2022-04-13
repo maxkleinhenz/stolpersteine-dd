@@ -44,6 +44,7 @@ interface Props {
   stolpersteinFeature: StolpersteinFeature;
   showArrow?: boolean;
   showShadow?: boolean;
+  replace?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -53,9 +54,22 @@ const props = withDefaults(defineProps<Props>(), {
 
 const router = useRouter();
 const showDetails = async () => {
-  await router.push({
-    name: routeNames.mapDetails,
-    params: { id: props.stolpersteinFeature.stolperstein.id, withTransitionParam },
-  });
+  if (props.replace) {
+    await router.replace({
+      name: routeNames.mapDetails,
+      params: {
+        id: props.stolpersteinFeature.stolperstein.id,
+        withTransitionParam,
+      },
+    });
+  } else {
+    await router.push({
+      name: routeNames.mapDetails,
+      params: {
+        id: props.stolpersteinFeature.stolperstein.id,
+        withTransitionParam,
+      },
+    });
+  }
 };
 </script>

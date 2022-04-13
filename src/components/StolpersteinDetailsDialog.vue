@@ -1,5 +1,5 @@
 <template>
-  <div class="dialog-content full-height app-bg z-top">
+  <div class="dialog-content full-height app-bg z-top scroll" ref="dialogRef">
     <q-btn
       class="dialog-close absolute-top-right q-ma-md"
       :size="$q.screen.gt.xs ? 'lg' : 'md'"
@@ -8,18 +8,15 @@
       color="white"
       icon="close"
       @click="
-        $router.push({
-          name: routeNames.map,
-          params: { withTransitionParam },
-        })
+        $router.push({ name: routeNames.map, params: { withTransitionParam } })
       "
     />
-    <q-scroll-area class="full-width full-height" ref="scrollRef">
+    <div class="full-width full-height">
       <StolpersteinDetail
         :stolperstein="stolperstein"
         @to-top="goToTop()"
       ></StolpersteinDetail>
-    </q-scroll-area>
+    </div>
   </div>
 </template>
 
@@ -30,13 +27,14 @@ import { onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useStore } from 'src/store';
 import { routeNames, withTransitionParam } from 'src/router/routes';
-import { QScrollArea, useMeta } from 'quasar';
+import { useMeta, scroll } from 'quasar';
 
 const store = useStore();
 const route = useRoute();
+const { setVerticalScrollPosition } = scroll;
 
-const scrollRef = ref<QScrollArea>();
 const stolperstein = ref<StolpersteinFeature | undefined>(undefined);
+const dialogRef = ref<HTMLElement>();
 
 onMounted(() => {
   setDetailStolperstein(Number(route.params.id));
@@ -73,7 +71,8 @@ const setDetailStolperstein = (stolpersteinId: number) => {
 };
 
 const goToTop = () => {
-  scrollRef.value?.setScrollPosition('vertical', 0, 200);
+  console.log('dialogRef.value', dialogRef.value);
+  if (dialogRef.value) setVerticalScrollPosition(dialogRef.value, 0, 200);
 };
 </script>
 

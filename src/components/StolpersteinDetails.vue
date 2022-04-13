@@ -90,7 +90,7 @@
                 :self="quasar.screen.gt.sm ? 'center left' : 'top middle'"
                 max-width="200px"
               >
-                Anteil nehmen und eine Kerze anzünden
+                Anteil nehmen und eine virtuelle Kerze anzünden
               </q-tooltip>
             </q-btn>
           </div>
@@ -192,6 +192,7 @@
             v-for="stolperstein in otherStolpersteine"
             :key="stolperstein.stolperstein.id"
             :stolpersteinFeature="stolperstein"
+            :replace="true"
           ></StolpersteinListItem>
         </q-card-section>
       </q-card>
@@ -302,10 +303,10 @@ const loadBiography = async (stolperstein: StolpersteinFeature) => {
 
 <style lang="scss" scoped>
 section {
-  margin: 12px 12px 32px 12px;
+  padding: 12px 12px 32px 12px;
 
   @media (min-width: $stolperstein-details-width) {
-    margin: 48px 32px;
+    padding: 24px 32px 24px 32px;
   }
 }
 
@@ -338,7 +339,7 @@ section {
 }
 
 .feedback-section {
-  margin-top: 64px;
+  padding-top: 32px;
   display: flex;
   justify-content: center;
 
@@ -361,7 +362,7 @@ section {
 .back-to-top-section {
   display: flex;
   justify-content: center;
-  margin-top: 84px;
-  margin-bottom: 64px;
+  padding-top: 64px;
+  padding-bottom: 64px;
 }
 </style>
