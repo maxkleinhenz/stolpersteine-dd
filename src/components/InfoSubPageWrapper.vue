@@ -3,7 +3,7 @@
     <div class="back-button-container">
       <q-btn
         v-show="$route.name !== routeNames.info"
-        size="md"
+        :size="$q.screen.gt.xs ? 'lg' : 'md'"
         round
         text-color="black"
         color="white"
