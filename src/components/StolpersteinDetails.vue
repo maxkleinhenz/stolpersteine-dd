@@ -3,30 +3,63 @@
     <section class="header-section" aria-labelledby="">
       <q-card class="app-card">
         <q-img src="images/Josef_Altbach_Stolperstein_Dresden.JPG" fit="cover">
+          <template v-slot:loading>
+            <q-skeleton square width="100%" height="100%" />
+          </template>
         </q-img>
 
         <q-card-section class="card-content row q-gutter-y-md">
           <div class="col-12 col-sm">
             <div class="card-header">
-              <h3 class="title text-weight-bold q-my-sm">
+              <h3
+                class="title text-weight-bold q-my-sm"
+                v-if="props.stolperstein"
+              >
                 {{ props.stolperstein?.stolperstein.name }}
               </h3>
+              <q-skeleton
+                tag="h3"
+                :type="text"
+                style="width: 70%"
+                class="title text-weight-bold q-my-sm"
+                v-if="!props.stolperstein"
+              />
             </div>
-            <div class="row">
-              <span>
-                <template v-if="props.stolperstein?.stolperstein.strasse">
-                  {{ props.stolperstein.stolperstein.strasse }}
-                  {{ props.stolperstein.stolperstein.hausnummer }}
-                  <br />
-                </template>
+            <div v-if="props.stolperstein">
+              <span
+                v-if="props.stolperstein?.stolperstein.strasse"
+                class="address"
+              >
+                {{ props.stolperstein.stolperstein.strasse }}
+                {{ props.stolperstein.stolperstein.hausnummer }}
+              </span>
+              <span class="address">
                 {{ props.stolperstein?.stolperstein.plz }}
                 {{ props.stolperstein?.stolperstein.ort }}
               </span>
             </div>
+            <div v-if="!props.stolperstein">
+              <q-skeleton
+                tag="span"
+                :type="text"
+                style="width: 50%; margin-bottom: 0.5rem"
+                class="address"
+              />
+              <q-skeleton
+                tag="span"
+                :type="text"
+                style="width: 40%"
+                class="address"
+              />
+            </div>
           </div>
           <div class="col-12 col-sm-auto text-center">
             <q-avatar size="128px">
-              <q-img ratio="1" src="images/portrait-placeholder.png" />
+              <q-img ratio="1" src="images/portrait-placeholder.png">
+                <template v-slot:loading>
+                  <q-skeleton type="QAvatar" width="100%" height="100%" />
+                </template>
+              </q-img>
             </q-avatar>
           </div>
         </q-card-section>
@@ -321,6 +354,10 @@ section {
   @media (min-width: $stolperstein-details-width) {
     padding: 16px 32px 32px 32px;
   }
+}
+
+.address {
+  display: block;
 }
 
 .inscription {
