@@ -36,7 +36,10 @@ const { setVerticalScrollPosition } = scroll;
 const stolperstein = ref<StolpersteinFeature | undefined>(undefined);
 const dialogRef = ref<HTMLElement>();
 
-onMounted(() => {
+onMounted(async () => {
+  if (!store.state.stolpersteine.length) {
+    await store.actions.loadStolpersteineFeatures();
+  }
   setDetailStolperstein(Number(route.params.id));
 });
 
@@ -71,7 +74,6 @@ const setDetailStolperstein = (stolpersteinId: number) => {
 };
 
 const goToTop = () => {
-  console.log('dialogRef.value', dialogRef.value);
   if (dialogRef.value) setVerticalScrollPosition(dialogRef.value, 0, 200);
 };
 </script>
