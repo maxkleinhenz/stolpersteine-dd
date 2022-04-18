@@ -19,7 +19,7 @@
               </h3>
               <q-skeleton
                 tag="h3"
-                :type="text"
+                type="text"
                 style="width: 70%"
                 class="title text-weight-bold q-my-sm"
                 v-if="!props.stolperstein"
@@ -41,13 +41,13 @@
             <div v-if="!props.stolperstein">
               <q-skeleton
                 tag="span"
-                :type="text"
+                type="text"
                 style="width: 50%; margin-bottom: 0.5rem"
                 class="address"
               />
               <q-skeleton
                 tag="span"
-                :type="text"
+                type="text"
                 style="width: 40%"
                 class="address"
               />
@@ -72,6 +72,7 @@
               round
               color="primary"
               icon="share"
+              @click="share()"
             >
               <q-tooltip
                 class="bg-primary text-body2"
@@ -90,6 +91,7 @@
               round
               color="primary"
               icon="bookmark_border"
+              @click="showNotSupportedDialog = true"
             >
               <q-tooltip
                 class="bg-primary text-body2"
@@ -111,6 +113,7 @@
               color="primary"
               icon="fireplace"
               label="12 Kerzen angezündet"
+              @click="showNotSupportedDialog = true"
             >
               <q-tooltip
                 class="bg-primary text-body2"
@@ -232,7 +235,7 @@
     </section>
 
     <section class="feedback-section">
-      <q-btn class="action-btn" rounded>
+      <q-btn class="action-btn" rounded @click="showNotSupportedDialog = true">
         <q-icon name="mail_outline" /> Feedback zum Stolperstein</q-btn
       >
     </section>
@@ -249,6 +252,22 @@
       />
     </section>
   </article>
+
+  <q-dialog v-model="showNotSupportedDialog" class="z-top">
+    <q-card>
+      <q-card-section>
+        <div class="text-h6">Nicht unterstützt</div>
+      </q-card-section>
+
+      <q-card-section class="q-pt-none">
+        Diese Aktion wird noch nicht unterstützt
+      </q-card-section>
+
+      <q-card-actions align="right">
+        <q-btn flat label="OK" color="primary" v-close-popup />
+      </q-card-actions>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script setup lang="ts">
@@ -277,6 +296,8 @@ const { findStolpersteineAtCoords } = useStolpersteinUtils();
 
 const otherStolpersteine = ref<StolpersteinFeature[]>();
 
+const showNotSupportedDialog = ref<boolean>(false);
+
 watch(
   () => props.stolperstein,
   (value) => {
@@ -290,6 +311,21 @@ watch(
     }
   }
 );
+
+const share = () => {
+  if (!props.stolperstein) return;
+
+  if (!!navigator.share) {
+    const shareData = <ShareData>{
+      title: `${props.stolperstein.stolperstein.name} - Stolpersteine Dresden`,
+      text: `Erkunde den Stolperstein von ${props.stolperstein.stolperstein.name}`,
+      url: window.location.href,
+    };
+    void navigator.share(shareData);
+  } else {
+    showNotSupportedDialog.value = true;
+  }
+};
 
 const inscription = ref<Array<string>>([]);
 const imageSlide = ref(1);
