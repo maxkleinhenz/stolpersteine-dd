@@ -1,16 +1,21 @@
 <template>
-  <div class="dialog-content full-height app-bg z-top scroll" ref="dialogRef">
-    <q-btn
-      class="dialog-close absolute-top-right q-ma-md"
-      :size="$q.screen.gt.xs ? 'lg' : 'md'"
-      round
-      text-color="black"
-      color="white"
-      icon="close"
-      @click="
-        $router.push({ name: routeNames.map, params: { withTransitionParam } })
-      "
-    />
+  <div class="dialog-content full-height app-bg scroll z-top" ref="dialogRef">
+    <div class="absolute flex justify-end full-width z-top">
+      <q-btn
+        class="fixed q-ma-md"
+        :size="$q.screen.gt.xs ? 'lg' : 'md'"
+        round
+        text-color="black"
+        color="white"
+        icon="close"
+        @click="
+          $router.push({
+            name: routeNames.map,
+            params: { withTransitionParam },
+          })
+        "
+      />
+    </div>
     <div class="full-width full-height">
       <StolpersteinDetail
         :stolperstein="stolperstein"
@@ -79,10 +84,6 @@ const goToTop = () => {
 </script>
 
 <style scoped lang="scss">
-.dialog-close {
-  z-index: 1;
-}
-
 .dialog-content {
   position: absolute;
   left: 0;
