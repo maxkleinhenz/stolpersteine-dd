@@ -1,5 +1,8 @@
 <template>
-  <div class="dialog-content full-height app-bg scroll z-top" ref="dialogRef">
+  <div
+    class="dialog-content shadow-5 full-height app-bg scroll z-top"
+    ref="dialogRef"
+  >
     <div class="absolute flex justify-end full-width z-top">
       <q-btn
         class="fixed q-ma-md"

@@ -1,14 +1,15 @@
 <template>
-  <article>
-    <section class="header-section" aria-labelledby="">
-      <q-card class="app-card">
+  <article class="abb-bg">
+    <section class="header-section light q-gutter-y-lg" aria-labelledby="">
+      <div>
         <q-img src="images/Josef_Altbach_Stolperstein_Dresden.JPG" fit="cover">
           <template v-slot:loading>
             <q-skeleton square width="100%" height="100%" />
           </template>
         </q-img>
-
-        <q-card-section class="card-content row q-gutter-y-md">
+      </div>
+      <div class="card-content">
+        <div class="row q-gutter-y-md q-gutter-x-md">
           <div class="col-12 col-sm">
             <div class="card-header">
               <h3
@@ -62,130 +63,116 @@
               </q-img>
             </q-avatar>
           </div>
-        </q-card-section>
-
-        <q-card-section class="card-content row q-gutter-y-md">
-          <div class="col-12 col-sm">
-            <q-btn
-              class="action-btn q-mr-md"
-              outline
-              round
-              color="primary"
-              icon="share"
-              @click="share()"
-            >
-              <q-tooltip
-                class="bg-primary text-body2"
-                :delay="300"
-                transition-show="jump-right"
-                transition-hide="jump-left"
-                anchor="center right"
-                self="center left"
-              >
-                Teilen
-              </q-tooltip>
-            </q-btn>
-            <q-btn
-              class="action-btn q-mr-md"
-              outline
-              round
-              color="primary"
-              icon="bookmark_border"
-              @click="showNotSupportedDialog = true"
-            >
-              <q-tooltip
-                class="bg-primary text-body2"
-                :delay="300"
-                transition-show="jump-right"
-                transition-hide="jump-left"
-                anchor="center right"
-                self="center left"
-              >
-                Merken
-              </q-tooltip>
-            </q-btn>
-          </div>
-          <div class="col-12 col-sm-auto">
-            <q-btn
-              class="action-btn full-width"
-              outline
-              rounded
-              color="primary"
-              icon="fireplace"
-              label="12 Kerzen angezündet"
-              @click="showNotSupportedDialog = true"
-            >
-              <q-tooltip
-                class="bg-primary text-body2"
-                :delay="300"
-                :transition-show="
-                  quasar.screen.gt.sm ? 'jump-right' : 'jump-down'
-                "
-                :transition-hide="quasar.screen.gt.sm ? 'jump-left' : 'jump-up'"
-                :anchor="quasar.screen.gt.sm ? 'center right' : 'bottom middle'"
-                :self="quasar.screen.gt.sm ? 'center left' : 'top middle'"
-                max-width="200px"
-              >
-                Anteil nehmen und eine virtuelle Kerze anzünden
-              </q-tooltip>
-            </q-btn>
-          </div>
-        </q-card-section>
-      </q-card>
+        </div>
+      </div>
+      <div
+        class="card-content row col-12 col-sm items-start"
+        :class="{
+          'q-gutter-x-sm': !isMobileMode,
+          full: quasar.screen.lt.sm,
+        }"
+      >
+        <StolpersteinDetailsActionButton
+          label="Verlegeort"
+          icon="zoom_in_map"
+          :mobile-mode="isMobileMode"
+          :click-action="() => (showNotSupportedDialog = true)"
+        ></StolpersteinDetailsActionButton>
+        <StolpersteinDetailsActionButton
+          label="Navigation"
+          icon="directions"
+          :mobile-mode="isMobileMode"
+          :click-action="() => (showNotSupportedDialog = true)"
+        ></StolpersteinDetailsActionButton>
+        <StolpersteinDetailsActionButton
+          label="Teilen"
+          icon="share"
+          :mobile-mode="isMobileMode"
+          :click-action="share"
+        ></StolpersteinDetailsActionButton>
+        <StolpersteinDetailsActionButton
+          label="Merken"
+          icon="bookmark_border"
+          :mobile-mode="isMobileMode"
+          :click-action="() => (showNotSupportedDialog = true)"
+        ></StolpersteinDetailsActionButton>
+      </div>
     </section>
 
-    <section class="inscription-section">
-      <q-card class="app-card">
-        <q-card-section class="card-header">
-          <h3 class="title text-center text-weight-bold q-my-sm">Inschrift</h3>
-        </q-card-section>
-        <q-card-section class="card-content">
-          <div class="inscription column items-center text-weight-medium">
-            <q-spinner
-              v-if="!inscription?.length"
-              color="primary"
-              size="3em"
-              :thickness="2"
-            />
-            <span v-for="(text, index) in inscription" :key="index">
-              {{ text }}</span
-            >
-          </div>
-        </q-card-section>
-      </q-card>
-    </section>
-
-    <section class="biography-section" aria-labelledby="">
-      <q-card class="app-card">
-        <q-card-section class="card-header">
-          <h3 class="title text-center text-weight-bold q-my-sm">Biografie</h3>
-        </q-card-section>
-        <q-card-section class="card-content">
-          <div class="text q-pa-lg">
-            <p>Josef Altbach wurde am 28. Oktober 1886 in Wyszków geboren.</p>
-            <p>
-              Seine zweite Frau Sarah wurde am 5. Juli 1882 geboren. Die Ehe,
-              die nach jüdischem Ritus geschlossen wurde, wurde in Deutschland
-              nicht anerkannt. Josef Altbach lebte seit 1926 in Deutschland und
-              war Inhaber eines Zigarren- und Tabakgeschäfts. Im Zuge der
-              sogenannten Polen-Aktion wurde die Familie am 28. Oktober 1938
-              nach Polen zwangsausgewiesen. Die Familie ging vermutlich über das
-              oberschlesische Beuthen (Bytom) nach Lemberg (Lviv) zu Verwandten.
-              Die genauen Todesumstände der beiden sind unbekannt.
-            </p>
-          </div>
-        </q-card-section>
-      </q-card>
-    </section>
-
-    <section class="image-section" aria-labelledby="">
+    <section class="candel-section" aria-labelledby="">
       <q-card class="app-card">
         <q-card-section class="card-header">
           <h3 class="title text-center text-weight-bold q-my-sm">
-            Bildergalerie
+            Anteil nehmen
           </h3>
         </q-card-section>
         <q-card-section class="card-content">
+          <p>
+            Zünde eine virtuelle Kerze an, um Anteil zu nehmen. 12 Personen
+            haben an diesem Ort eine Kerze angezündet.
+          </p>
+        </q-card-section>
+        <q-card-actions align="center" class="q-pb-lg">
+          <q-btn
+            class="action-btn"
+            rounded
+            outline
+            label="Eine virtuelle Kerze anzünden"
+            @click="showNotSupportedDialog = true"
+          >
+          </q-btn>
+        </q-card-actions>
+      </q-card>
+    </section>
+
+    <section class="inscription-section light">
+      <div class="card-header">
+        <h3 class="title text-center text-weight-bold q-my-sm">Inschrift</h3>
+      </div>
+      <div class="card-content">
+        <div class="inscription column items-center text-weight-medium">
+          <q-spinner
+            v-if="!inscription?.length"
+            color="primary"
+            size="3em"
+            :thickness="2"
+          />
+          <span v-for="(text, index) in inscription" :key="index">
+            {{ text }}</span
+          >
+        </div>
+      </div>
+    </section>
+
+    <section class="biography-section" aria-labelledby="">
+      <div>
+        <div class="card-header">
+          <h3 class="title text-center text-weight-bold q-my-sm">Biografie</h3>
+        </div>
+        <div class="card-content">
+          <p>Josef Altbach wurde am 28. Oktober 1886 in Wyszków geboren.</p>
+          <p>
+            Seine zweite Frau Sarah wurde am 5. Juli 1882 geboren. Die Ehe, die
+            nach jüdischem Ritus geschlossen wurde, wurde in Deutschland nicht
+            anerkannt. Josef Altbach lebte seit 1926 in Deutschland und war
+            Inhaber eines Zigarren- und Tabakgeschäfts. Im Zuge der sogenannten
+            Polen-Aktion wurde die Familie am 28. Oktober 1938 nach Polen
+            zwangsausgewiesen. Die Familie ging vermutlich über das
+            oberschlesische Beuthen (Bytom) nach Lemberg (Lviv) zu Verwandten.
+            Die genauen Todesumstände der beiden sind unbekannt.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="image-section" aria-labelledby="">
+      <div>
+        <div class="card-header">
+          <h3 class="title text-center text-weight-bold q-my-sm">
+            Bildergalerie
+          </h3>
+        </div>
+        <div class="card-content full">
           <q-carousel
             class="image-carousel"
             swipeable
@@ -208,8 +195,8 @@
               img-src="images/portrait-placeholder.png"
             />
           </q-carousel>
-        </q-card-section>
-      </q-card>
+        </div>
+      </div>
     </section>
 
     <section
@@ -217,21 +204,21 @@
       aria-labelledby=""
       v-if="otherStolpersteine?.length"
     >
-      <q-card class="app-card">
-        <q-card-section class="card-header">
+      <div>
+        <div class="card-header">
           <h3 class="title text-center text-weight-bold q-my-sm">
             Stolpersteine am gleichen Ort
           </h3>
-        </q-card-section>
-        <q-card-section class="card-content">
+        </div>
+        <div class="card-content q-pt-xs q-gutter-y-md">
           <StolpersteinListItem
             v-for="stolperstein in otherStolpersteine"
             :key="stolperstein.stolperstein.id"
             :stolpersteinFeature="stolperstein"
             :replace="true"
           ></StolpersteinListItem>
-        </q-card-section>
-      </q-card>
+        </div>
+      </div>
     </section>
 
     <section class="feedback-section">
@@ -242,7 +229,6 @@
 
     <section class="back-to-top-section">
       <q-btn
-        class="action-btn"
         round
         icon="expand_less"
         color="white"
@@ -256,11 +242,11 @@
   <q-dialog v-model="showNotSupportedDialog" class="z-top">
     <q-card>
       <q-card-section>
-        <div class="text-h6">Nicht unterstützt</div>
+        <div class="text-h6">Noch nicht unterstützt</div>
       </q-card-section>
 
       <q-card-section class="q-pt-none">
-        Diese Aktion wird noch nicht unterstützt
+        Diese Aktion ist in der Vorabversion noch nicht unterstützt
       </q-card-section>
 
       <q-card-actions align="right">
@@ -278,7 +264,9 @@ import { parse } from 'node-html-parser';
 import { useQuasar } from 'quasar';
 import { useStolpersteinUtils } from 'src/common/StolpersteinUtils';
 import StolpersteinListItem from './StolpersteinListItem.vue';
+import StolpersteinDetailsActionButton from './StolpersteinDetailsActionButton.vue';
 import { useStore } from 'src/store';
+import { computed } from '@vue/reactivity';
 const props = defineProps({
   stolperstein: {
     type: Object as PropType<StolpersteinFeature>,
@@ -297,6 +285,9 @@ const { findStolpersteineAtCoords } = useStolpersteinUtils();
 const otherStolpersteine = ref<StolpersteinFeature[]>();
 
 const showNotSupportedDialog = ref<boolean>(false);
+const isMobileMode = computed(
+  () => quasar.platform.is.mobile || quasar.screen.lt.sm
+);
 
 watch(
   () => props.stolperstein,
@@ -372,28 +363,60 @@ const loadBiography = async (stolperstein: StolpersteinFeature) => {
 
 <style lang="scss" scoped>
 section {
-  padding: 12px 12px 32px 12px;
-
-  @media (min-width: $stolperstein-details-width) {
-    padding: 24px 32px 24px 32px;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+  &.light {
+    background-color: $app-background-color-light;
+    padding-bottom: 4rem;
   }
 }
 
-.title {
-  font-size: 2em;
+.card-header {
+  margin-bottom: 1rem;
+
+  .title {
+    font-size: 2em;
+  }
 }
 
 .card-content {
   font-size: 1rem;
-  padding: 16px;
+  padding-inline: 16px;
+
+  &.full {
+    padding-inline: 0;
+    padding-bottom: 0;
+  }
 
   @media (min-width: $stolperstein-details-width) {
-    padding: 16px 32px 32px 32px;
+    padding-inline: 56px;
   }
+}
+
+.action-btn {
+  padding: 12px 32px;
+  margin-inline: 12px;
 }
 
 .address {
   display: block;
+}
+
+.header-section {
+  padding-top: 0 !important;
+}
+
+.candel-section {
+  padding-inline: 24px;
+
+  color: white;
+  .app-card {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)),
+      url('/images/candle.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
 }
 
 .inscription {
@@ -401,25 +424,21 @@ section {
 }
 
 .biography-section {
-  .text {
-    background-color: white;
-    border-radius: $app-card-border-radius;
-  }
+  background-color: white;
 }
 
-.image-carousel {
-  border-radius: $app-card-border-radius;
+.image-section {
+  padding-bottom: 0;
 }
 
 .feedback-section {
-  padding-top: 32px;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
   display: flex;
   justify-content: center;
 
   button {
     box-sizing: border-box;
-    padding: 12px 24px;
-    min-width: 50%;
     background-color: $primary;
     color: white;
     .q-icon {
@@ -428,14 +447,9 @@ section {
   }
 }
 
-.action-btn {
-  min-height: 3em;
-}
-
 .back-to-top-section {
   display: flex;
   justify-content: center;
-  padding-top: 64px;
-  padding-bottom: 64px;
+  padding-top: 28px;
 }
 </style>
