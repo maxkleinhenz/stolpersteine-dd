@@ -1,18 +1,18 @@
 <template>
   <q-btn
     class="col-auto"
-    :class="{ small: !props.mobileMode }"
+    :class="{ small: !props.denseMode }"
     color="primary"
-    :stack="props.mobileMode"
-    :outline="!props.mobileMode"
-    :flat="props.mobileMode"
+    :stack="props.denseMode"
+    :outline="!props.denseMode"
+    :flat="props.denseMode"
     rounded
     @click="clickAction ? clickAction() : () => undefined"
   >
     <q-icon
       :name="props.icon"
       size="sm"
-      :class="{ 'q-mr-xs': !props.mobileMode }"
+      :class="{ 'q-mr-xs': !props.denseMode }"
     ></q-icon>
     <span class="label-small">{{ props.label }}</span>
   </q-btn>
@@ -30,7 +30,7 @@ const props = defineProps({
     type: String,
     required: true,
   },
-  mobileMode: {
+  denseMode: {
     type: Boolean,
     required: false,
     default: false,
@@ -43,7 +43,7 @@ const props = defineProps({
 });
 
 watch(
-  () => props.mobileMode,
+  () => props.denseMode,
   (value: boolean) => {
     console.log('widthLabel', value);
   }

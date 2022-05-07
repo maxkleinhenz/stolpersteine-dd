@@ -8,7 +8,10 @@
   >
     <q-item-section top avatar>
       <q-avatar size="64px">
-        <q-img ratio="1" src="images/Josef_Altbach_Stolperstein_Dresden.JPG" />
+        <q-img
+          ratio="1"
+          src="~assets/images/Josef_Altbach_Stolperstein_Dresden.jpg"
+        />
       </q-avatar>
     </q-item-section>
 

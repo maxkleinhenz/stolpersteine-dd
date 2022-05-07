@@ -2,7 +2,10 @@
   <article class="abb-bg">
     <section class="header-section light q-gutter-y-lg" aria-labelledby="">
       <div>
-        <q-img src="images/Josef_Altbach_Stolperstein_Dresden.JPG" fit="cover">
+        <q-img
+          src="~assets/images/Josef_Altbach_Stolperstein_Dresden.jpg"
+          fit="cover"
+        >
           <template v-slot:loading>
             <q-skeleton square width="100%" height="100%" />
           </template>
@@ -56,7 +59,7 @@
           </div>
           <div class="col-12 col-sm-auto text-center">
             <q-avatar size="128px">
-              <q-img ratio="1" src="images/portrait-placeholder.png">
+              <q-img ratio="1" src="~assets/images/portrait-placeholder.png">
                 <template v-slot:loading>
                   <q-skeleton type="QAvatar" width="100%" height="100%" />
                 </template>
@@ -68,32 +71,32 @@
       <div
         class="card-content row col-12 col-sm items-start"
         :class="{
-          'q-gutter-x-sm': !isMobileMode,
+          'q-gutter-x-sm': !isDenseMode,
           full: quasar.screen.lt.sm,
         }"
       >
         <StolpersteinDetailsActionButton
           label="Verlegeort"
           icon="zoom_in_map"
-          :mobile-mode="isMobileMode"
+          :dense-mode="isDenseMode"
           :click-action="() => (showNotSupportedDialog = true)"
         ></StolpersteinDetailsActionButton>
         <StolpersteinDetailsActionButton
           label="Navigation"
           icon="directions"
-          :mobile-mode="isMobileMode"
+          :dense-mode="isDenseMode"
           :click-action="() => (showNotSupportedDialog = true)"
         ></StolpersteinDetailsActionButton>
         <StolpersteinDetailsActionButton
           label="Teilen"
           icon="share"
-          :mobile-mode="isMobileMode"
+          :dense-mode="isDenseMode"
           :click-action="share"
         ></StolpersteinDetailsActionButton>
         <StolpersteinDetailsActionButton
           label="Merken"
           icon="bookmark_border"
-          :mobile-mode="isMobileMode"
+          :dense-mode="isDenseMode"
           :click-action="() => (showNotSupportedDialog = true)"
         ></StolpersteinDetailsActionButton>
       </div>
@@ -188,11 +191,11 @@
           >
             <q-carousel-slide
               :name="1"
-              img-src="images/Josef_Altbach_Stolperstein_Dresden.JPG"
+              img-src="~assets/images/Josef_Altbach_Stolperstein_Dresden.jpg"
             />
             <q-carousel-slide
               :name="2"
-              img-src="images/portrait-placeholder.png"
+              img-src="~assets/images/portrait-placeholder.png"
             />
           </q-carousel>
         </div>
@@ -225,17 +228,6 @@
       <q-btn class="action-btn" rounded @click="showNotSupportedDialog = true">
         <q-icon name="mail_outline" /> Feedback zum Stolperstein</q-btn
       >
-    </section>
-
-    <section class="back-to-top-section">
-      <q-btn
-        round
-        icon="expand_less"
-        color="white"
-        text-color="dark"
-        size="lg"
-        @click="emit('toTop')"
-      />
     </section>
   </article>
 
@@ -274,10 +266,6 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits<{
-  (event: 'toTop'): void;
-}>();
-
 const quasar = useQuasar();
 const store = useStore();
 const { findStolpersteineAtCoords } = useStolpersteinUtils();
@@ -285,9 +273,7 @@ const { findStolpersteineAtCoords } = useStolpersteinUtils();
 const otherStolpersteine = ref<StolpersteinFeature[]>();
 
 const showNotSupportedDialog = ref<boolean>(false);
-const isMobileMode = computed(
-  () => quasar.platform.is.mobile || quasar.screen.lt.sm
-);
+const isDenseMode = computed(() => quasar.screen.lt.sm);
 
 watch(
   () => props.stolperstein,
@@ -412,7 +398,7 @@ section {
   color: white;
   .app-card {
     background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)),
-      url('/images/candle.jpg');
+      url('~assets/images/candle.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -431,9 +417,12 @@ section {
   padding-bottom: 0;
 }
 
+.other-section {
+  padding-bottom: 0;
+}
+
 .feedback-section {
-  margin-bottom: 12px;
-  padding-bottom: 12px;
+  padding-bottom: 8rem;
   display: flex;
   justify-content: center;
 
@@ -445,11 +434,5 @@ section {
       margin-right: 10px;
     }
   }
-}
-
-.back-to-top-section {
-  display: flex;
-  justify-content: center;
-  padding-top: 28px;
 }
 </style>
