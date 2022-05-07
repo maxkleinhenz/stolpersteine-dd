@@ -2,6 +2,7 @@
   <div
     class="dialog-content shadow-5 full-height app-bg scroll z-top"
     ref="dialogRef"
+    v-scroll="onScroll"
   >
     <div class="absolute flex justify-end full-width z-top">
       <q-btn
@@ -20,11 +21,28 @@
       />
     </div>
     <div class="full-width full-height">
-      <StolpersteinDetail
-        :stolperstein="stolperstein"
-        @to-top="goToTop()"
-      ></StolpersteinDetail>
+      <StolpersteinDetail :stolperstein="stolperstein"></StolpersteinDetail>
     </div>
+
+    <transition
+      enter-active-class="animated fadeIn"
+      leave-active-class="animated fadeOut"
+    >
+      <div
+        class="page-scroller absolute flex justify-end full-width z-top"
+        v-show="showPageScroller"
+      >
+        <q-btn
+          class="fixed q-ma-md"
+          :size="$q.screen.gt.xs ? 'lg' : 'md'"
+          round
+          text-color="black"
+          color="white"
+          icon="expand_less"
+          @click="goToTop()"
+        />
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -43,6 +61,7 @@ const { setVerticalScrollPosition } = scroll;
 
 const stolperstein = ref<StolpersteinFeature | undefined>(undefined);
 const dialogRef = ref<HTMLElement>();
+const showPageScroller = ref(false);
 
 onMounted(async () => {
   if (!store.state.stolpersteine.length) {
@@ -84,6 +103,11 @@ const setDetailStolperstein = (stolpersteinId: number) => {
 const goToTop = () => {
   if (dialogRef.value) setVerticalScrollPosition(dialogRef.value, 0, 200);
 };
+
+const onScroll = (postion: number) => {
+  showPageScroller.value =
+    postion >= (dialogRef.value?.scrollHeight ?? 3000) * 0.1;
+};
 </script>
 
 <style scoped lang="scss">
@@ -96,6 +120,14 @@ const goToTop = () => {
 
   @media (min-width: $breakpoint-sm-min) {
     position: fixed;
+  }
+}
+
+.page-scroller {
+  bottom: 80px;
+
+  @media (min-width: $breakpoint-sm-min) {
+    bottom: 100px;
   }
 }
 </style>
