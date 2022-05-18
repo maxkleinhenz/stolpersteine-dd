@@ -14,7 +14,7 @@
         icon="close"
         @click="
           $router.push({
-            name: routeNames.map,
+            name: pageRecord.Map.routeName,
             params: { withTransitionParam },
           })
         "
@@ -29,7 +29,7 @@
       leave-active-class="animated fadeOut"
     >
       <div
-        class="page-scroller absolute flex justify-end full-width z-top"
+        class="page-scroller absolute flex justify-center full-width z-top"
         v-show="showPageScroller"
       >
         <q-btn
@@ -52,12 +52,14 @@ import StolpersteinDetail from 'src/components/StolpersteinDetails.vue';
 import { onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useStore } from 'src/store';
-import { routeNames, withTransitionParam } from 'src/router/routes';
+import { withTransitionParam } from 'src/router/routes';
 import { useMeta, scroll } from 'quasar';
+import { usePages } from 'src/common/PageList';
 
 const store = useStore();
 const route = useRoute();
 const { setVerticalScrollPosition } = scroll;
+const { pageRecord } = usePages();
 
 const stolperstein = ref<StolpersteinFeature | undefined>(undefined);
 const dialogRef = ref<HTMLElement>();
@@ -105,8 +107,7 @@ const goToTop = () => {
 };
 
 const onScroll = (postion: number) => {
-  showPageScroller.value =
-    postion >= (dialogRef.value?.scrollHeight ?? 3000) * 0.1;
+  showPageScroller.value = postion >= 200;
 };
 </script>
 

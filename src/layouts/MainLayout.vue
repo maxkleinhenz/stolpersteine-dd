@@ -25,34 +25,34 @@
     <q-footer bordered class="footer lt-md app-bg text-black">
       <q-tabs class="text-black" dense narrow-indicator>
         <q-route-tab
-          :name="routeNames.home"
+          :name="pageRecord.Home.routeName"
           :icon="
-            route.name?.toString().startsWith(routeNames.home)
+            route.name?.toString().startsWith(pageRecord.Home.routeName)
               ? matHome
               : outlinedHome
           "
           label="Start"
-          :to="{ name: routeNames.home }"
+          :to="{ name: pageRecord.Home.routeName }"
         />
         <q-route-tab
-          :name="routeNames.map"
+          :name="pageRecord.Map.routeName"
           :icon="
-            route.name?.toString().startsWith(routeNames.map)
+            route.name?.toString().startsWith(pageRecord.Map.routeName)
               ? matMap
               : outlinedMap
           "
           label="Karte"
-          :to="{ name: routeNames.map }"
+          :to="{ name: pageRecord.Map.routeName }"
         />
         <q-route-tab
-          :name="routeNames.info"
+          :name="pageRecord.Info.routeName"
           :icon="
-            route.name?.toString().startsWith(routeNames.info)
+            route.name?.toString().startsWith(pageRecord.Info.routeName)
               ? matInfo
               : outlinedInfo
           "
           label="Info"
-          :to="{ name: routeNames.info }"
+          :to="{ name: pageRecord.Info.routeName }"
         />
       </q-tabs>
     </q-footer>
@@ -72,10 +72,12 @@ import TopNavComponent from 'src/components/TopNavComponent.vue';
 import { useMeta, useQuasar } from 'quasar';
 import { useStore } from 'src/store';
 import StolpersteinSidebar from 'src/components/StolpersteinSidebar.vue';
-import { routeNames } from 'src/router/routes';
+import { usePages } from 'src/common/PageList';
 
 const store = useStore();
 const quasar = useQuasar();
+const { pageRecord } = usePages();
+
 useMeta({
   titleTemplate: (title) => `${title} - Stolpersteine Dresden`,
   title: 'Startseite',
@@ -85,7 +87,8 @@ const route = useRoute();
 const sidebarOpen = computed({
   get() {
     // show drawer only on map page
-    if (!route.name?.toString().startsWith(routeNames.map)) return false;
+    if (!route.name?.toString().startsWith(pageRecord.Map.routeName))
+      return false;
     return store.state.isStolpersteinSidebarVisible || quasar.screen.gt.sm;
   },
   set(value: boolean): void {

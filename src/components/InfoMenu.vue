@@ -3,16 +3,16 @@
     <article>
       <section>
         <div class="header text-center">
-          <h1>Informationen</h1>
+          <h1>{{ pageRecord.Info.title }}</h1>
         </div>
 
         <nav role="navigation" aria-label="Info-Menü">
           <router-link
-            v-for="entry in menuEntries"
-            :key="entry.to"
+            v-for="entry in infoMenuRecord"
+            :key="entry.routeName"
             class="info-link text-center q-px-md q-py-md q-my-md"
-            :to="{ name: entry.to, params: { withTransitionParam } }"
-            >{{ entry.name }}</router-link
+            :to="{ name: entry.routeName, params: { withTransitionParam } }"
+            >{{ entry.title }}</router-link
           >
         </nav>
       </section>
@@ -22,8 +22,10 @@
 
 <script setup lang="ts">
 import InfoSubPageWrapper from './InfoSubPageWrapper.vue';
-import { menuEntries } from 'src/common/InfoMenuEntries';
 import { withTransitionParam } from 'src/router/routes';
+import { usePages } from 'src/common/PageList';
+
+const { pageRecord, infoMenuRecord } = usePages();
 </script>
 
 <style scoped lang="scss">

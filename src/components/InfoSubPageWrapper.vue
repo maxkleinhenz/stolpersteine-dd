@@ -2,7 +2,7 @@
   <div class="content-container">
     <div class="back-button-container">
       <q-btn
-        v-show="$route.name !== routeNames.info"
+        v-show="$route.name !== pageRecord.Info.routeName"
         :size="$q.screen.gt.xs ? 'lg' : 'md'"
         round
         text-color="black"
@@ -10,7 +10,7 @@
         icon="arrow_back"
         @click="
           $router.push({
-            name: routeNames.info,
+            name: pageRecord.Info.routeName,
             params: { withTransitionParam },
           })
         "
@@ -23,8 +23,10 @@
 </template>
 
 <script setup lang="ts">
-import { routeNames } from 'src/router/routes';
+import { usePages } from 'src/common/PageList';
 import { withTransitionParam } from 'src/router/routes';
+
+const { pageRecord } = usePages();
 </script>
 
 <style scoped lang="scss">

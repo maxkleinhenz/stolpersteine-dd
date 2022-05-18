@@ -1,4 +1,6 @@
+import { useMeta } from 'quasar';
 import { route } from 'quasar/wrappers';
+import { usePages, RouteNameType } from 'src/common/PageList';
 import { RootState } from 'src/store/state';
 import {
   createMemoryHistory,
@@ -7,6 +9,8 @@ import {
   createWebHistory,
 } from 'vue-router';
 import routes from './routes';
+
+const { pageRecord } = usePages();
 
 /*
  * If not building with SSR mode, you can
@@ -34,6 +38,15 @@ export default route<RootState>(function (/* { store, ssrContext } */) {
     history: createHistory(
       process.env.MODE === 'ssr' ? void 0 : process.env.VUE_ROUTER_BASE
     ),
+  });
+
+  Router.afterEach((to) => {
+    if (to.name) {
+      const page = pageRecord[to.name as RouteNameType];
+      if (page?.title) {
+        useMeta({ title: page.title });
+      }
+    }
   });
 
   return Router;

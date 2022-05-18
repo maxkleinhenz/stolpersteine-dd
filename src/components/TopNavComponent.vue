@@ -6,10 +6,12 @@
   >
     <div class="col q-pa-lg">
       <router-link
-        :to="{ name: routeNames.home }"
+        :to="{ name: pageRecord.Home.routeName }"
         class="nav-link"
         :class="{
-          'link-active': $route.name?.toString().startsWith(routeNames.home),
+          'link-active': $route.name
+            ?.toString()
+            .startsWith(pageRecord.Home.routeName),
         }"
       >
         <span>Start</span>
@@ -17,10 +19,12 @@
     </div>
     <div class="col q-pa-lg">
       <router-link
-        :to="{ name: routeNames.map }"
+        :to="{ name: pageRecord.Map.routeName }"
         class="nav-link"
         :class="{
-          'link-active': $route.name?.toString().startsWith(routeNames.map),
+          'link-active': $route.name
+            ?.toString()
+            .startsWith(pageRecord.Map.routeName),
         }"
       >
         <span>Karte</span>
@@ -28,10 +32,12 @@
     </div>
     <div class="col q-pa-lg">
       <router-link
-        :to="{ name: routeNames.info }"
+        :to="{ name: pageRecord.Info.routeName }"
         class="nav-link"
         :class="{
-          'link-active': $route.name?.toString().startsWith(routeNames.info),
+          'link-active': $route.name
+            ?.toString()
+            .startsWith(pageRecord.Info.routeName),
         }"
       >
         <span>Info</span>
@@ -41,7 +47,9 @@
 </template>
 
 <script setup lang="ts">
-import { routeNames } from 'src/router/routes';
+import { usePages } from 'src/common/PageList';
+
+const { pageRecord } = usePages();
 </script>
 
 <style lang="scss" scoped>

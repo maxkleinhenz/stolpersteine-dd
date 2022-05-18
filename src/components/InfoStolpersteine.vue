@@ -2,7 +2,7 @@
   <InfoSubPageWrapper>
     <article>
       <section>
-        <h3>{{ title }}</h3>
+        <h3>{{ pageRecord.Info_Stolpersteine.title }}</h3>
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius ratione
           debitis doloribus aperiam vel aut magnam quis quidem mollitia, magni
@@ -22,14 +22,10 @@
 </template>
 
 <script setup lang="ts">
-import { useMeta } from 'quasar';
+import { usePages } from 'src/common/PageList';
 import InfoSubPageWrapper from './InfoSubPageWrapper.vue';
 
-const title = 'Die Stolpersteine';
-
-useMeta({
-  title: title,
-});
+const { pageRecord } = usePages();
 </script>
 
 <style scoped></style>

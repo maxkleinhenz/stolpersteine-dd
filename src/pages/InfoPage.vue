@@ -7,12 +7,8 @@
 </template>
 
 <script setup lang="ts">
-import { useMeta } from 'quasar';
 import RouterViewTransistion from 'src/plugins/RouterViewTransistion.vue';
 
-useMeta({
-  title: 'Informationen',
-});
 </script>
 
 <style scoped lang="scss">

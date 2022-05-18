@@ -63,22 +63,20 @@ import { useStore } from 'src/store';
 import { useRouter } from 'vue-router';
 
 import { StolpersteinFeature } from 'src/models/stolperstein.model';
-import { routeNames, withTransitionParam } from 'src/router/routes';
-import { useMeta, useQuasar } from 'quasar';
+import { withTransitionParam } from 'src/router/routes';
+import { useQuasar } from 'quasar';
 import StolpersteinBottomSheet from 'src/components/StolpersteinBottomSheet.vue';
 import StolpersteinSlider from 'src/components/StolpersteinSlider.vue';
 import RouterViewTransistion from 'src/plugins/RouterViewTransistion.vue';
+import { usePages } from 'src/common/PageList';
 
 const store = useStore();
 const router = useRouter();
 const quasar = useQuasar();
+const { pageRecord } = usePages();
 
 const showSelectedSlide = ref(false);
 const selectedStolpersteine = ref<StolpersteinFeature[] | undefined>();
-
-useMeta({
-  title: 'Karte',
-});
 
 watch(
   () => store.state.selectedStolpersteine,
@@ -88,7 +86,7 @@ watch(
     } else if (value.length === 1) {
       showSelectedSlide.value = false;
       await router.push({
-        name: routeNames.mapDetails,
+        name: pageRecord.Map_Details.routeName,
         params: { id: value[0].stolperstein.id, withTransitionParam },
       });
     } else {
@@ -99,7 +97,10 @@ watch(
 );
 
 const goToMap = async () => {
-  await router.push({ name: routeNames.map, params: { withTransitionParam } });
+  await router.push({
+    name: pageRecord.Map.routeName,
+    params: { withTransitionParam },
+  });
 };
 </script>
 

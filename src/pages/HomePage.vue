@@ -15,13 +15,13 @@
               Lebensgeschichten hinter den Steinen stehen
             </p>
             <q-btn
-              class="map-btn q-py-md q-px-lg"
+              class="map-btn app-action-button"
               color="white"
               text-color="black"
               rounded
               icon-right="chevron_right"
               label="Zur interaktiven Karte"
-              @click="$router.push({ name: routeNames.map })"
+              @click="$router.push({ name: pageRecord.Map.routeName })"
             ></q-btn>
           </div>
         </div>
@@ -143,19 +143,17 @@
 </template>
 
 <script setup lang="ts">
-import { useMeta, useQuasar } from 'quasar';
-import { routeNames } from 'src/router/routes';
+import { useQuasar } from 'quasar';
 import { scroll } from 'quasar';
 import { useLandingPageHeight } from 'src/common/LandingPageUtils';
+import { usePages } from 'src/common/PageList';
 import { ref } from 'vue';
 
 const quasar = useQuasar();
 const { setVerticalScrollPosition } = scroll;
 const { landingPageHeightCss } = useLandingPageHeight();
+const { pageRecord } = usePages();
 
-useMeta({
-  title: 'Startseite',
-});
 
 const timelineSectionRef = ref<HTMLElement>();
 

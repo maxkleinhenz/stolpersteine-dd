@@ -1,21 +1,8 @@
+import { usePages } from 'src/common/PageList';
 import { RouteRecordRaw } from 'vue-router';
 
 export const withTransitionParam = 'withTransitionParam';
-
-export const routeNames = {
-  home: 'Home',
-  map: 'Map',
-  mapDetails: 'Map.Details',
-  info: 'Info',
-  infoVerein: 'Info.Verein',
-  infoStolpersteine: 'Info.Stolpersteine',
-  infoResearch: 'Info.Research',
-  infoGlossary: 'Info.Glossary',
-  infoHelp: 'Info.Help',
-  infoContact: 'Info.Contact',
-  infoPrivacy: 'Info.Privacy',
-  infoImprint: 'Info.Imprint',
-};
+const { pageRecord } = usePages();
 
 const routes: RouteRecordRaw[] = [
   {
@@ -24,17 +11,17 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: '',
-        name: routeNames.home,
+        name: pageRecord.Home.routeName,
         component: () => import('pages/HomePage.vue'),
       },
       {
         path: 'karte',
-        name: routeNames.map,
+        name: pageRecord.Map.routeName,
         component: () => import('pages/MapPage.vue'),
         children: [
           {
             path: ':id',
-            name: routeNames.mapDetails,
+            name: pageRecord.Map_Details.routeName,
             component: () => import('components/StolpersteinDetailsDialog.vue'),
           },
         ],
@@ -45,48 +32,50 @@ const routes: RouteRecordRaw[] = [
         children: [
           {
             path: '',
-            name: routeNames.info,
+            name: pageRecord.Info.routeName,
             component: () => import('src/components/InfoMenu.vue'),
           },
           {
             path: 'ueber-stolpersteine-fuer-dresden',
-            name: routeNames.infoVerein,
+            name: pageRecord.Info_Verein.routeName,
             component: () =>
               import('components/InfoUeberStolpersteinVerein.vue'),
           },
           {
             path: 'stolpersteine',
-            name: routeNames.infoStolpersteine,
+            name: pageRecord.Info_Stolpersteine.routeName,
             component: () => import('components/InfoStolpersteine.vue'),
           },
           {
             path: 'recherche',
-            name: routeNames.infoResearch,
+            name: pageRecord.Info_Research.routeName,
+
             component: () => import('components/InfoResearch.vue'),
           },
           {
             path: 'glossar',
-            name: routeNames.infoGlossary,
+            name: pageRecord.Info_Glossary.routeName,
+
             component: () => import('components/InfoGlossary.vue'),
           },
           {
             path: 'hilfe-und-faq',
-            name: routeNames.infoHelp,
+            name: pageRecord.Info_Help.routeName,
             component: () => import('components/InfoHelp.vue'),
           },
           {
             path: 'kontakt',
-            name: routeNames.infoContact,
+            name: pageRecord.Info_Contact.routeName,
             component: () => import('components/InfoContact.vue'),
           },
           {
             path: 'datenschutz',
-            name: routeNames.infoPrivacy,
+            name: pageRecord.Info_Privacy.routeName,
             component: () => import('components/InfoPrivacy.vue'),
           },
           {
             path: 'impressum',
-            name: routeNames.infoImprint,
+            name: pageRecord.Info_Imprint.routeName,
             component: () => import('components/InfoImprint.vue'),
           },
         ],
