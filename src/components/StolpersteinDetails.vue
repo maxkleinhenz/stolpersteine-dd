@@ -14,7 +14,7 @@
       <div class="card-content">
         <div class="row q-gutter-y-md q-gutter-x-md">
           <div class="col-12 col-sm">
-            <div class="card-header">
+            <div class="card-header full">
               <h3
                 class="title text-weight-bold q-my-sm"
                 v-if="props.stolperstein"
@@ -117,7 +117,7 @@
         </q-card-section>
         <q-card-actions align="center" class="q-pb-lg">
           <q-btn
-            class="action-btn"
+            class="app-action-button"
             rounded
             outline
             label="Eine virtuelle Kerze anzünden"
@@ -225,7 +225,11 @@
     </section>
 
     <section class="feedback-section">
-      <q-btn class="action-btn" rounded @click="showNotSupportedDialog = true">
+      <q-btn
+        class="app-action-button"
+        rounded
+        @click="showNotSupportedDialog = true"
+      >
         <q-icon name="mail_outline" /> Feedback zum Stolperstein</q-btn
       >
     </section>
@@ -348,6 +352,9 @@ const loadBiography = async (stolperstein: StolpersteinFeature) => {
 </script>
 
 <style lang="scss" scoped>
+$padding-inline: 1rem;
+$padding-inline-large: 4rem;
+
 section {
   padding-top: 4rem;
   padding-bottom: 4rem;
@@ -359,15 +366,24 @@ section {
 
 .card-header {
   margin-bottom: 1rem;
+  padding-inline: $padding-inline;
+
+  &.full {
+    padding-inline: 0 !important;
+  }
+
+  @media (min-width: $stolperstein-details-width) {
+    padding-inline: $padding-inline-large;
+  }
 
   .title {
-    font-size: 2em;
+    font-size: 2rem;
   }
 }
 
 .card-content {
   font-size: 1rem;
-  padding-inline: 16px;
+  padding-inline: $padding-inline;
 
   &.full {
     padding-inline: 0;
@@ -375,13 +391,8 @@ section {
   }
 
   @media (min-width: $stolperstein-details-width) {
-    padding-inline: 56px;
+    padding-inline: $padding-inline-large;
   }
-}
-
-.action-btn {
-  padding: 12px 32px;
-  margin-inline: 12px;
 }
 
 .address {
