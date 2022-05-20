@@ -6,6 +6,9 @@
           src="~assets/images/Josef_Altbach_Stolperstein_Dresden.jpg"
           fit="cover"
         >
+          <div class="absolute-bottom text-subtitle1 text-center">
+            Nur Platzhalter in der Vorabversion
+          </div>
           <template v-slot:loading>
             <q-skeleton square width="100%" height="100%" />
           </template>
@@ -147,24 +150,27 @@
       </div>
     </section>
 
-    <section class="biography-section" aria-labelledby="">
-      <div>
-        <div class="card-header">
-          <h3 class="title text-center text-weight-bold q-my-sm">Biografie</h3>
-        </div>
-        <div class="card-content">
-          <p>Josef Altbach wurde am 28. Oktober 1886 in Wyszków geboren.</p>
-          <p>
-            Seine zweite Frau Sarah wurde am 5. Juli 1882 geboren. Die Ehe, die
-            nach jüdischem Ritus geschlossen wurde, wurde in Deutschland nicht
-            anerkannt. Josef Altbach lebte seit 1926 in Deutschland und war
-            Inhaber eines Zigarren- und Tabakgeschäfts. Im Zuge der sogenannten
-            Polen-Aktion wurde die Familie am 28. Oktober 1938 nach Polen
-            zwangsausgewiesen. Die Familie ging vermutlich über das
-            oberschlesische Beuthen (Bytom) nach Lemberg (Lviv) zu Verwandten.
-            Die genauen Todesumstände der beiden sind unbekannt.
-          </p>
-        </div>
+    <section class="biography-section relative-position" aria-labelledby="">
+      <div
+        class="text-subtitle1 absolute-top custom-caption text-center q-mt-sm"
+      >
+        <div class="text-subtitle1">Nur Platzhalter in der Vorabversion</div>
+      </div>
+      <div class="card-header">
+        <h3 class="title text-center text-weight-bold q-my-sm">Biografie</h3>
+      </div>
+      <div class="card-content">
+        <p>Josef Altbach wurde am 28. Oktober 1886 in Wyszków geboren.</p>
+        <p>
+          Seine zweite Frau Sarah wurde am 5. Juli 1882 geboren. Die Ehe, die
+          nach jüdischem Ritus geschlossen wurde, wurde in Deutschland nicht
+          anerkannt. Josef Altbach lebte seit 1926 in Deutschland und war
+          Inhaber eines Zigarren- und Tabakgeschäfts. Im Zuge der sogenannten
+          Polen-Aktion wurde die Familie am 28. Oktober 1938 nach Polen
+          zwangsausgewiesen. Die Familie ging vermutlich über das
+          oberschlesische Beuthen (Bytom) nach Lemberg (Lviv) zu Verwandten. Die
+          genauen Todesumstände der beiden sind unbekannt.
+        </p>
       </div>
     </section>
 
@@ -192,11 +198,23 @@
             <q-carousel-slide
               :name="1"
               img-src="~assets/images/Josef_Altbach_Stolperstein_Dresden.jpg"
-            />
+            >
+              <div class="absolute-top text-subtitle1 custom-caption">
+                <div class="text-subtitle1">
+                  Nur Platzhalter in der Vorabversion
+                </div>
+              </div>
+            </q-carousel-slide>
             <q-carousel-slide
               :name="2"
               img-src="~assets/images/portrait-placeholder.png"
-            />
+            >
+              <div class="absolute-top text-subtitle1 custom-caption">
+                <div class="text-subtitle1">
+                  Nur Platzhalter in der Vorabversion
+                </div>
+              </div>
+            </q-carousel-slide>
           </q-carousel>
         </div>
       </div>
@@ -445,5 +463,12 @@ section {
       margin-right: 10px;
     }
   }
+}
+
+.custom-caption {
+  text-align: center;
+  padding: 12px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.3);
 }
 </style>
