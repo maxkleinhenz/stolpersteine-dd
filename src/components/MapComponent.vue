@@ -27,11 +27,26 @@
         @click="zoomOut"
       ></q-btn>
     </div>
+
+    <transition
+      enter-active-class="animated fadeIn"
+      leave-active-class="animated fadeOut"
+    >
+      <div class="spinner-container relative-position" v-if="isLoading">
+        <div class="backdrop"></div>
+        <q-spinner
+          class="spinner"
+          color="secondary"
+          size="8em"
+          :thickness="6"
+        />
+      </div>
+    </transition>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, onBeforeUnmount, computed, watch } from 'vue';
+import { onMounted, onBeforeUnmount, computed, watch, ref } from 'vue';
 import { Map as MaplibreMap, LngLat } from 'maplibre-gl';
 import { useStolpersteinMap } from 'src/common/StolpersteinMap';
 import { useStore } from 'src/store';
@@ -50,8 +65,10 @@ const {
 const dresden = new LngLat(13.7372621, 51.0504088);
 const apiKey = process.env.MAPTILER_API_KEY ?? '';
 
+const isLoading = ref(true);
+
 let map: MaplibreMap;
-let mapInitializeTimer: NodeJS.Timeout;
+// let mapInitializeTimer: NodeJS.Timeout;
 
 const stolpersteine = computed(() => store.getters.filteredStolpersteine());
 watch(
@@ -79,19 +96,20 @@ watch(
 );
 
 onMounted(() => {
-  mapInitializeTimer = setTimeout(function () {
-    map = createMap(apiKey, dresden);
-    map.on('load', () => {
-      setStolpersteinSource(map, stolpersteine.value);
-      setLayer(map);
-      map.resize();
-    });
-    map.keyboard.disable();
-  }, 400);
+  // mapInitializeTimer = setTimeout(function () {
+  map = createMap(apiKey, dresden);
+  map.on('load', () => {
+    setStolpersteinSource(map, stolpersteine.value);
+    setLayer(map);
+    map.resize();
+    isLoading.value = false;
+  });
+  map.keyboard.disable();
+  // }, 0);
 });
 
 onBeforeUnmount(() => {
-  clearTimeout(mapInitializeTimer);
+  // clearTimeout(mapInitializeTimer);
 
   map?.remove();
 });
@@ -145,6 +163,27 @@ const zoomOut = () => {
   @media (min-width: $breakpoint-md-min) {
     margin-bottom: 30px;
     margin-right: 48px;
+  }
+}
+
+.spinner-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+
+  .spinner {
+    color: $stolperstein-color;
+  }
+
+  .backdrop {
+    position: absolute;
+    background-color: $dark;
+    opacity: $backdrop-opacity;
+    height: 100%;
+    width: 100%;
   }
 }
 </style>
