@@ -105,8 +105,6 @@ const goToMap = async () => {
 </script>
 
 <style lang="scss" scoped>
-$backdrop-opacity: 0.5;
-
 .map-page {
   overflow: hidden;
 }

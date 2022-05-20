@@ -19,8 +19,6 @@
 </template>
 
 <script setup lang="ts">
-import { watch } from 'vue';
-
 const props = defineProps({
   label: {
     type: String,
@@ -41,13 +39,6 @@ const props = defineProps({
     default: undefined,
   },
 });
-
-watch(
-  () => props.denseMode,
-  (value: boolean) => {
-    console.log('widthLabel', value);
-  }
-);
 </script>
 
 <style scoped lang="scss">
