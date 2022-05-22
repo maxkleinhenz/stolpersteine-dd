@@ -34,12 +34,7 @@
     >
       <div class="spinner-container relative-position" v-if="isLoading">
         <div class="backdrop"></div>
-        <q-spinner
-          class="spinner"
-          color="secondary"
-          size="8em"
-          :thickness="6"
-        />
+        <q-spinner class="spinner" color="primary" size="8em" :thickness="4" />
       </div>
     </transition>
   </div>
@@ -173,10 +168,6 @@ const zoomOut = () => {
   justify-content: center;
   align-items: center;
   z-index: 100;
-
-  .spinner {
-    color: $stolperstein-color;
-  }
 
   .backdrop {
     position: absolute;
