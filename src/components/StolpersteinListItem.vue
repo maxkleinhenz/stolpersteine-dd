@@ -43,6 +43,12 @@ import { StolpersteinFeature } from 'src/models/stolperstein.model';
 import { useRouter } from 'vue-router';
 import { withTransitionParam } from 'src/router/routes';
 import { usePages } from 'src/common/PageList';
+import { useQuasar } from 'quasar';
+
+const $q = useQuasar();
+defineExpose({
+  $q,
+});
 
 interface Props {
   stolpersteinFeature: StolpersteinFeature;
