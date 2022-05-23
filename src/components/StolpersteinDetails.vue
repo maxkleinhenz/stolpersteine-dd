@@ -7,7 +7,7 @@
           fit="cover"
         >
           <div class="absolute-bottom text-subtitle1 text-center">
-            Nur Platzhalter in der Vorabversion
+            Vorschau für Vorabversion
           </div>
           <template v-slot:loading>
             <q-skeleton square width="100%" height="100%" />
@@ -72,7 +72,7 @@
         </div>
       </div>
       <div
-        class="card-content row col-12 col-sm items-start"
+        class="card-content row col-12 col-sm items-start q-mt-xl"
         :class="{
           'q-gutter-x-sm': !isDenseMode,
           full: quasar.screen.lt.sm,
@@ -118,12 +118,12 @@
             haben an diesem Ort eine Kerze angezündet.
           </p>
         </q-card-section>
-        <q-card-actions align="center" class="q-pb-lg">
+        <q-card-actions align="center" class="card-content q-pb-lg">
           <q-btn
             class="app-action-button"
             rounded
             outline
-            label="Eine virtuelle Kerze anzünden"
+            label="virtuelle Kerze anzünden"
             @click="showNotSupportedDialog = true"
           >
           </q-btn>
@@ -154,7 +154,7 @@
       <div
         class="text-subtitle1 absolute-top custom-caption text-center q-mt-sm"
       >
-        <div class="text-subtitle1">Nur Platzhalter in der Vorabversion</div>
+        <div class="text-subtitle1">Vorschau für Vorabversion</div>
       </div>
       <div class="card-header">
         <h3 class="title text-center text-weight-bold q-my-sm">Biografie</h3>
@@ -200,9 +200,7 @@
               img-src="~assets/images/Josef_Altbach_Stolperstein_Dresden.jpg"
             >
               <div class="absolute-top text-subtitle1 custom-caption">
-                <div class="text-subtitle1">
-                  Nur Platzhalter in der Vorabversion
-                </div>
+                <div class="text-subtitle1">Vorschau für Vorabversion</div>
               </div>
             </q-carousel-slide>
             <q-carousel-slide
@@ -210,9 +208,7 @@
               img-src="~assets/images/portrait-placeholder.png"
             >
               <div class="absolute-top text-subtitle1 custom-caption">
-                <div class="text-subtitle1">
-                  Nur Platzhalter in der Vorabversion
-                </div>
+                <div class="text-subtitle1">Vorschau für Vorabversion</div>
               </div>
             </q-carousel-slide>
           </q-carousel>
