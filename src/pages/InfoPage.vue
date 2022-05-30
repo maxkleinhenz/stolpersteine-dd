@@ -1,5 +1,11 @@
 <template>
-  <q-page class="info-page column" :class="{ 'footer-space': $q.screen.lt.sm }">
+  <q-page
+    class="info-page column"
+    :class="[
+      { 'footer-space': $q.screen.lt.sm },
+      { 'mobile-menu': isMenuMobile },
+    ]"
+  >
     <div class="column items-center">
       <RouterViewTransistion :name="'fade'"></RouterViewTransistion>
     </div>
@@ -7,7 +13,20 @@
 </template>
 
 <script setup lang="ts">
+import { useQuasar } from 'quasar';
+import { usePages } from 'src/common/PageList';
 import RouterViewTransistion from 'src/plugins/RouterViewTransistion.vue';
+import { computed } from 'vue';
+import { useRoute } from 'vue-router';
+
+const quasar = useQuasar();
+const route = useRoute();
+const { pageRecord } = usePages();
+
+const isMenuMobile = computed(() => {
+  console.log(quasar.screen.lt.sm, pageRecord.Info.routeName, route.name);
+  return quasar.screen.lt.sm && pageRecord.Info.routeName === route.name;
+});
 </script>
 
 <style scoped lang="scss">

@@ -43,7 +43,7 @@
           nesciunt, id explicabo harum architecto sint aspernatur quae vel!
         </p>
       </section>
-      <section class="info-section">
+      <section>
         <h3>{{ title }}</h3>
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius ratione

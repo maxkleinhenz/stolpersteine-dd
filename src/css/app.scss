@@ -46,12 +46,12 @@
 }
 
 .info-page {
-  // background-color: $app-background-color-light;
+  background-color: $app-background-color-light;
 
   article {
     section {
       background-color: $app-background-color-light;
-      padding: 4rem 1rem 2rem;
+      padding: 0rem 1rem 6rem;
 
       &:first-child {
         padding-top: 6rem;
@@ -85,6 +85,16 @@
         margin-left: 1rem;
         margin-right: 1rem;
       }
+    }
+  }
+}
+
+.mobile-menu {
+  background-color: $app-background-color;
+
+  & article {
+    section {
+      background-color: $app-background-color !important;
     }
   }
 }

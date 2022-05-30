@@ -1,11 +1,5 @@
 <template>
-  <q-layout
-    view="hHh LpR fFf"
-    :class="[
-      { 'default-layout': isMobileDefaultLayout },
-      { 'info-content-layout': isMobileInfoContentLayout },
-    ]"
-  >
+  <q-layout view="hHh LpR fFf">
     <TopNavComponent class="gt-xs"></TopNavComponent>
 
     <q-drawer
@@ -82,7 +76,7 @@ import { usePages } from 'src/common/PageList';
 
 const store = useStore();
 const quasar = useQuasar();
-const { pageRecord, InfoRouteNameTypeArray } = usePages();
+const { pageRecord } = usePages();
 
 useMeta({
   titleTemplate: (title) => `${title} - Stolpersteine Dresden`,
@@ -102,38 +96,12 @@ const sidebarOpen = computed({
   },
 });
 
-const isMobileDefaultLayout = computed(() => {
-  return (
-    quasar.screen.lt.md &&
-    !(InfoRouteNameTypeArray as ReadonlyArray<string>).includes(
-      route.name?.toString() ?? ''
-    )
-  );
-});
-
-const isMobileInfoContentLayout = computed(() => {
-  return (
-    quasar.screen.lt.md &&
-    (InfoRouteNameTypeArray as ReadonlyArray<string>).includes(
-      route.name?.toString() ?? ''
-    )
-  );
-});
-
 onMounted(async () => {
   await store.actions.loadStolpersteineFeatures();
 });
 </script>
 
 <style scoped lang="scss">
-.default-layout {
-  background-color: $app-background-color;
-}
-
-.info-content-layout {
-  background-color: $app-background-color-light;
-}
-
 .footer {
   height: $app-footer-height;
   background-color: #fbf3e4;
