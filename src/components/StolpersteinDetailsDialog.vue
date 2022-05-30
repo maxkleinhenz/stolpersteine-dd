@@ -3,6 +3,7 @@
     class="dialog-content shadow-5 full-height app-bg scroll"
     ref="dialogRef"
     v-scroll="onScroll"
+    v-touch-pan.horizontal.prevent="handlePan"
   >
     <div class="absolute flex justify-end full-width z-top">
       <q-btn
@@ -113,6 +114,17 @@ const goToMap = async () => {
 
 const onScroll = (postion: number) => {
   showPageScroller.value = postion >= 200;
+};
+
+const handlePan = (ev: {
+  offset: {
+    x: number;
+    y: number;
+  };
+}) => {
+  if (ev.offset.x < -150) {
+    void goToMap();
+  }
 };
 </script>
 
