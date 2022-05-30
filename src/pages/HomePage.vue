@@ -154,7 +154,6 @@ const { setVerticalScrollPosition } = scroll;
 const { landingPageHeightCss } = useLandingPageHeight();
 const { pageRecord } = usePages();
 
-
 const timelineSectionRef = ref<HTMLElement>();
 
 const onClickExpand = () => {
@@ -167,7 +166,11 @@ const onClickExpand = () => {
 
 <style scoped lang="scss">
 section {
-  padding: 12px 24px 12px 24px;
+  padding: 1rem 2rem 1rem 2rem;
+
+  &:last-child {
+    padding-bottom: $app-footer-height;
+  }
 }
 
 .header-section {

@@ -25,6 +25,7 @@
     >
       <div
         class="stolperstein-slider-container absolute-bottom"
+        :class="{ 'footer-space': $q.screen.lt.sm }"
         v-if="showSelectedSlide"
       >
         <StolpersteinSlider
@@ -123,7 +124,7 @@ const goToMap = async () => {
 }
 
 .backdrop {
-  position: fixed;
+  position: absolute;
   left: 0;
   right: 0;
   top: 0;

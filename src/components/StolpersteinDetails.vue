@@ -1,5 +1,5 @@
 <template>
-  <article class="abb-bg">
+  <article class="app-bg" :class="{ 'footer-space': $q.screen.lt.sm }">
     <section class="header-section light q-gutter-y-lg" aria-labelledby="">
       <div>
         <q-img

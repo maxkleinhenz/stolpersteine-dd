@@ -1,12 +1,13 @@
 export const usePages = () => {
   return {
+    InfoRouteNameTypeArray,
     InfoMenuRouteNameTypeArray,
     pageRecord,
     infoMenuRecord,
   };
 };
 
-export const InfoMenuRouteNameTypeArray = [
+const InfoMenuRouteNameTypeArray = [
   'Info_Verein',
   'Info_Stolpersteine',
   'Info_Research',
@@ -16,14 +17,26 @@ export const InfoMenuRouteNameTypeArray = [
   'Info_Privacy',
   'Info_Imprint',
 ] as const;
-export type InfoMenuRouteNameType = typeof InfoMenuRouteNameTypeArray[number];
+type InfoMenuRouteNameType = typeof InfoMenuRouteNameTypeArray[number];
 
-export const RouteNameTypeArray = [
+const InfoRouteNameTypeArray = [
+  'Info',
+  'Info_Verein',
+  'Info_Stolpersteine',
+  'Info_Research',
+  'Info_Glossary',
+  'Info_Help',
+  'Info_Contact',
+  'Info_Privacy',
+  'Info_Imprint',
+] as const;
+// type InfoRouteNameType = typeof InfoRouteNameTypeArray[number];
+
+const RouteNameTypeArray = [
   'Home',
   'Map',
   'Map_Details',
-  'Info',
-  ...InfoMenuRouteNameTypeArray,
+  ...InfoRouteNameTypeArray,
 ] as const;
 export type RouteNameType = typeof RouteNameTypeArray[number];
 

@@ -41,15 +41,21 @@
   }
 }
 
+.footer-space {
+  padding-bottom: $app-footer-height;
+}
+
 .info-page {
-  background-color: $app-background-color-light;
+  // background-color: $app-background-color-light;
 
   article {
-    padding-top: 2rem;
-
     section {
       background-color: $app-background-color-light;
       padding: 4rem 1rem 2rem;
+
+      &:first-child {
+        padding-top: 6rem;
+      }
 
       h1,
       h3 {

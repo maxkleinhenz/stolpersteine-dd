@@ -1,6 +1,12 @@
 <template>
-  <q-layout view="hHh LpR fFf">
-    <TopNavComponent class="gt-sm"></TopNavComponent>
+  <q-layout
+    view="hHh LpR fFf"
+    :class="[
+      { 'default-layout': isMobileDefaultLayout },
+      { 'info-content-layout': isMobileInfoContentLayout },
+    ]"
+  >
+    <TopNavComponent class="gt-xs"></TopNavComponent>
 
     <q-drawer
       v-if="quasar.screen.gt.xs"
@@ -22,8 +28,8 @@
       </router-view>
     </q-page-container>
 
-    <q-footer bordered class="footer lt-md app-bg text-black">
-      <q-tabs class="text-black" dense narrow-indicator>
+    <footer class="footer fixed-bottom footer z-max lt-sm app-bg text-black">
+      <q-tabs class="nav-tabs text-black" dense narrow-indicator>
         <q-route-tab
           :name="pageRecord.Home.routeName"
           :icon="
@@ -55,7 +61,7 @@
           :to="{ name: pageRecord.Info.routeName }"
         />
       </q-tabs>
-    </q-footer>
+    </footer>
   </q-layout>
 </template>
 
@@ -76,7 +82,7 @@ import { usePages } from 'src/common/PageList';
 
 const store = useStore();
 const quasar = useQuasar();
-const { pageRecord } = usePages();
+const { pageRecord, InfoRouteNameTypeArray } = usePages();
 
 useMeta({
   titleTemplate: (title) => `${title} - Stolpersteine Dresden`,
@@ -96,13 +102,47 @@ const sidebarOpen = computed({
   },
 });
 
+const isMobileDefaultLayout = computed(() => {
+  return (
+    quasar.screen.lt.md &&
+    !(InfoRouteNameTypeArray as ReadonlyArray<string>).includes(
+      route.name?.toString() ?? ''
+    )
+  );
+});
+
+const isMobileInfoContentLayout = computed(() => {
+  return (
+    quasar.screen.lt.md &&
+    (InfoRouteNameTypeArray as ReadonlyArray<string>).includes(
+      route.name?.toString() ?? ''
+    )
+  );
+});
+
 onMounted(async () => {
   await store.actions.loadStolpersteineFeatures();
 });
 </script>
 
 <style scoped lang="scss">
+.default-layout {
+  background-color: $app-background-color;
+}
+
+.info-content-layout {
+  background-color: $app-background-color-light;
+}
+
 .footer {
-  border-top: 1px solid $primary;
+  height: $app-footer-height;
+  background-color: #fbf3e4;
+  outline: 1px solid $primary;
+  box-shadow: 0 -4px 8px 0px #0000001f;
+}
+
+.footer,
+.nav-tabs {
+  border-radius: $app-card-border-radius $app-card-border-radius 0 0;
 }
 </style>

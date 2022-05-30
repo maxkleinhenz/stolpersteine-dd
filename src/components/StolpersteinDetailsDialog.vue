@@ -1,6 +1,6 @@
 <template>
   <div
-    class="dialog-content shadow-5 full-height app-bg scroll z-top"
+    class="dialog-content shadow-5 full-height app-bg scroll"
     ref="dialogRef"
     v-scroll="onScroll"
   >
@@ -12,12 +12,7 @@
         text-color="black"
         color="white"
         icon="close"
-        @click="
-          $router.push({
-            name: pageRecord.Map.routeName,
-            params: { withTransitionParam },
-          })
-        "
+        @click="goToMap()"
       />
     </div>
     <div class="full-width full-height">
@@ -31,6 +26,7 @@
       <div
         class="page-scroller absolute flex justify-center full-width z-top"
         v-show="showPageScroller"
+        :class="{ 'footer-space': $q.screen.lt.sm }"
       >
         <q-btn
           class="fixed q-ma-md"
@@ -50,7 +46,7 @@
 import { StolpersteinFeature } from 'src/models/stolperstein.model';
 import StolpersteinDetail from 'src/components/StolpersteinDetails.vue';
 import { onMounted, ref, watch } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { useStore } from 'src/store';
 import { withTransitionParam } from 'src/router/routes';
 import { useMeta, scroll } from 'quasar';
@@ -58,6 +54,7 @@ import { usePages } from 'src/common/PageList';
 
 const store = useStore();
 const route = useRoute();
+const router = useRouter();
 const { setVerticalScrollPosition } = scroll;
 const { pageRecord } = usePages();
 
@@ -98,12 +95,20 @@ const setDetailStolperstein = (stolpersteinId: number) => {
       });
     } else {
       stolperstein.value = undefined;
+      void goToMap();
     }
   }
 };
 
 const goToTop = () => {
   if (dialogRef.value) setVerticalScrollPosition(dialogRef.value, 0, 200);
+};
+
+const goToMap = async () => {
+  await router.push({
+    name: pageRecord.Map.routeName,
+    params: { withTransitionParam },
+  });
 };
 
 const onScroll = (postion: number) => {
@@ -118,9 +123,11 @@ const onScroll = (postion: number) => {
   top: 0;
   bottom: 0;
   width: min(100vw, #{$stolperstein-details-width});
+  z-index: 999;
 
   @media (min-width: $breakpoint-sm-min) {
     position: fixed;
+    z-index: 99999;
   }
 }
 

@@ -80,10 +80,11 @@ const drawerOpenRatio = computed(() => {
 
 const drawerStyle = computed(() => {
   return {
-    height: `${drawerMaxHeight.value}px`,
+    height: `calc(${drawerMaxHeight.value}px + ${props.marginBottom ?? 0}px)`,
     transform: `translateY(${-drawerPos.value}px)`,
     bottom: `${props.marginBottom ?? 0}px`,
     top: `calc(100% - ${props.marginBottom ?? 0}px)`,
+    'padding-bottom': `${props.marginBottom ?? 0}px`,
   };
 });
 
@@ -206,6 +207,7 @@ $draggable-width: 3em;
 
 .slide-drawer {
   border-radius: 20px 20px 0 0;
+  box-shadow: 0 -4px 8px 0px #0000001f;
   z-index: 100;
 }
 

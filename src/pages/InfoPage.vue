@@ -1,5 +1,5 @@
 <template>
-  <q-page class="info-page column">
+  <q-page class="info-page column" :class="{ 'footer-space': $q.screen.lt.sm }">
     <div class="column items-center">
       <RouterViewTransistion :name="'fade'"></RouterViewTransistion>
     </div>
@@ -8,7 +8,6 @@
 
 <script setup lang="ts">
 import RouterViewTransistion from 'src/plugins/RouterViewTransistion.vue';
-
 </script>
 
 <style scoped lang="scss">

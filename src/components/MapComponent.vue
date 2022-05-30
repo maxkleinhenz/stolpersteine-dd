@@ -7,7 +7,10 @@
         alt="MapTiler logo"
     /></a>
     <div id="map" ref="mapContainer"></div>
-    <div class="map-controls column absolute-bottom-right">
+    <div
+      class="map-controls column absolute-bottom-right"
+      :class="{ 'footer-space': $q.screen.lt.sm }"
+    >
       <q-btn
         class="q-my-sm"
         :size="quasar.screen.gt.xs ? 'lg' : 'md'"
