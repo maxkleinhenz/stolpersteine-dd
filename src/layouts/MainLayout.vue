@@ -137,8 +137,13 @@ onMounted(async () => {
 .footer {
   height: $app-footer-height;
   background-color: #fbf3e4;
-  outline: 1px solid $primary;
   box-shadow: 0 -4px 8px 0px #0000001f;
+  border-color: $primary;
+  border-width: 1px 1px 0 1px;
+  border-style: solid;
+  box-sizing: content-box;
+  right: -1px;
+  left: -1px;
 }
 
 .footer,

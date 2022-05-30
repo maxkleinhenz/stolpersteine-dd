@@ -86,10 +86,6 @@
           >
             <div>
               <p>Über 100 Stolpersteine wurden bis jetzt in Dresden verlegt.</p>
-              <p>
-                Zwei Stolpersteine erinnern an den Textilkaufmann Joseph Fränkel
-                - jeweils einer an seinem Wohnwort und Arbeitsplatz.
-              </p>
             </div>
           </q-timeline-entry>
 

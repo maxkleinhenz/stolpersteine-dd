@@ -206,7 +206,7 @@ onBeforeUnmount(() => {
 $draggable-width: 3em;
 
 .slide-drawer {
-  border-radius: 20px 20px 0 0;
+  border-radius: 25px 25px 0 0;
   box-shadow: 0 -4px 8px 0px #0000001f;
   z-index: 100;
 }
