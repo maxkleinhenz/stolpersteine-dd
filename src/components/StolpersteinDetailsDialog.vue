@@ -50,9 +50,10 @@ import { onMounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useStore } from 'src/store';
 import { withTransitionParam } from 'src/router/routes';
-import { useMeta, scroll } from 'quasar';
+import { useMeta, scroll, useQuasar } from 'quasar';
 import { usePages } from 'src/common/PageList';
 
+const quasar = useQuasar();
 const store = useStore();
 const route = useRoute();
 const router = useRouter();
@@ -122,7 +123,12 @@ const handlePan = (ev: {
     y: number;
   };
 }) => {
-  if (ev.offset.x < -150) {
+  if (
+    // gt sx -> opens sidebar from left
+    // lt sm -> opens sidebar from right
+    (quasar.screen.gt.xs && ev.offset.x < -150) ||
+    (!quasar.screen.gt.xs && ev.offset.x > 150)
+  ) {
     void goToMap();
   }
 };
