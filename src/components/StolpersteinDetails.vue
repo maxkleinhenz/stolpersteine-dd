@@ -171,6 +171,40 @@
           oberschlesische Beuthen (Bytom) nach Lemberg (Lviv) zu Verwandten. Die
           genauen Todesumstände der beiden sind unbekannt.
         </p>
+        <p>
+          Die Enkelinnen von Sarah und Josef Altbach spendeten die Stolpersteine
+          2012.
+        </p>
+
+        <div class="references">
+          <q-expansion-item
+            v-model="referencesExpanded"
+            expand-separator
+            icon="link"
+            label="Quellenangaben"
+            class="app-references-expansion overflow-hidden"
+            :class="{ 'shadow-1': referencesExpanded }"
+            :header-class="referencesExpanded ? 'bg-grey-3' : undefined"
+            style="border-radius: 30px"
+          >
+            <q-card>
+              <q-card-section>
+                <ul>
+                  <li>Angaben der Familie</li>
+                  <li>
+                    Arbeitskreis Gedenkbuch der Gesellschaft für
+                    Christlich-Jüdische Zusammenarbeit Dresden e.V. (2006):
+                    <span class="text-italic"
+                      >Buch der Erinnerung. Juden in Dresden: Deportiert,
+                      ermordet, verschollen.</span
+                    >
+                    1933-1945. Thelem Universitätsverlag Dresden, S. 26.
+                  </li>
+                </ul>
+              </q-card-section>
+            </q-card>
+          </q-expansion-item>
+        </div>
       </div>
     </section>
 
@@ -292,6 +326,8 @@ const otherStolpersteine = ref<StolpersteinFeature[]>();
 
 const showNotSupportedDialog = ref<boolean>(false);
 const isDenseMode = computed(() => quasar.screen.lt.sm);
+
+const referencesExpanded = ref(false);
 
 watch(
   () => props.stolperstein,
@@ -436,6 +472,24 @@ section {
 
 .biography-section {
   background-color: white;
+
+  .references {
+    margin-top: 3.5rem;
+
+    .app-references-expansion {
+      transition: box-shadow 350ms ease-in-out;
+    }
+
+    ul {
+      list-style-type: none;
+      margin-left: 0rem;
+      padding: 0;
+
+      li {
+        padding-bottom: 1.5rem;
+      }
+    }
+  }
 }
 
 .image-section {
