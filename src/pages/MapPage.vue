@@ -58,7 +58,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import MapComponent from 'components/MapComponent.vue';
 import { useStore } from 'src/store';
 import { useRouter } from 'vue-router';
@@ -70,6 +70,7 @@ import StolpersteinBottomSheet from 'src/components/StolpersteinBottomSheet.vue'
 import StolpersteinSlider from 'src/components/StolpersteinSlider.vue';
 import RouterViewTransistion from 'src/plugins/RouterViewTransistion.vue';
 import { usePages } from 'src/common/PageList';
+import { useStolpersteinMap } from 'src/common/StolpersteinMap';
 
 const store = useStore();
 const router = useRouter();
@@ -77,15 +78,28 @@ const quasar = useQuasar();
 const { pageRecord } = usePages();
 
 const showSelectedSlide = ref(false);
-const selectedStolpersteine = ref<StolpersteinFeature[] | undefined>();
+
+const selectedStolpersteineRef = ref<StolpersteinFeature[] | undefined>();
+const selectedStolpersteine = computed({
+  get(): StolpersteinFeature[] | undefined {
+    return selectedStolpersteineRef.value;
+  },
+  set(val: StolpersteinFeature[] | undefined) {
+    const { selectedStolperstein } = useStolpersteinMap();
+    selectedStolpersteineRef.value = val;
+    selectedStolperstein.value = val;
+  },
+});
 
 watch(
   () => store.state.selectedStolpersteine,
   async (value) => {
     if (!value?.length) {
       showSelectedSlide.value = false;
+      selectedStolpersteine.value = undefined;
     } else if (value.length === 1) {
       showSelectedSlide.value = false;
+      selectedStolpersteine.value = value;
       await router.push({
         name: pageRecord.Map_Details.routeName,
         params: { id: value[0].stolperstein.id, withTransitionParam },

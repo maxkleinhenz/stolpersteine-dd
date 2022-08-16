@@ -46,7 +46,7 @@
 <script setup lang="ts">
 import { StolpersteinFeature } from 'src/models/stolperstein.model';
 import StolpersteinDetail from 'src/components/StolpersteinDetails.vue';
-import { onMounted, ref, watch } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useStore } from 'src/store';
 import { withTransitionParam } from 'src/router/routes';
@@ -60,7 +60,20 @@ const router = useRouter();
 const { setVerticalScrollPosition } = scroll;
 const { pageRecord } = usePages();
 
-const stolperstein = ref<StolpersteinFeature | undefined>(undefined);
+const stolpersteinRef = ref<StolpersteinFeature | undefined>(undefined);
+const stolperstein = computed({
+  get(): StolpersteinFeature | undefined {
+    return stolpersteinRef.value;
+  },
+  set(val: StolpersteinFeature | undefined) {
+    stolpersteinRef.value = val;
+    if (val) {
+      store.mutations.selectStolpersteine([val]);
+    } else {
+      store.mutations.selectStolpersteine(undefined);
+    }
+  },
+});
 const dialogRef = ref<HTMLElement>();
 const showPageScroller = ref(false);
 
@@ -84,16 +97,14 @@ const setDetailStolperstein = (stolpersteinId: number) => {
     return;
   } else {
     // find detail stolperstein
-    const foundStolperstein = store.state.stolpersteine.filter((s) => {
-      return s.stolperstein.id === stolpersteinId;
-    });
+    const foundStolperstein = store.getters.getStolpersteinById(stolpersteinId);
 
-    if (foundStolperstein?.length) {
-      stolperstein.value = foundStolperstein[0];
+    if (foundStolperstein) {
+      stolperstein.value = foundStolperstein;
       goToTop();
 
       useMeta({
-        title: foundStolperstein[0].stolperstein.name,
+        title: foundStolperstein.stolperstein.name,
       });
     } else {
       stolperstein.value = undefined;
@@ -107,6 +118,7 @@ const goToTop = () => {
 };
 
 const goToMap = async () => {
+  stolperstein.value = undefined;
   await router.push({
     name: pageRecord.Map.routeName,
     params: { withTransitionParam },

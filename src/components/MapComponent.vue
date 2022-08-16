@@ -57,7 +57,7 @@ const {
   resize,
   setLayer,
   setStolpersteinSource,
-  selectedStolpersteine,
+  selectedStolperstein,
 } = useStolpersteinMap();
 
 const dresden = new LngLat(13.7372621, 51.0504088);
@@ -87,7 +87,7 @@ watch(
 );
 
 watch(
-  () => selectedStolpersteine.value,
+  () => selectedStolperstein.value,
   (value) => {
     store.mutations.selectStolpersteine(value);
   }

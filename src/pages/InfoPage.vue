@@ -24,7 +24,6 @@ const route = useRoute();
 const { pageRecord } = usePages();
 
 const isMenuMobile = computed(() => {
-  console.log(quasar.screen.lt.sm, pageRecord.Info.routeName, route.name);
   return quasar.screen.lt.sm && pageRecord.Info.routeName === route.name;
 });
 </script>
