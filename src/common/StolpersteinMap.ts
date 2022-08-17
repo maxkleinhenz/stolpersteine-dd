@@ -7,6 +7,7 @@ import {
   GeoJSONSource,
   GeoJSONSourceSpecification,
 } from 'maplibre-gl';
+import { debounce } from 'quasar';
 import { Geometry } from 'src/models/stolperstein-result.model';
 import {
   GroupedStolpersteinFeature,
@@ -36,9 +37,9 @@ const selectedStolpersteinMarker = createSelectedStolpersteinMarker();
 export function useStolpersteinMap() {
   return {
     createMap,
-    resize,
-    setLayer,
+    initMap,
     setStolpersteinSource,
+    resize,
     selectedStolperstein,
   };
 }
@@ -53,6 +54,7 @@ const selectedStolperstein = computed({
   set(val: StolpersteinFeature[] | undefined) {
     selectedStolpersteinRef.value = val;
     selectedStolpersteinMarker.remove();
+
     // center map on point
     if (val && val.length > 0) {
       const coord = val[0].geometry as Geometry;
@@ -70,7 +72,8 @@ const selectedStolperstein = computed({
 const createMap = (apiKey: string, center: LngLatLike): MaplibreMap => {
   map = new MaplibreMap({
     container: 'map',
-    style: `https://api.maptiler.com/maps/e79c1d05-b6e6-4dcd-8aad-05d3ec97c7d5/style.json?key=${apiKey}`,
+    // style: `https://api.maptiler.com/maps/e79c1d05-b6e6-4dcd-8aad-05d3ec97c7d5/style.json?key=${apiKey}`,
+    style: 'map-style.json',
     center: center,
     zoom: 12,
     trackResize: true,
@@ -95,13 +98,17 @@ const createMap = (apiKey: string, center: LngLatLike): MaplibreMap => {
 const setStolpersteinSource = (
   map: MaplibreMap,
   stolpersteinFeatures: Array<StolpersteinFeature>
-): void => {
+) => {
   if (!map) return;
   setGroupFeatureSource(map, stolpersteinFeatures, StolpersteinSource);
 };
 
-const setLayer = (map: MaplibreMap) => {
+const initMap = (
+  map: MaplibreMap,
+  stolpersteinFeatures: Array<StolpersteinFeature>
+) => {
   if (!map) return;
+  setStolpersteinSource(map, stolpersteinFeatures);
 
   map.loadImage('images/stolperstein-glyph.png', (error, image) => {
     if (error) {
@@ -113,11 +120,11 @@ const setLayer = (map: MaplibreMap) => {
       map.addImage('stolperstein-glyph', image);
     }
 
-    initMap();
+    initMapImpl();
   });
 };
 
-const initMap = () => {
+const initMapImpl = () => {
   map.addLayer({
     id: StolpersteinClusterLayer,
     type: 'circle',
@@ -164,7 +171,7 @@ const initMap = () => {
     },
   });
 
-  // click handeler are executed in order there are registered
+  // click handler are executed in order there are registered
   // click on "empty" map -> reset selected stolpersteine
   // click on stolperstein point layer -> set selected stolpersteine
   map.on('click', () => {
@@ -219,7 +226,7 @@ const initMap = () => {
 };
 
 const resize = (map: MaplibreMap) => {
-  setTimeout(() => {
+  debounce(function () {
     if (map?.getCanvas() && map?.getContainer()) {
       map.getCanvas().height = map.getContainer().clientHeight ?? 0;
       map.getCanvas().width = map.getContainer().clientWidth ?? 0;

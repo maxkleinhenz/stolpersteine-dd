@@ -55,7 +55,7 @@ const store = useStore();
 const {
   createMap,
   resize,
-  setLayer,
+  initMap,
   setStolpersteinSource,
   selectedStolperstein,
 } = useStolpersteinMap();
@@ -66,8 +66,6 @@ const apiKey = process.env.MAPTILER_API_KEY ?? '';
 const isLoading = ref(true);
 
 let map: MaplibreMap;
-// let mapInitializeTimer: NodeJS.Timeout;
-
 const stolpersteine = computed(() => store.getters.filteredStolpersteine());
 watch(
   () => store.getters.filteredStolpersteine(),
@@ -94,21 +92,16 @@ watch(
 );
 
 onMounted(() => {
-  // mapInitializeTimer = setTimeout(function () {
   map = createMap(apiKey, dresden);
   map.on('load', () => {
-    setStolpersteinSource(map, stolpersteine.value);
-    setLayer(map);
+    initMap(map, stolpersteine.value);
     map.resize();
     isLoading.value = false;
   });
   map.keyboard.disable();
-  // }, 0);
 });
 
 onBeforeUnmount(() => {
-  // clearTimeout(mapInitializeTimer);
-
   map?.remove();
 });
 
