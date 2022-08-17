@@ -273,11 +273,7 @@
     </section>
 
     <section class="feedback-section">
-      <q-btn
-        class="app-action-button"
-        rounded
-        @click="showNotSupportedDialog = true"
-      >
+      <q-btn class="app-action-button" rounded @click="sendFeedbackEmail()">
         <q-icon name="mail_outline" /> Feedback zum Stolperstein</q-btn
       >
     </section>
@@ -398,6 +394,12 @@ const loadBiography = async (stolperstein: StolpersteinFeature) => {
   //     }
   //   }
   // });
+};
+
+const sendFeedbackEmail = () => {
+  const email = 'max.github@outlook.de';
+  const subject = `Feedback zum Stolperstein von ${props.stolperstein.stolperstein.name}`;
+  document.location = 'mailto:' + email + '?subject=' + subject;
 };
 </script>
 
