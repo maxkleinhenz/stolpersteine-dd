@@ -1,7 +1,7 @@
 <template>
   <q-virtual-scroll
     class="full-width full-height"
-    :items="stolpersteine"
+    :items="filteredStolpersteine"
     virtual-scroll-item-size="96"
   >
     <template v-slot="{ item }">
@@ -17,10 +17,10 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from 'src/store';
-import { computed } from 'vue';
+import { storeToRefs } from 'pinia';
+import { useStolpersteinStore } from 'src/store/stolperstein-store';
 import StolpersteinListItem from './StolpersteinListItem.vue';
 
-const store = useStore();
-const stolpersteine = computed(() => store.getters.filteredStolpersteine());
+const store = useStolpersteinStore();
+const { filteredStolpersteine } = storeToRefs(store);
 </script>

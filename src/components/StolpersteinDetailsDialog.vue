@@ -46,40 +46,27 @@
 <script setup lang="ts">
 import { StolpersteinFeature } from 'src/models/stolperstein.model';
 import StolpersteinDetail from 'src/components/StolpersteinDetails.vue';
-import { computed, onMounted, ref, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { useStore } from 'src/store';
 import { withTransitionParam } from 'src/router/routes';
 import { useMeta, scroll, useQuasar } from 'quasar';
 import { usePages } from 'src/common/PageList';
+import { useStolpersteinStore } from 'src/store/stolperstein-store';
 
 const quasar = useQuasar();
-const store = useStore();
+const store = useStolpersteinStore();
 const route = useRoute();
 const router = useRouter();
 const { setVerticalScrollPosition } = scroll;
 const { pageRecord } = usePages();
 
-const stolpersteinRef = ref<StolpersteinFeature | undefined>(undefined);
-const stolperstein = computed({
-  get(): StolpersteinFeature | undefined {
-    return stolpersteinRef.value;
-  },
-  set(val: StolpersteinFeature | undefined) {
-    stolpersteinRef.value = val;
-    if (val) {
-      store.mutations.selectStolpersteine([val]);
-    } else {
-      store.mutations.selectStolpersteine(undefined);
-    }
-  },
-});
+const stolperstein = ref<StolpersteinFeature | undefined>(undefined);
 const dialogRef = ref<HTMLElement>();
 const showPageScroller = ref(false);
 
 onMounted(async () => {
-  if (!store.state.stolpersteine.length) {
-    await store.actions.loadStolpersteineFeatures();
+  if (!store.stolpersteine.length) {
+    await store.loadStolpersteineFeatures();
   }
   setDetailStolperstein(Number(route.params.id));
 });
@@ -97,7 +84,7 @@ const setDetailStolperstein = (stolpersteinId: number) => {
     return;
   } else {
     // find detail stolperstein
-    const foundStolperstein = store.getters.getStolpersteinById(stolpersteinId);
+    const foundStolperstein = store.getStolpersteinById(stolpersteinId);
 
     if (foundStolperstein) {
       stolperstein.value = foundStolperstein;

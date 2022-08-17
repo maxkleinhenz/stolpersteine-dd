@@ -1,7 +1,6 @@
 import { useMeta } from 'quasar';
 import { route } from 'quasar/wrappers';
 import { usePages, RouteNameType } from 'src/common/PageList';
-import { RootState } from 'src/store/state';
 import {
   createMemoryHistory,
   createRouter,
@@ -21,7 +20,7 @@ const { pageRecord } = usePages();
  * with the Router instance.
  */
 
-export default route<RootState>(function (/* { store, ssrContext } */) {
+export default route(function (/* { store, ssrContext } */) {
   const createHistory = process.env.SERVER
     ? createMemoryHistory
     : process.env.VUE_ROUTER_MODE === 'history'

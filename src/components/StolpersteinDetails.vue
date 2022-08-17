@@ -305,8 +305,8 @@ import { useQuasar } from 'quasar';
 import { useStolpersteinUtils } from 'src/common/StolpersteinUtils';
 import StolpersteinListItem from './StolpersteinListItem.vue';
 import StolpersteinDetailsActionButton from './StolpersteinDetailsActionButton.vue';
-import { useStore } from 'src/store';
 import { computed } from '@vue/reactivity';
+import { useStolpersteinStore } from 'src/store/stolperstein-store';
 const props = defineProps({
   stolperstein: {
     type: Object as PropType<StolpersteinFeature>,
@@ -315,7 +315,7 @@ const props = defineProps({
 });
 
 const quasar = useQuasar();
-const store = useStore();
+const store = useStolpersteinStore();
 const { findStolpersteineAtCoords } = useStolpersteinUtils();
 
 const otherStolpersteine = ref<StolpersteinFeature[]>();
@@ -333,7 +333,7 @@ watch(
 
       otherStolpersteine.value = findStolpersteineAtCoords(
         value.geometry.coordinates,
-        store.state.stolpersteine
+        store.stolpersteine
       ).filter((e) => e.stolperstein.id !== value.stolperstein.id);
     }
   }

@@ -13,7 +13,9 @@ import {
   GroupedStolpersteinFeature,
   StolpersteinFeature,
 } from 'src/models/stolperstein.model';
-import { computed, ref } from 'vue';
+import { usePositionStore } from 'src/store/position-store';
+import { useStolpersteinStore } from 'src/store/stolperstein-store';
+import { watch } from 'vue';
 import { useStolpersteinUtils } from './StolpersteinUtils';
 
 const StolpersteinSource = 'stolpersteine';
@@ -27,6 +29,8 @@ interface GroupedGeoJsonFeature extends GroupedStolpersteinFeature {
 
 export const useStolpersteinMap = () => {
   let map: MaplibreMap;
+  const store = useStolpersteinStore();
+  const positionStore = usePositionStore();
 
   const createSelectedStolpersteinMarker = () => {
     const el = document.createElement('div');
@@ -35,20 +39,16 @@ export const useStolpersteinMap = () => {
   };
   const selectedStolpersteinMarker = createSelectedStolpersteinMarker();
 
-  const selectedStolpersteinRef = ref<StolpersteinFeature[] | undefined>(
-    undefined
-  );
-  const selectedStolperstein = computed({
-    get(): StolpersteinFeature[] | undefined {
-      return selectedStolpersteinRef.value;
-    },
-    set(val: StolpersteinFeature[] | undefined) {
-      selectedStolpersteinRef.value = val;
+  watch(
+    () => store.selectedStolpersteine,
+    (value) => {
       selectedStolpersteinMarker.remove();
 
       // center map on point
-      if (val && val.length > 0) {
-        const coord = val[0].geometry as Geometry;
+      if (value && value.length > 0) {
+        positionStore.followPosition = false;
+
+        const coord = value[0].geometry as Geometry;
         map.flyTo({
           center: coord.coordinates,
         });
@@ -57,8 +57,17 @@ export const useStolpersteinMap = () => {
           .setLngLat([coord.coordinates[0], coord.coordinates[1]])
           .addTo(map);
       }
-    },
-  });
+    }
+  );
+
+  watch(
+    () => store.filteredStolpersteine,
+    (stolpersteine) => {
+      if (map?.isStyleLoaded()) {
+        setStolpersteinSource(map, stolpersteine);
+      }
+    }
+  );
 
   const createMap = (apiKey: string, center: LngLatLike): MaplibreMap => {
     map = new MaplibreMap({
@@ -166,7 +175,7 @@ export const useStolpersteinMap = () => {
     // click on "empty" map -> reset selected stolpersteine
     // click on stolperstein point layer -> set selected stolpersteine
     map.on('click', () => {
-      selectedStolperstein.value = undefined;
+      store.selectedStolpersteine = undefined;
     });
 
     map.on('click', StolpersteinClusterLayer, function (e) {
@@ -198,7 +207,7 @@ export const useStolpersteinMap = () => {
         const e = proxy[key as unknown as number];
         stolpersteine.push(JSON.parse(e) as StolpersteinFeature);
       });
-      selectedStolperstein.value = stolpersteine;
+      store.selectedStolpersteine = stolpersteine;
     });
 
     map.on('mouseenter', StolpersteinClusterLayer, function () {
@@ -270,6 +279,5 @@ export const useStolpersteinMap = () => {
     initMap,
     setStolpersteinSource,
     resize,
-    selectedStolperstein,
   };
 };

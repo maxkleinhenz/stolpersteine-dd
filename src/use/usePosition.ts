@@ -1,9 +1,11 @@
 import { Map as MaplibreMap, Marker } from 'maplibre-gl';
 import { useQuasar } from 'quasar';
+import { usePositionStore } from 'src/store/position-store';
 import { computed, ref } from 'vue';
 
 export const usePosition = () => {
   const quasar = useQuasar();
+  const store = usePositionStore();
   let mapInstance: MaplibreMap;
 
   const createSelectedStolpersteinMarker = () => {
@@ -13,8 +15,6 @@ export const usePosition = () => {
   };
   const positionMarker = createSelectedStolpersteinMarker();
 
-  const followPosition = ref(false);
-  const watchActiv = ref(false);
   const watchIdRef = ref<number | undefined>(undefined);
   const watchId = computed({
     get(): number | undefined {
@@ -22,10 +22,10 @@ export const usePosition = () => {
     },
     set(val: number | undefined) {
       watchIdRef.value = val;
-      watchActiv.value = !!val;
+      store.watchActiv = !!val;
 
       if (!val) {
-        followPosition.value = false;
+        store.followPosition = false;
         positionMarker.remove();
       }
     },
@@ -33,7 +33,7 @@ export const usePosition = () => {
 
   const geolocationSuccess = (position: GeolocationPosition) => {
     if (mapInstance) {
-      if (followPosition.value) {
+      if (store.followPosition) {
         mapInstance.flyTo({
           center: [position.coords.longitude, position.coords.latitude],
         });
@@ -46,7 +46,7 @@ export const usePosition = () => {
   };
 
   const geolocationError = (error: GeolocationPositionError) => {
-    followPosition.value = false;
+    store.followPosition = false;
 
     if (error.code === 1) {
       quasar.dialog({
@@ -68,7 +68,7 @@ export const usePosition = () => {
     clearWatch();
 
     if (checkGeoloctionSupported()) {
-      followPosition.value = true;
+      store.followPosition = true;
       watchId.value = navigator.geolocation.watchPosition(
         geolocationSuccess,
         geolocationError,
@@ -103,7 +103,5 @@ export const usePosition = () => {
   return {
     watchLocation,
     clearWatch,
-    followPosition,
-    watchActiv,
   };
 };

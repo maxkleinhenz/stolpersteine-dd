@@ -8,7 +8,7 @@
         color="white"
         icon="r_menu"
         class="datails-toggler sm"
-        @click="store.mutations.toggleStolpersteinSidebarVisibility"
+        @click="store.toggleStolpersteinSidebarVisibility"
       />
     </div>
 
@@ -58,60 +58,44 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { computed, watch } from 'vue';
 import MapComponent from 'components/MapComponent.vue';
-import { useStore } from 'src/store';
 import { useRouter } from 'vue-router';
 
-import { StolpersteinFeature } from 'src/models/stolperstein.model';
 import { withTransitionParam } from 'src/router/routes';
 import { useQuasar } from 'quasar';
 import StolpersteinBottomSheet from 'src/components/StolpersteinBottomSheet.vue';
 import StolpersteinSlider from 'src/components/StolpersteinSlider.vue';
 import RouterViewTransistion from 'src/plugins/RouterViewTransistion.vue';
 import { usePages } from 'src/common/PageList';
-import { useStolpersteinMap } from 'src/common/StolpersteinMap';
+import { useStolpersteinStore } from 'src/store/stolperstein-store';
+import { storeToRefs } from 'pinia';
 
-const store = useStore();
+const store = useStolpersteinStore();
 const router = useRouter();
 const quasar = useQuasar();
 const { pageRecord } = usePages();
 
-const showSelectedSlide = ref(false);
+const showSelectedSlide = computed(
+  () => (store.selectedStolpersteine?.length ?? 0) > 1
+);
 
-const selectedStolpersteineRef = ref<StolpersteinFeature[] | undefined>();
-const selectedStolpersteine = computed({
-  get(): StolpersteinFeature[] | undefined {
-    return selectedStolpersteineRef.value;
-  },
-  set(val: StolpersteinFeature[] | undefined) {
-    const { selectedStolperstein } = useStolpersteinMap();
-    selectedStolpersteineRef.value = val;
-    selectedStolperstein.value = val;
-  },
-});
+const { selectedStolpersteine } = storeToRefs(store);
 
 watch(
-  () => store.state.selectedStolpersteine,
+  () => store.selectedStolpersteine,
   async (value) => {
-    if (!value?.length) {
-      showSelectedSlide.value = false;
-      selectedStolpersteine.value = undefined;
-    } else if (value.length === 1) {
-      showSelectedSlide.value = false;
-      selectedStolpersteine.value = value;
+    if (value && value.length === 1) {
       await router.push({
         name: pageRecord.Map_Details.routeName,
         params: { id: value[0].stolperstein.id, withTransitionParam },
       });
-    } else {
-      showSelectedSlide.value = true;
-      selectedStolpersteine.value = value;
     }
   }
 );
 
 const goToMap = async () => {
+  // store.selectedStolpersteine = undefined;
   await router.push({
     name: pageRecord.Map.routeName,
     params: { withTransitionParam },

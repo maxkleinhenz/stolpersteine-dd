@@ -12,7 +12,6 @@
       :class="{ 'footer-space': $q.screen.lt.sm }"
     >
       <q-btn
-        v-if="quasar.platform.is.mobile"
         class="q-my-sm"
         :size="quasar.screen.gt.xs ? 'lg' : 'md'"
         round
@@ -55,24 +54,22 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onBeforeUnmount, computed, watch, ref } from 'vue';
+import { onMounted, onBeforeUnmount, ref } from 'vue';
 import { Map as MaplibreMap, LngLat, MapLibreEvent } from 'maplibre-gl';
 import { useStolpersteinMap } from 'src/common/StolpersteinMap';
-import { useStore } from 'src/store';
 import { useQuasar } from 'quasar';
 import { usePosition } from 'src/use/usePosition';
+import { useStolpersteinStore } from 'src/store/stolperstein-store';
+import { usePositionStore } from 'src/store/position-store';
+import { storeToRefs } from 'pinia';
 
 const quasar = useQuasar();
-const store = useStore();
-const {
-  createMap,
-  resize,
-  initMap,
-  setStolpersteinSource,
-  selectedStolperstein,
-} = useStolpersteinMap();
+const store = useStolpersteinStore();
+const positionStore = usePositionStore();
+const { createMap, resize, initMap } = useStolpersteinMap();
 
-const { watchLocation, clearWatch, followPosition, watchActiv } = usePosition();
+const { watchLocation, clearWatch } = usePosition();
+const { followPosition } = storeToRefs(positionStore);
 
 const dresden = new LngLat(13.7372621, 51.0504088);
 const apiKey = process.env.MAPTILER_API_KEY ?? '';
@@ -80,38 +77,11 @@ const apiKey = process.env.MAPTILER_API_KEY ?? '';
 const isLoading = ref(true);
 
 let map: MaplibreMap;
-const stolpersteine = computed(() => store.getters.filteredStolpersteine());
-watch(
-  () => store.getters.filteredStolpersteine(),
-  (stolpersteine) => {
-    if (map?.isStyleLoaded()) {
-      setStolpersteinSource(map, stolpersteine);
-    }
-  }
-);
-
-const toggle = computed(() => store.state.isStolpersteinSidebarVisible);
-watch(
-  () => toggle.value,
-  () => {
-    resize(map);
-  }
-);
-
-watch(
-  () => selectedStolperstein.value,
-  (value) => {
-    store.mutations.selectStolpersteine(value);
-    if (value?.length ?? 0 > 0) {
-      followPosition.value = false;
-    }
-  }
-);
 
 onMounted(() => {
   map = createMap(apiKey, dresden);
   map.on('load', () => {
-    initMap(map, stolpersteine.value);
+    initMap(map, store.filteredStolpersteine);
     map.resize();
     isLoading.value = false;
   });
@@ -148,7 +118,7 @@ const zoomOut = () => {
 };
 
 const startWatchLocation = () => {
-  if (followPosition.value && watchActiv.value) {
+  if (positionStore.followPosition && positionStore.watchActiv) {
     clearWatch();
   } else {
     watchLocation(map);

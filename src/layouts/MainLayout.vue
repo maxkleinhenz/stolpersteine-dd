@@ -70,11 +70,11 @@ import {
 import { useRoute } from 'vue-router';
 import TopNavComponent from 'src/components/TopNavComponent.vue';
 import { useMeta, useQuasar } from 'quasar';
-import { useStore } from 'src/store';
 import StolpersteinSidebar from 'src/components/StolpersteinSidebar.vue';
 import { usePages } from 'src/common/PageList';
+import { useStolpersteinStore } from 'src/store/stolperstein-store';
 
-const store = useStore();
+const store = useStolpersteinStore();
 const quasar = useQuasar();
 const { pageRecord } = usePages();
 
@@ -89,15 +89,15 @@ const sidebarOpen = computed({
     // show drawer only on map page
     if (!route.name?.toString().startsWith(pageRecord.Map.routeName))
       return false;
-    return store.state.isStolpersteinSidebarVisible || quasar.screen.gt.sm;
+    return store.isStolpersteinSidebarVisible || quasar.screen.gt.sm;
   },
   set(value: boolean): void {
-    store.mutations.setStolpersteinSidebarVisibility(value);
+    store.isStolpersteinSidebarVisible = value;
   },
 });
 
 onMounted(async () => {
-  await store.actions.loadStolpersteineFeatures();
+  await store.loadStolpersteineFeatures();
 });
 </script>
 

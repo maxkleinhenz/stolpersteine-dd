@@ -34,19 +34,20 @@
 </template>
 
 <script setup lang="ts">
-import { useStore } from 'src/store';
+import { useStolpersteinStore } from 'src/store/stolperstein-store';
 import { onBeforeUnmount, ref } from 'vue';
 
-const store = useStore();
-const state = ref(store.state);
-const searchText = ref(state.value.stolpersteineSearchText);
+const store = useStolpersteinStore();
+
+const searchText = ref(store.stolpersteineSearchText);
 
 onBeforeUnmount(() => {
   clearSearch();
 });
 
 const searchStolpersteine = () => {
-  store.mutations.setStolpersteinSearchText(searchText.value);
+  store.selectedStolpersteine = undefined;
+  store.stolpersteineSearchText = searchText.value;
 };
 
 const clearSearch = () => {
