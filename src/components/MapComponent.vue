@@ -1,6 +1,6 @@
 <template>
   <div class="map-wrap">
-    <q-resize-observer :debounce="200" @resize="onResize"></q-resize-observer>
+    <q-resize-observer @resize="onResize"></q-resize-observer>
     <a href="https://www.maptiler.com" class="watermark q-px-xs"
       ><img
         src="https://api.maptiler.com/resources/logo.svg"
@@ -11,6 +11,17 @@
       class="map-controls column absolute-bottom-right"
       :class="{ 'footer-space': $q.screen.lt.sm }"
     >
+      <q-btn
+        v-if="quasar.platform.is.mobile"
+        class="q-my-sm"
+        :size="quasar.screen.gt.xs ? 'lg' : 'md'"
+        round
+        :color="followPosition ? 'black' : 'white'"
+        :text-color="followPosition ? 'white' : 'black'"
+        icon="my_location"
+        @click="startWatchLocation()"
+      ></q-btn>
+
       <q-btn
         class="q-my-sm"
         :size="quasar.screen.gt.xs ? 'lg' : 'md'"
@@ -45,10 +56,11 @@
 
 <script setup lang="ts">
 import { onMounted, onBeforeUnmount, computed, watch, ref } from 'vue';
-import { Map as MaplibreMap, LngLat } from 'maplibre-gl';
+import { Map as MaplibreMap, LngLat, MapLibreEvent } from 'maplibre-gl';
 import { useStolpersteinMap } from 'src/common/StolpersteinMap';
 import { useStore } from 'src/store';
 import { useQuasar } from 'quasar';
+import { usePosition } from 'src/use/usePosition';
 
 const quasar = useQuasar();
 const store = useStore();
@@ -59,6 +71,8 @@ const {
   setStolpersteinSource,
   selectedStolperstein,
 } = useStolpersteinMap();
+
+const { watchLocation, clearWatch, followPosition, watchActiv } = usePosition();
 
 const dresden = new LngLat(13.7372621, 51.0504088);
 const apiKey = process.env.MAPTILER_API_KEY ?? '';
@@ -88,6 +102,9 @@ watch(
   () => selectedStolperstein.value,
   (value) => {
     store.mutations.selectStolpersteine(value);
+    if (value?.length ?? 0 > 0) {
+      followPosition.value = false;
+    }
   }
 );
 
@@ -98,7 +115,19 @@ onMounted(() => {
     map.resize();
     isLoading.value = false;
   });
-  map.keyboard.disable();
+  map.on('dragstart', () => {
+    followPosition.value = false;
+  });
+  map.on(
+    'zoomstart',
+    (
+      event: MapLibreEvent<MouseEvent | TouchEvent | WheelEvent | undefined>
+    ) => {
+      if (event.originalEvent) {
+        followPosition.value = false;
+      }
+    }
+  );
 });
 
 onBeforeUnmount(() => {
@@ -111,9 +140,19 @@ const onResize = () => {
 
 const zoomIn = () => {
   map?.zoomIn({ animate: true });
+  followPosition.value = false;
 };
 const zoomOut = () => {
   map?.zoomOut({ animate: true });
+  followPosition.value = false;
+};
+
+const startWatchLocation = () => {
+  if (followPosition.value && watchActiv.value) {
+    clearWatch();
+  } else {
+    watchLocation(map);
+  }
 };
 </script>
 
