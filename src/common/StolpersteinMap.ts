@@ -35,7 +35,14 @@ export const useStolpersteinMap = () => {
   const createSelectedStolpersteinMarker = () => {
     const el = document.createElement('div');
     el.className = 'selected-stolperstein-marker';
-    return new Marker(el);
+
+    const marker = new Marker(el);
+    el.addEventListener('click', (event: MouseEvent) => {
+      event.stopPropagation();
+      flyToCoords(marker.getLngLat());
+    });
+
+    return marker;
   };
   const selectedStolpersteinMarker = createSelectedStolpersteinMarker();
 
@@ -46,15 +53,11 @@ export const useStolpersteinMap = () => {
 
       // center map on point
       if (value && value.length > 0) {
-        positionStore.followPosition = false;
-
-        const coord = value[0].geometry as Geometry;
-        map.flyTo({
-          center: coord.coordinates,
-        });
+        const geometry = value[0].geometry as Geometry;
+        flyToCoords(geometry.coordinates);
 
         selectedStolpersteinMarker
-          .setLngLat([coord.coordinates[0], coord.coordinates[1]])
+          .setLngLat([geometry.coordinates[0], geometry.coordinates[1]])
           .addTo(map);
       }
     }
@@ -68,6 +71,13 @@ export const useStolpersteinMap = () => {
       }
     }
   );
+
+  const flyToCoords = (coordinates: LngLatLike) => {
+    positionStore.followPosition = false;
+    map.flyTo({
+      center: coordinates,
+    });
+  };
 
   const createMap = (apiKey: string, center: LngLatLike): MaplibreMap => {
     map = new MaplibreMap({
