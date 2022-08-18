@@ -17,7 +17,7 @@
         round
         :color="followPosition ? 'black' : 'white'"
         :text-color="followPosition ? 'white' : 'black'"
-        icon="my_location"
+        :icon="watchActiv ? 'gps_fixed' : 'gps_not_fixed'"
         @click="startWatchLocation()"
       ></q-btn>
 
@@ -69,7 +69,7 @@ const positionStore = usePositionStore();
 const { createMap, resize, initMap } = useStolpersteinMap();
 
 const { watchLocation, clearWatch } = usePosition();
-const { followPosition } = storeToRefs(positionStore);
+const { followPosition, watchActiv } = storeToRefs(positionStore);
 
 const dresden = new LngLat(13.7372621, 51.0504088);
 const apiKey = process.env.MAPTILER_API_KEY ?? '';
