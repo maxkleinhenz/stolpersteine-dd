@@ -154,6 +154,7 @@ const startWatchLocation = () => {
 .map-controls {
   margin-bottom: 120px;
   margin-right: 15px;
+  z-index: 30;
 
   @media (min-width: $breakpoint-sm-min) {
     margin-bottom: 30px;

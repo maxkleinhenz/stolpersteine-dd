@@ -113,7 +113,7 @@ const goToMap = async () => {
 }
 
 .stolperstein-slider-container {
-  z-index: 3;
+  z-index: 50;
   margin-bottom: 100px;
 
   @media (min-width: $breakpoint-sm-min) {
