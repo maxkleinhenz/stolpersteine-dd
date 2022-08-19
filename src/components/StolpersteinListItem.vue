@@ -10,8 +10,14 @@
       <q-avatar size="64px">
         <q-img
           ratio="1"
-          src="~assets/images/Josef_Altbach_Stolperstein_Dresden.jpg"
-        />
+          :src="props.stolpersteinFeature.stolperstein.stolpersteinImage"
+          loading="lazy"
+        >
+          <template v-slot:error>
+            <div
+              class="absolute-full flex flex-center bg-grey-4 text-black"
+            ></div> </template
+        ></q-img>
       </q-avatar>
     </q-item-section>
 

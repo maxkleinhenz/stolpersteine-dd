@@ -19,11 +19,14 @@ interface Geometry {
 export interface Stolperstein {
   id: number;
   name: string;
+  firstName: string;
+  lastName: string;
   strasse: string;
   hausnummer: string;
   hausnummerZusatz: string;
   plz: string;
   ort: string;
   url: string;
+  stolpersteinImage: string;
   sortValue: string;
 }

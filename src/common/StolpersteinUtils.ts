@@ -9,6 +9,7 @@ export const useStolpersteinUtils = () => {
   return {
     loadStolpersteine,
     groupStolpersteinByCoords,
+    findStolpersteinById,
     findStolpersteineAtCoords,
   };
 };
@@ -24,16 +25,22 @@ const loadStolpersteine = async () => {
           stolperstein: {
             id: responseFeature.properties.id,
             name: responseFeature.properties.einrichtung,
+            firstName: responseFeature.properties.einrichtung.split(', ')[1],
+            lastName: responseFeature.properties.einrichtung.split(', ')[0],
             strasse: responseFeature.properties.strasse,
             hausnummer: responseFeature.properties.hnr,
             hausnummerZusatz: responseFeature.properties.hnrz,
             plz: responseFeature.properties.plz,
             ort: 'Dresden',
             url: responseFeature.properties.url,
+            stolpersteinImage: '',
             sortValue: responseFeature.properties.einrichtung.toLowerCase(),
           },
           geometry: responseFeature.geometry,
         };
+        newFeature.stolperstein.stolpersteinImage = `images/stolpersteine/${
+          newFeature.stolperstein.lastName
+        }-${newFeature.stolperstein.firstName.replace('Dr. ', '')}.jpg`;
         stolpersteineFeatures.push(newFeature);
       });
 
@@ -73,6 +80,18 @@ const groupStolpersteinByCoords = (
   });
 
   return grouped;
+};
+
+const findStolpersteinById = (
+  id: number,
+  source: StolpersteinFeature[]
+): StolpersteinFeature | undefined => {
+  const found = source.filter((s) => {
+    return s.stolperstein.id === id;
+  });
+  if ((found?.length ?? 0) > 0) return found[0];
+
+  return undefined;
 };
 
 const findStolpersteineAtCoords = (

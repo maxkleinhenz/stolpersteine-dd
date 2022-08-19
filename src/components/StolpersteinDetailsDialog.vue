@@ -16,7 +16,7 @@
         @click="goToMap()"
       />
     </div>
-    <div class="full-width full-height">
+    <div v-if="stolperstein" class="full-width full-height">
       <StolpersteinDetail :stolperstein="stolperstein"></StolpersteinDetail>
     </div>
 
@@ -52,6 +52,7 @@ import { withTransitionParam } from 'src/router/routes';
 import { useMeta, scroll, useQuasar } from 'quasar';
 import { usePages } from 'src/common/PageList';
 import { useStolpersteinStore } from 'src/store/stolperstein-store';
+import { useStolpersteinUtils } from 'src/common/StolpersteinUtils';
 
 const quasar = useQuasar();
 const store = useStolpersteinStore();
@@ -59,6 +60,7 @@ const route = useRoute();
 const router = useRouter();
 const { setVerticalScrollPosition } = scroll;
 const { pageRecord } = usePages();
+const { findStolpersteinById } = useStolpersteinUtils();
 
 const stolperstein = ref<StolpersteinFeature | undefined>(undefined);
 const dialogRef = ref<HTMLElement>();
@@ -81,10 +83,14 @@ watch(
 const setDetailStolperstein = (stolpersteinId: number) => {
   if (stolpersteinId === NaN) {
     stolperstein.value = undefined;
+    void goToMap();
     return;
   } else {
     // find detail stolperstein
-    const foundStolperstein = store.getStolpersteinById(stolpersteinId);
+    const foundStolperstein = findStolpersteinById(
+      stolpersteinId,
+      store.stolpersteine
+    );
 
     if (foundStolperstein) {
       stolperstein.value = foundStolperstein;
@@ -96,6 +102,7 @@ const setDetailStolperstein = (stolpersteinId: number) => {
     } else {
       stolperstein.value = undefined;
       void goToMap();
+      return;
     }
   }
 };

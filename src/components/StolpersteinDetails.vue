@@ -2,15 +2,14 @@
   <article class="app-bg" :class="{ 'footer-space': $q.screen.lt.sm }">
     <section class="header-section light q-gutter-y-lg" aria-labelledby="">
       <div>
-        <q-img
-          src="~assets/images/Josef_Altbach_Stolperstein_Dresden.jpg"
-          fit="cover"
-        >
-          <div class="absolute-bottom text-subtitle1 text-center">
-            Vorschau für Vorabversion
-          </div>
+        <q-img class="stolperstein-image" :src="stolpersteinImage" fit="cover">
           <template v-slot:loading>
             <q-skeleton square width="100%" height="100%" />
+          </template>
+          <template v-slot:error>
+            <div class="absolute-full flex flex-center bg-grey-4 text-black">
+              Bild nicht gefunden
+            </div>
           </template>
         </q-img>
       </div>
@@ -62,7 +61,7 @@
           </div>
           <div class="col-12 col-sm-auto text-center">
             <q-avatar size="128px">
-              <q-img ratio="1" src="~assets/images/portrait-placeholder.png">
+              <q-img ratio="1" src="images/portrait-placeholder.png">
                 <template v-slot:loading>
                   <q-skeleton type="QAvatar" width="100%" height="100%" />
                 </template>
@@ -229,17 +228,14 @@
             transition-next="slide-left"
             transition-prev="slide-right"
           >
-            <q-carousel-slide
-              :name="1"
-              img-src="~assets/images/Josef_Altbach_Stolperstein_Dresden.jpg"
-            >
+            <q-carousel-slide :name="1" :img-src="stolpersteinImage">
               <div class="absolute-top text-subtitle1 custom-caption">
                 <div class="text-subtitle1">Vorschau für Vorabversion</div>
               </div>
             </q-carousel-slide>
             <q-carousel-slide
               :name="2"
-              img-src="~assets/images/portrait-placeholder.png"
+              img-src="images/portrait-placeholder.png"
             >
               <div class="absolute-top text-subtitle1 custom-caption">
                 <div class="text-subtitle1">Vorschau für Vorabversion</div>
@@ -310,7 +306,7 @@ import { useStolpersteinStore } from 'src/store/stolperstein-store';
 const props = defineProps({
   stolperstein: {
     type: Object as PropType<StolpersteinFeature>,
-    required: false,
+    required: true,
   },
 });
 
@@ -318,6 +314,7 @@ const quasar = useQuasar();
 const store = useStolpersteinStore();
 const { findStolpersteineAtCoords } = useStolpersteinUtils();
 
+const stolpersteinImage = ref<string>('');
 const otherStolpersteine = ref<StolpersteinFeature[]>();
 
 const showNotSupportedDialog = ref<boolean>(false);
@@ -331,10 +328,19 @@ watch(
     if (value) {
       void loadBiography(value);
 
-      otherStolpersteine.value = findStolpersteineAtCoords(
+      stolpersteinImage.value = value.stolperstein.stolpersteinImage;
+
+      const stolpersteineAtcCoords = findStolpersteineAtCoords(
         value.geometry.coordinates,
         store.stolpersteine
-      ).filter((e) => e.stolperstein.id !== value.stolperstein.id);
+      );
+
+      // mark selected stolpersteine on map
+      store.selectedStolpersteine = stolpersteineAtcCoords;
+
+      otherStolpersteine.value = stolpersteineAtcCoords.filter(
+        (e) => e.stolperstein.id !== value.stolperstein.id
+      );
     }
   }
 );
@@ -343,12 +349,11 @@ const share = () => {
   if (!props.stolperstein) return;
 
   if (!!navigator.share) {
-    const shareData = <ShareData>{
+    void navigator.share({
       title: `${props.stolperstein.stolperstein.name} - Stolpersteine Dresden`,
       text: `Erkunde den Stolperstein von ${props.stolperstein.stolperstein.name}`,
       url: window.location.href,
-    };
-    void navigator.share(shareData);
+    });
   } else {
     showNotSupportedDialog.value = true;
   }
@@ -453,6 +458,10 @@ section {
 
 .header-section {
   padding-top: 0 !important;
+
+  .stolperstein-image {
+    max-height: 570px;
+  }
 }
 
 .candel-section {

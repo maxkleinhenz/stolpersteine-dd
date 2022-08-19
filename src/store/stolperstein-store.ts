@@ -24,14 +24,6 @@ export const useStolpersteinStore = defineStore('stolperstein', {
         this.stolpersteine = stolpersteineFeatures;
       });
     },
-    getStolpersteinById(id: number): StolpersteinFeature | undefined {
-      const found = this.stolpersteine.filter((s) => {
-        return s.stolperstein.id === id;
-      });
-      if ((found?.length ?? 0) > 0) return found[0];
-
-      return undefined;
-    },
     toggleStolpersteinSidebarVisibility() {
       this.isStolpersteinSidebarVisible = !this.isStolpersteinSidebarVisible;
     },
