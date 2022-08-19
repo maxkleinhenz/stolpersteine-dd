@@ -1,48 +1,26 @@
 <template>
   <nav
-    class="top-nav fixed-top-right row q-my-lg q-mr-xl q-px-lg"
+    class="top-nav fixed-top-right q-my-lg q-mr-xl"
     role="navigation"
     aria-label="Hauptmenu"
   >
-    <div class="col q-pa-lg">
-      <router-link
+    <q-tabs no-caps>
+      <q-route-tab
+        label="Start"
+        class="nav-link"
         :to="{ name: pageRecord.Home.routeName }"
+      />
+      <q-route-tab
+        label="Karte"
         class="nav-link"
-        :class="{
-          'link-active': $route.name
-            ?.toString()
-            .startsWith(pageRecord.Home.routeName),
-        }"
-      >
-        <span>Start</span>
-      </router-link>
-    </div>
-    <div class="col q-pa-lg">
-      <router-link
         :to="{ name: pageRecord.Map.routeName }"
+      />
+      <q-route-tab
+        label="Info"
         class="nav-link"
-        :class="{
-          'link-active': $route.name
-            ?.toString()
-            .startsWith(pageRecord.Map.routeName),
-        }"
-      >
-        <span>Karte</span>
-      </router-link>
-    </div>
-    <div class="col q-pa-lg">
-      <router-link
         :to="{ name: pageRecord.Info.routeName }"
-        class="nav-link"
-        :class="{
-          'link-active': $route.name
-            ?.toString()
-            .startsWith(pageRecord.Info.routeName),
-        }"
-      >
-        <span>Info</span>
-      </router-link>
-    </div>
+      />
+    </q-tabs>
   </nav>
 </template>
 
@@ -58,20 +36,28 @@ const { pageRecord } = usePages();
   background-color: white;
   border-radius: 72px;
   box-shadow: 0 3px 8px #0000001f;
+  padding-inline: 28px;
+
+  @media (min-width: $breakpoint-md-min) {
+    padding-inline: 32px;
+  }
 }
 
 .nav-link {
   text-decoration: none;
   color: black;
-  font-size: 1rem;
+  // margin: 6px;
+  padding-block: 12.3px;
+  padding-inline: 18px;
 
-  &:focus,
-  &:hover {
-    text-decoration: underline;
+  :deep(.q-tab__label) {
+    font-size: 1rem;
+    font-weight: 400;
   }
 
-  &.link-active {
-    text-decoration: underline;
+  @media (min-width: $breakpoint-md-min) {
+    padding-inline: 18px;
+    padding-block: 14px;
   }
 }
 </style>
