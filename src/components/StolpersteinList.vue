@@ -1,25 +1,33 @@
 <template>
   <q-virtual-scroll
     class="full-width full-height"
-    :items="filteredStolpersteine"
-    virtual-scroll-item-size="112"
+    :items-size="itemCount"
+    :items-fn="getListItems"
+    :virtual-scroll-item-size="112"
+    virtual-scroll-slice-size="20"
+    v-slot="{ item }"
   >
-    <template v-slot="{ item }">
+    <div class="q-px-md q-py-sm">
       <StolpersteinListItem
         :key="item.id"
         :stolperstein-feature="item"
-        class="q-ma-md"
-        @click.stop
+        @click.stop=""
       ></StolpersteinListItem>
-    </template>
+    </div>
   </q-virtual-scroll>
 </template>
 
 <script setup lang="ts">
-import { storeToRefs } from 'pinia';
+import { QVirtualScroll } from 'quasar';
 import { useStolpersteinStore } from 'src/store/stolperstein-store';
+import { computed } from 'vue';
 import StolpersteinListItem from './StolpersteinListItem.vue';
 
 const store = useStolpersteinStore();
-const { filteredStolpersteine } = storeToRefs(store);
+
+const itemCount = computed(() => store.filteredStolpersteine.length);
+
+const getListItems = (from: number, size: number) => {
+  return store.filteredStolpersteine.slice(from, from + size);
+};
 </script>
