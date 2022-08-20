@@ -2,16 +2,15 @@
   <q-virtual-scroll
     class="full-width full-height"
     :items="filteredStolpersteine"
-    virtual-scroll-item-size="96"
+    virtual-scroll-item-size="112"
   >
     <template v-slot="{ item }">
-      <div class="q-ma-md">
-        <StolpersteinListItem
-          :key="item.id"
-          :stolperstein-feature="item"
-          @click.stop
-        ></StolpersteinListItem>
-      </div>
+      <StolpersteinListItem
+        :key="item.id"
+        :stolperstein-feature="item"
+        class="q-ma-md"
+        @click.stop
+      ></StolpersteinListItem>
     </template>
   </q-virtual-scroll>
 </template>

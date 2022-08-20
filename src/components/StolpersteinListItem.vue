@@ -11,12 +11,14 @@
         <q-img
           ratio="1"
           :src="props.stolpersteinFeature.stolperstein.stolpersteinThumbImage"
+          :no-spinner="true"
         >
           <template v-slot:error>
             <div
               class="absolute-full flex flex-center bg-grey-4 text-black"
-            ></div> </template
-        ></q-img>
+            ></div>
+          </template>
+        </q-img>
       </q-avatar>
     </q-item-section>
 
@@ -90,3 +92,9 @@ const showDetails = async () => {
   }
 };
 </script>
+
+<style lang="scss">
+.image-loading {
+  background-color: $app-background-color-light;
+}
+</style>
