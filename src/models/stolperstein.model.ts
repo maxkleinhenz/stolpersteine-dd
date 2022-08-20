@@ -28,5 +28,6 @@ export interface Stolperstein {
   ort: string;
   url: string;
   stolpersteinImage: string;
+  stolpersteinThumbImage: string;
   sortValue: string;
 }

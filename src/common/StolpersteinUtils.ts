@@ -34,6 +34,7 @@ const loadStolpersteine = async () => {
             ort: 'Dresden',
             url: responseFeature.properties.url,
             stolpersteinImage: '',
+            stolpersteinThumbImage: '',
             sortValue: responseFeature.properties.einrichtung.toLowerCase(),
           },
           geometry: responseFeature.geometry,
@@ -41,6 +42,12 @@ const loadStolpersteine = async () => {
         newFeature.stolperstein.stolpersteinImage = `images/stolpersteine/${
           newFeature.stolperstein.lastName
         }-${newFeature.stolperstein.firstName.replace('Dr. ', '')}.jpg`;
+
+        newFeature.stolperstein.stolpersteinThumbImage =
+          newFeature.stolperstein.stolpersteinImage.replace(
+            'images/stolpersteine/',
+            'images/stolpersteine/thumb-150/'
+          );
         stolpersteineFeatures.push(newFeature);
       });
 

@@ -10,7 +10,7 @@
       <q-avatar size="64px">
         <q-img
           ratio="1"
-          :src="props.stolpersteinFeature.stolperstein.stolpersteinImage"
+          :src="props.stolpersteinFeature.stolperstein.stolpersteinThumbImage"
         >
           <template v-slot:error>
             <div
