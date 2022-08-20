@@ -1,6 +1,9 @@
 <template>
   <article class="app-bg" :class="{ 'footer-space': $q.screen.lt.sm }">
-    <section class="header-section light q-gutter-y-lg" aria-labelledby="">
+    <section
+      class="header-section light q-gutter-y-lg"
+      aria-labelledby="header-section-title"
+    >
       <div>
         <q-img class="stolperstein-image" :src="stolpersteinImage" fit="cover">
           <template v-slot:loading>
@@ -18,45 +21,24 @@
           <div class="col-12 col-sm">
             <div class="card-header full">
               <h3
+                id="header-section-title"
                 class="title text-weight-bold q-my-sm"
-                v-if="props.stolperstein"
               >
-                {{ props.stolperstein?.stolperstein.name }}
+                {{ props.stolperstein.stolperstein.name }}
               </h3>
-              <q-skeleton
-                tag="h3"
-                type="text"
-                style="width: 70%"
-                class="title text-weight-bold q-my-sm"
-                v-if="!props.stolperstein"
-              />
             </div>
-            <div v-if="props.stolperstein">
+            <div>
               <span
-                v-if="props.stolperstein?.stolperstein.strasse"
+                v-if="props.stolperstein.stolperstein.strasse"
                 class="address"
               >
                 {{ props.stolperstein.stolperstein.strasse }}
                 {{ props.stolperstein.stolperstein.hausnummer }}
               </span>
               <span class="address">
-                {{ props.stolperstein?.stolperstein.plz }}
-                {{ props.stolperstein?.stolperstein.ort }}
+                {{ props.stolperstein.stolperstein.plz }}
+                {{ props.stolperstein.stolperstein.ort }}
               </span>
-            </div>
-            <div v-if="!props.stolperstein">
-              <q-skeleton
-                tag="span"
-                type="text"
-                style="width: 50%; margin-bottom: 0.5rem"
-                class="address"
-              />
-              <q-skeleton
-                tag="span"
-                type="text"
-                style="width: 40%"
-                class="address"
-              />
             </div>
           </div>
           <div class="col-12 col-sm-auto text-center">
@@ -104,10 +86,13 @@
       </div>
     </section>
 
-    <section class="candel-section" aria-labelledby="">
+    <section class="candel-section" aria-labelledby="candel-section-title">
       <q-card class="app-card">
         <q-card-section class="card-header">
-          <h3 class="title text-center text-weight-bold q-my-sm">
+          <h3
+            id="candel-section-title"
+            class="title text-center text-weight-bold q-my-sm"
+          >
             Anteil nehmen
           </h3>
         </q-card-section>
@@ -130,9 +115,17 @@
       </q-card>
     </section>
 
-    <section class="inscription-section light">
+    <section
+      class="inscription-section light"
+      aria-labelledby="inscription-section-title"
+    >
       <div class="card-header">
-        <h3 class="title text-center text-weight-bold q-my-sm">Inschrift</h3>
+        <h3
+          id="inscription-section-title"
+          class="title text-center text-weight-bold q-my-sm"
+        >
+          Inschrift
+        </h3>
       </div>
       <div class="card-content">
         <div class="inscription column items-center text-weight-medium">
@@ -149,14 +142,22 @@
       </div>
     </section>
 
-    <section class="biography-section relative-position" aria-labelledby="">
+    <section
+      class="biography-section relative-position"
+      aria-labelledby="biography-section-title"
+    >
       <div
         class="text-subtitle1 absolute-top custom-caption text-center q-mt-sm"
       >
         <div class="text-subtitle1">Vorschau für Vorabversion</div>
       </div>
       <div class="card-header">
-        <h3 class="title text-center text-weight-bold q-my-sm">Biografie</h3>
+        <h3
+          id="biography-section-title"
+          class="title text-center text-weight-bold q-my-sm"
+        >
+          Biografie
+        </h3>
       </div>
       <div class="card-content">
         <p>Josef Altbach wurde am 28. Oktober 1886 in Wyszków geboren.</p>
@@ -207,10 +208,13 @@
       </div>
     </section>
 
-    <section class="image-section" aria-labelledby="">
+    <section class="image-section" aria-labelledby="image-section-title">
       <div>
         <div class="card-header">
-          <h3 class="title text-center text-weight-bold q-my-sm">
+          <h3
+            id="image-section-title"
+            class="title text-center text-weight-bold q-my-sm"
+          >
             Bildergalerie
           </h3>
         </div>
@@ -248,12 +252,15 @@
 
     <section
       class="other-section"
-      aria-labelledby=""
+      aria-labelledby="other-section-title"
       v-if="otherStolpersteine?.length"
     >
       <div>
         <div class="card-header">
-          <h3 class="title text-center text-weight-bold q-my-sm">
+          <h3
+            id="other-section-title"
+            class="title text-center text-weight-bold q-my-sm"
+          >
             Stolpersteine am gleichen Ort
           </h3>
         </div>
@@ -295,7 +302,7 @@
 <script setup lang="ts">
 import axios from 'axios';
 import { StolpersteinFeature } from 'src/models/stolperstein.model';
-import { PropType, ref, watch } from 'vue';
+import { PropType, ref, watch, onMounted } from 'vue';
 import { parse } from 'node-html-parser';
 import { useQuasar } from 'quasar';
 import { useStolpersteinUtils } from 'src/common/StolpersteinUtils';
@@ -322,28 +329,34 @@ const isDenseMode = computed(() => quasar.screen.lt.sm);
 
 const referencesExpanded = ref(false);
 
+onMounted(() => {
+  initDetails(props.stolperstein);
+});
+
 watch(
   () => props.stolperstein,
   (value) => {
-    if (value) {
-      void loadBiography(value);
-
-      stolpersteinImage.value = value.stolperstein.stolpersteinImage;
-
-      const stolpersteineAtcCoords = findStolpersteineAtCoords(
-        value.geometry.coordinates,
-        store.stolpersteine
-      );
-
-      // mark selected stolpersteine on map
-      store.selectedStolpersteine = stolpersteineAtcCoords;
-
-      otherStolpersteine.value = stolpersteineAtcCoords.filter(
-        (e) => e.stolperstein.id !== value.stolperstein.id
-      );
-    }
+    initDetails(value);
   }
 );
+
+const initDetails = (stolperstein: StolpersteinFeature) => {
+  void loadBiography(stolperstein);
+
+  stolpersteinImage.value = stolperstein.stolperstein.stolpersteinImage;
+
+  const stolpersteineAtcCoords = findStolpersteineAtCoords(
+    stolperstein.geometry.coordinates,
+    store.stolpersteine
+  );
+
+  // mark selected stolpersteine on map
+  store.selectedStolpersteine = stolpersteineAtcCoords;
+
+  otherStolpersteine.value = stolpersteineAtcCoords.filter(
+    (e) => e.stolperstein.id !== stolperstein.stolperstein.id
+  );
+};
 
 const share = () => {
   if (!props.stolperstein) return;
