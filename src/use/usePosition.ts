@@ -86,8 +86,6 @@ export const usePosition = () => {
   };
 
   const geolocationError = (error: GeolocationPositionError) => {
-    watchId.value = undefined;
-
     if (error.code === 1) {
       quasar.dialog({
         title: 'Standortfreigabe',
@@ -97,7 +95,7 @@ export const usePosition = () => {
     } else {
       quasar.dialog({
         title: 'Standort nicht verfügbar',
-        message: 'Der aktuelle Standort kann zur Zeit nicht ermittelt werden.',
+        message: `Der aktuelle Standort kann zur Zeit nicht ermittelt werden. Error Code = ${error.code}`,
       });
     }
   };
@@ -162,26 +160,27 @@ export const usePosition = () => {
     }
   };
 
-  const watchLocation = (map: MaplibreMap) => {
+  const watchPosition = (map: MaplibreMap) => {
     mapInstance = map;
 
     if (store.watchActiv) {
       flyToMarkerPostion();
-    } else if (checkGeoloctionSupported()) {
+    } else if (checkGeolocationSupported()) {
       store.followPosition = true;
       watchId.value = navigator.geolocation.watchPosition(
         geolocationSuccess,
         geolocationError,
         {
-          timeout: 3000,
+          timeout: 10000, // 10 sec
+          maximumAge: 60 * 1000, //1 min
         }
       );
     } else {
-      watchId.value = undefined;
+      clearPositionWatch();
     }
   };
 
-  const checkGeoloctionSupported = (): boolean => {
+  const checkGeolocationSupported = (): boolean => {
     if (!navigator.geolocation) {
       quasar.dialog({
         title: 'Standort nicht unterstützt',
@@ -193,7 +192,7 @@ export const usePosition = () => {
     }
   };
 
-  const clearWatch = () => {
+  const clearPositionWatch = () => {
     if (watchId.value) {
       navigator.geolocation.clearWatch(watchId.value);
       watchId.value = undefined;
@@ -201,7 +200,7 @@ export const usePosition = () => {
   };
 
   return {
-    watchLocation,
-    clearWatch,
+    watchPosition,
+    clearPositionWatch,
   };
 };

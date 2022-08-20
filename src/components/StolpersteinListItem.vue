@@ -11,7 +11,6 @@
         <q-img
           ratio="1"
           :src="props.stolpersteinFeature.stolperstein.stolpersteinImage"
-          loading="lazy"
         >
           <template v-slot:error>
             <div

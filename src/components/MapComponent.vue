@@ -54,7 +54,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onBeforeUnmount, ref } from 'vue';
+import { onMounted, onBeforeUnmount, ref, onDeactivated } from 'vue';
 import { Map as MaplibreMap, LngLat, MapLibreEvent } from 'maplibre-gl';
 import { useStolpersteinMap } from 'src/common/StolpersteinMap';
 import { useQuasar } from 'quasar';
@@ -68,7 +68,7 @@ const store = useStolpersteinStore();
 const positionStore = usePositionStore();
 const { createMap, resize, initMap } = useStolpersteinMap();
 
-const { watchLocation, clearWatch } = usePosition();
+const { watchPosition, clearPositionWatch } = usePosition();
 const { followPosition, watchActiv } = storeToRefs(positionStore);
 
 const dresden = new LngLat(13.7372621, 51.0504088);
@@ -104,6 +104,10 @@ onBeforeUnmount(() => {
   map?.remove();
 });
 
+onDeactivated(() => {
+  clearPositionWatch();
+});
+
 const onResize = () => {
   resize(map);
 };
@@ -119,9 +123,9 @@ const zoomOut = () => {
 
 const startWatchLocation = () => {
   if (positionStore.followPosition && positionStore.watchActiv) {
-    clearWatch();
+    clearPositionWatch();
   } else {
-    watchLocation(map);
+    watchPosition(map);
   }
 };
 </script>
