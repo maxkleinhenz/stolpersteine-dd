@@ -6,10 +6,10 @@
     >
       <div>
         <q-img class="stolperstein-image" :src="stolpersteinImage" fit="cover">
-          <template v-slot:loading>
+          <template #loading>
             <q-skeleton square width="100%" height="100%" />
           </template>
-          <template v-slot:error>
+          <template #error>
             <div class="absolute-full flex flex-center bg-grey-4 text-black">
               Bild nicht gefunden
             </div>
@@ -44,7 +44,7 @@
           <div class="col-12 col-sm-auto text-center">
             <q-avatar size="128px">
               <q-img ratio="1" src="images/portrait-placeholder.png">
-                <template v-slot:loading>
+                <template #loading>
                   <q-skeleton type="QAvatar" width="100%" height="100%" />
                 </template>
               </q-img>
@@ -220,10 +220,10 @@
         </div>
         <div class="card-content full">
           <q-carousel
+            v-model="imageSlide"
             class="image-carousel"
             swipeable
             animated
-            v-model="imageSlide"
             thumbnails
             infinite
             arrows
@@ -251,9 +251,9 @@
     </section>
 
     <section
+      v-if="otherStolpersteine?.length"
       class="other-section"
       aria-labelledby="other-section-title"
-      v-if="otherStolpersteine?.length"
     >
       <div>
         <div class="card-header">
@@ -266,9 +266,9 @@
         </div>
         <div class="card-content q-pt-xs q-gutter-y-md">
           <StolpersteinListItem
-            v-for="stolperstein in otherStolpersteine"
-            :key="stolperstein.stolperstein.id"
-            :stolpersteinFeature="stolperstein"
+            v-for="other in otherStolpersteine"
+            :key="other.stolperstein.id"
+            :stolperstein-feature="other"
             :replace="true"
           ></StolpersteinListItem>
         </div>
@@ -293,7 +293,7 @@
       </q-card-section>
 
       <q-card-actions align="right">
-        <q-btn flat label="OK" color="primary" v-close-popup />
+        <q-btn v-close-popup flat label="OK" color="primary" />
       </q-card-actions>
     </q-card>
   </q-dialog>

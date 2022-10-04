@@ -38,8 +38,8 @@
       </section>
 
       <section
-        class="timeline-section column justify-center items-center"
         ref="timelineSectionRef"
+        class="timeline-section column justify-center items-center"
       >
         <h2>Verlegungen</h2>
 

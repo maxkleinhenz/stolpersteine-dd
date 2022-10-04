@@ -45,7 +45,7 @@
       enter-active-class="animated fadeIn"
       leave-active-class="animated fadeOut"
     >
-      <div class="spinner-container relative-position" v-if="isLoading">
+      <div v-if="isLoading" class="spinner-container relative-position">
         <div class="backdrop"></div>
         <q-spinner class="spinner" color="primary" size="8em" :thickness="4" />
       </div>

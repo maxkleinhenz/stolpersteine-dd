@@ -1,17 +1,17 @@
 <template>
   <q-input
+    v-model="searchText"
     rounded
     outlined
     dense
-    v-model="searchText"
-    Placeholder="Suche"
+    placeholder="Suche"
     aria-placeholder="Durchsuche Stolpersteine"
     bg-color="white"
     @click.stop
     @keyup.enter="searchStolpersteine()"
     @keyup.esc="clearSearch()"
   >
-    <template v-slot:append>
+    <template #append>
       <q-btn
         v-show="searchText"
         round
@@ -29,7 +29,7 @@
       />
     </template>
 
-    <template v-slot:after> </template>
+    <template #after> </template>
   </q-input>
 </template>
 

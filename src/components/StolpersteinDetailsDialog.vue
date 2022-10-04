@@ -1,9 +1,9 @@
 <template>
   <div
-    class="dialog-content shadow-5 full-height app-bg scroll"
     ref="dialogRef"
     v-scroll="onScroll"
     v-touch-pan.horizontal.prevent="handlePan"
+    class="dialog-content shadow-5 full-height app-bg scroll"
   >
     <div class="absolute flex justify-end full-width z-top">
       <q-btn
@@ -25,8 +25,8 @@
       leave-active-class="animated fadeOut"
     >
       <div
-        class="page-scroller absolute flex justify-center full-width z-top"
         v-show="showPageScroller"
+        class="page-scroller absolute flex justify-center full-width z-top"
         :class="{ 'footer-space': $q.screen.lt.sm }"
       >
         <q-btn

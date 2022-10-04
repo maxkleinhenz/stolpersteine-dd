@@ -12,8 +12,8 @@
       :style="drawerStyle"
     >
       <q-card-section
-        class="header-container full-width q-pa-none"
         v-touch-pan.mouse.vertical.prevent="slideDrawer"
+        class="header-container full-width q-pa-none"
         @click="cycleDrawer"
       >
         <div class="draggable-container">
@@ -55,6 +55,7 @@ const props = defineProps({
   marginBottom: {
     type: Number,
     required: false,
+    default: 0,
   },
 });
 

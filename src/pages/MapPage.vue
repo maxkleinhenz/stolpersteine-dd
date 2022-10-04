@@ -24,9 +24,10 @@
       leave-active-class="animated slideOutDown"
     >
       <div
+      v-if="showSelectedSlide"
         class="stolperstein-slider-container absolute-bottom"
         :class="{ 'footer-space': $q.screen.lt.sm }"
-        v-if="showSelectedSlide"
+        
       >
         <StolpersteinSlider
           :stolpersteine="selectedStolpersteine"
@@ -37,9 +38,9 @@
     <div>
       <transition name="backdrop" mode="out-in">
         <div
+          v-show="$route.params.id"
           class="backdrop"
           @click="goToMap()"
-          v-show="$route.params.id"
         ></div>
       </transition>
 

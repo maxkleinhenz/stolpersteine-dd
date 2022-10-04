@@ -1,7 +1,7 @@
 <template>
   <q-item
-    clickable
     v-ripple
+    clickable
     class="app-card q-pa-md"
     :class="{ 'shadow-3': showShadow }"
     @click="showDetails()"
@@ -13,7 +13,7 @@
           :src="props.stolpersteinFeature.stolperstein.stolpersteinThumbImage"
           :no-spinner="true"
         >
-          <template v-slot:error>
+          <template #error>
             <div
               class="absolute-full flex flex-center bg-grey-4 text-black"
             ></div>
@@ -27,8 +27,8 @@
         props.stolpersteinFeature.stolperstein.name
       }}</q-item-label>
       <q-item-label
-        class="text-body2"
         v-if="props.stolpersteinFeature.stolperstein.strasse"
+        class="text-body2"
       >
         {{ props.stolpersteinFeature.stolperstein.strasse }}
         {{ props.stolpersteinFeature.stolperstein.hausnummer }}

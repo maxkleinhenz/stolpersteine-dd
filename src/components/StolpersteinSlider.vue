@@ -2,14 +2,14 @@
   <Swiper
     class="stolperstein-swiper"
     :class="{ 'centered-swiper': !isSlideable }"
-    :slidesPerView="'auto'"
+    :slides-per-view="'auto'"
     :centered-slides="quasar.screen.xs"
     :mousewheel="quasar.screen.gt.xs"
     :modules="[Navigation, Mousewheel]"
     :initial-slide="0"
     @swiper="onSwiper"
   >
-    <template v-slot:container-start v-if="showNavigation">
+    <template v-if="showNavigation" #container-start>
       <q-btn
         class="arrow prev"
         icon="chevron_left"
@@ -20,7 +20,7 @@
       >
       </q-btn
     ></template>
-    <template v-slot:container-end v-if="showNavigation"
+    <template v-if="showNavigation" #container-end
       ><q-btn
         class="arrow next"
         icon="chevron_right"
@@ -57,6 +57,7 @@ import { computed, PropType, ref } from 'vue';
 const props = defineProps({
   stolpersteine: {
     type: Object as PropType<StolpersteinFeature[] | undefined>,
+    default: undefined,
   },
 });
 

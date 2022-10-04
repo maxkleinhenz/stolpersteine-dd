@@ -25,12 +25,15 @@ import { withTransitionParam } from 'src/router/routes';
 const props = defineProps({
   name: {
     type: String,
+    default: null,
   },
   enterActiveClass: {
     type: String,
+    default: null,
   },
   leaveActiveClass: {
     type: String,
+    default: null,
   },
 });
 

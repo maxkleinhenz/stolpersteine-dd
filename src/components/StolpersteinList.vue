@@ -7,7 +7,7 @@
     virtual-scroll-slice-size="20"
   >
     <template #default="{ item }">
-      <div class="q-px-md q-py-sm" :key="item.id">
+      <div :key="item.id" class="q-px-md q-py-sm">
         <StolpersteinListItem
           :stolperstein-feature="item"
           @click.stop=""
