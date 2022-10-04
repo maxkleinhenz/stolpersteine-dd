@@ -7,7 +7,11 @@
     ]"
   >
     <div class="column items-center">
-      <RouterViewTransistion :name="'fade'"></RouterViewTransistion>
+      <router-view v-slot="{ Component }">
+        <transition name="fade" mode="out-in">
+          <component :is="Component" />
+        </transition>
+      </router-view>
     </div>
   </q-page>
 </template>
@@ -15,7 +19,6 @@
 <script setup lang="ts">
 import { useQuasar } from 'quasar';
 import { usePages } from 'src/common/PageList';
-import RouterViewTransistion from 'src/plugins/RouterViewTransistion.vue';
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 

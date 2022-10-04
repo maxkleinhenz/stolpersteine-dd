@@ -62,6 +62,7 @@ export const usePosition = () => {
     store.followPosition = true;
     mapInstance?.flyTo({
       center: positionMarker.getLngLat(),
+      animate: true,
     });
   };
 
@@ -71,6 +72,7 @@ export const usePosition = () => {
       if (store.followPosition) {
         mapInstance.flyTo({
           center: [position.coords.longitude, position.coords.latitude],
+          animate: true,
         });
       }
 

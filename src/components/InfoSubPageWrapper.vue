@@ -11,7 +11,6 @@
         @click="
           $router.push({
             name: pageRecord.Info.routeName,
-            params: { withTransitionParam },
           })
         "
       />
@@ -24,7 +23,6 @@
 
 <script setup lang="ts">
 import { usePages } from 'src/common/PageList';
-import { withTransitionParam } from 'src/router/routes';
 
 const { pageRecord } = usePages();
 </script>

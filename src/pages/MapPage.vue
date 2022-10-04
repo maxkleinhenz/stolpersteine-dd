@@ -24,10 +24,9 @@
       leave-active-class="animated slideOutDown"
     >
       <div
-      v-if="showSelectedSlide"
+        v-if="showSelectedSlide"
         class="stolperstein-slider-container absolute-bottom"
         :class="{ 'footer-space': $q.screen.lt.sm }"
-        
       >
         <StolpersteinSlider
           :stolpersteine="selectedStolpersteine"
@@ -44,16 +43,23 @@
         ></div>
       </transition>
 
-      <RouterViewTransistion
-        :enter-active-class="
-          quasar.screen.gt.xs ? 'animated slideInLeft' : 'animated slideInRight'
-        "
-        :leave-active-class="
-          quasar.screen.gt.xs
-            ? 'animated slideOutLeft'
-            : 'animated slideOutRight'
-        "
-      ></RouterViewTransistion>
+      <router-view v-slot="{ Component }">
+        <transition
+          :enter-active-class="
+            quasar.screen.gt.xs
+              ? 'animated slideInLeft'
+              : 'animated slideInRight'
+          "
+          :leave-active-class="
+            quasar.screen.gt.xs
+              ? 'animated slideOutLeft'
+              : 'animated slideOutRight'
+          "
+          mode="out-in"
+        >
+          <component :is="Component" />
+        </transition>
+      </router-view>
     </div>
   </q-page>
 </template>
@@ -62,12 +68,9 @@
 import { computed, watch } from 'vue';
 import MapComponent from 'components/MapComponent.vue';
 import { useRouter } from 'vue-router';
-
-import { withTransitionParam } from 'src/router/routes';
 import { useQuasar } from 'quasar';
 import StolpersteinBottomSheet from 'src/components/StolpersteinBottomSheet.vue';
 import StolpersteinSlider from 'src/components/StolpersteinSlider.vue';
-import RouterViewTransistion from 'src/plugins/RouterViewTransistion.vue';
 import { usePages } from 'src/common/PageList';
 import { useStolpersteinStore } from 'src/store/stolperstein-store';
 import { storeToRefs } from 'pinia';
@@ -89,7 +92,7 @@ watch(
     if (value && value.length === 1) {
       await router.push({
         name: pageRecord.Map_Details.routeName,
-        params: { id: value[0].stolperstein.id, withTransitionParam },
+        params: { id: value[0].stolperstein.id },
       });
     }
   }
@@ -99,7 +102,6 @@ const goToMap = async () => {
   // store.selectedStolpersteine = undefined;
   await router.push({
     name: pageRecord.Map.routeName,
-    params: { withTransitionParam },
   });
 };
 </script>

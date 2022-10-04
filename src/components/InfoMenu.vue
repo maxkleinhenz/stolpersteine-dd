@@ -11,7 +11,9 @@
             v-for="entry in infoMenuRecord"
             :key="entry.routeName"
             class="info-link text-center q-px-md q-py-md q-my-md"
-            :to="{ name: entry.routeName, params: { withTransitionParam } }"
+            :to="{
+              name: entry.routeName,
+            }"
             >{{ entry.title }}</router-link
           >
         </nav>
@@ -22,7 +24,6 @@
 
 <script setup lang="ts">
 import InfoSubPageWrapper from './InfoSubPageWrapper.vue';
-import { withTransitionParam } from 'src/router/routes';
 import { usePages } from 'src/common/PageList';
 
 const { pageRecord, infoMenuRecord } = usePages();

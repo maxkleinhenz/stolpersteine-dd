@@ -48,7 +48,6 @@ import { StolpersteinFeature } from 'src/models/stolperstein.model';
 import StolpersteinDetail from 'src/components/StolpersteinDetails.vue';
 import { onMounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { withTransitionParam } from 'src/router/routes';
 import { useMeta, scroll, useQuasar } from 'quasar';
 import { usePages } from 'src/common/PageList';
 import { useStolpersteinStore } from 'src/store/stolperstein-store';
@@ -115,7 +114,6 @@ const goToMap = async () => {
   stolperstein.value = undefined;
   await router.push({
     name: pageRecord.Map.routeName,
-    params: { withTransitionParam },
   });
 };
 

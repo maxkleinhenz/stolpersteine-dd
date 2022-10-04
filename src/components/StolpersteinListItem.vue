@@ -48,7 +48,6 @@
 <script setup lang="ts">
 import { StolpersteinFeature } from 'src/models/stolperstein.model';
 import { useRouter } from 'vue-router';
-import { withTransitionParam } from 'src/router/routes';
 import { usePages } from 'src/common/PageList';
 
 interface Props {
@@ -72,7 +71,6 @@ const showDetails = async () => {
       name: pageRecord.Map_Details.routeName,
       params: {
         id: props.stolpersteinFeature.stolperstein.id,
-        withTransitionParam,
       },
     });
   } else {
@@ -80,7 +78,6 @@ const showDetails = async () => {
       name: pageRecord.Map_Details.routeName,
       params: {
         id: props.stolpersteinFeature.stolperstein.id,
-        withTransitionParam,
       },
     });
   }

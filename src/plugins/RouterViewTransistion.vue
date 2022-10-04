@@ -1,13 +1,18 @@
 <template>
   <router-view v-slot="{ Component }">
-    <transition
-      :name="displayTransition ? props.name : undefined"
-      :enter-active-class="
+    <!-- 
+    
+                 :enter-active-class="
         displayTransition ? props.enterActiveClass : undefined
       "
       :leave-active-class="
         displayTransition ? props.leaveActiveClass : undefined
       "
+      
+    
+    -->
+    <transition
+      :name="displayTransition ? props.name : undefined"
       mode="out-in"
       @before-leave="onBeforeLeave"
     >
@@ -48,9 +53,15 @@ const onBeforeLeave = (el: HTMLElement) => {
 
 onBeforeRouteUpdate((to: RouteLocationNormalized) => {
   const hasTransitionParam = Object.keys(to.params).some(
-    (key) => key === withTransitionParam
+    (key) => key === Object.keys(withTransitionParam)[0]
   );
   displayTransition.value = hasTransitionParam || !quasar.platform.is.ios;
+
+  console.log(
+    'Object.keys(withTransitionParam)[0]',
+    Object.keys(withTransitionParam)[0]
+  );
+  console.log('displayTransition', displayTransition.value);
 });
 </script>
 
