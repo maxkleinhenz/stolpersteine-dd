@@ -5,15 +5,15 @@
     :items-fn="getListItems"
     :virtual-scroll-item-size="112"
     virtual-scroll-slice-size="20"
-    v-slot="{ item }"
   >
-    <div class="q-px-md q-py-sm">
-      <StolpersteinListItem
-        :key="item.id"
-        :stolperstein-feature="item"
-        @click.stop=""
-      ></StolpersteinListItem>
-    </div>
+    <template #default="{ item }">
+      <div class="q-px-md q-py-sm" :key="item.id">
+        <StolpersteinListItem
+          :stolperstein-feature="item"
+          @click.stop=""
+        ></StolpersteinListItem>
+      </div>
+    </template>
   </q-virtual-scroll>
 </template>
 
