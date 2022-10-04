@@ -1,33 +1,29 @@
 <template>
-  <q-virtual-scroll
-    class="full-width full-height"
-    :items-size="itemCount"
-    :items-fn="getListItems"
-    :virtual-scroll-item-size="112"
-    virtual-scroll-slice-size="20"
-  >
-    <template #default="{ item }">
-      <div :key="item.id" class="q-px-md q-py-sm">
+  <div v-bind="containerProps" class="full-width full-height" style="">
+    <div v-bind="wrapperProps">
+      <div
+        v-for="item in list"
+        :key="item.data.stolperstein.id"
+        class="q-px-md q-py-sm"
+      >
         <StolpersteinListItem
-          :stolperstein-feature="item"
+          :stolperstein-feature="item.data"
           @click.stop=""
         ></StolpersteinListItem>
       </div>
-    </template>
-  </q-virtual-scroll>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { QVirtualScroll } from 'quasar';
 import { useStolpersteinStore } from 'src/store/stolperstein-store';
 import { computed } from 'vue';
 import StolpersteinListItem from './StolpersteinListItem.vue';
+import { useVirtualList } from '@vueuse/core';
 
 const store = useStolpersteinStore();
-
-const itemCount = computed(() => store.filteredStolpersteine.length);
-
-const getListItems = (from: number, size: number) => {
-  return store.filteredStolpersteine.slice(from, from + size);
-};
+const items = computed(() => store.filteredStolpersteine);
+const { list, containerProps, wrapperProps } = useVirtualList(items, {
+  itemHeight: 112,
+});
 </script>
