@@ -1,20 +1,14 @@
 <template>
   <router-view v-slot="{ Component }">
-    <!-- 
-    
-                 :enter-active-class="
-        displayTransition ? props.enterActiveClass : undefined
+    <transition
+      :name="enableTransition ? props.name : undefined"
+      :enter-active-class="
+        enableTransition ? props.enterActiveClass : undefined
       "
       :leave-active-class="
-        displayTransition ? props.leaveActiveClass : undefined
+        enableTransition ? props.leaveActiveClass : undefined
       "
-      
-    
-    -->
-    <transition
-      :name="displayTransition ? props.name : undefined"
-      mode="out-in"
-      @before-leave="onBeforeLeave"
+      :mode="props.mode"
     >
       <component :is="Component" />
     </transition>
@@ -23,9 +17,8 @@
 
 <script setup lang="ts">
 import { useQuasar } from 'quasar';
-import { ref } from 'vue';
-import { onBeforeRouteUpdate, RouteLocationNormalized } from 'vue-router';
-import { withTransitionParam } from 'src/router/routes';
+import { PropType, ref } from 'vue';
+import { onBeforeRouteUpdate } from 'vue-router';
 
 const props = defineProps({
   name: {
@@ -33,35 +26,24 @@ const props = defineProps({
     default: null,
   },
   enterActiveClass: {
-    type: String,
-    default: null,
+    type: String as PropType<string | undefined>,
+    default: undefined,
   },
   leaveActiveClass: {
-    type: String,
-    default: null,
+    type: String as PropType<string | undefined>,
+    default: undefined,
+  },
+  mode: {
+    type: String as PropType<'in-out' | 'out-in' | 'default'>,
+    default: 'out-in',
   },
 });
 
 const quasar = useQuasar();
 
-const displayTransition = ref(true);
-
-const onBeforeLeave = (el: HTMLElement) => {
-  if (displayTransition.value) el.style.display = 'block';
-  else el.style.display = 'none';
-};
-
-onBeforeRouteUpdate((to: RouteLocationNormalized) => {
-  const hasTransitionParam = Object.keys(to.params).some(
-    (key) => key === Object.keys(withTransitionParam)[0]
-  );
-  displayTransition.value = hasTransitionParam || !quasar.platform.is.ios;
-
-  console.log(
-    'Object.keys(withTransitionParam)[0]',
-    Object.keys(withTransitionParam)[0]
-  );
-  console.log('displayTransition', displayTransition.value);
+const enableTransition = ref(true);
+onBeforeRouteUpdate(() => {
+  enableTransition.value = !quasar.platform.is.ios;
 });
 </script>
 

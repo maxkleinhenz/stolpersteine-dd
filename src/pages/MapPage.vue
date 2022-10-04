@@ -43,23 +43,17 @@
         ></div>
       </transition>
 
-      <router-view v-slot="{ Component }">
-        <transition
-          :enter-active-class="
-            quasar.screen.gt.xs
-              ? 'animated slideInLeft'
-              : 'animated slideInRight'
-          "
-          :leave-active-class="
-            quasar.screen.gt.xs
-              ? 'animated slideOutLeft'
-              : 'animated slideOutRight'
-          "
-          mode="out-in"
-        >
-          <component :is="Component" />
-        </transition>
-      </router-view>
+      <RouterViewTransistion
+        :enter-active-class="
+          quasar.screen.gt.xs ? 'animated slideInLeft' : 'animated slideInRight'
+        "
+        :leave-active-class="
+          quasar.screen.gt.xs
+            ? 'animated slideOutLeft'
+            : 'animated slideOutRight'
+        "
+      >
+      </RouterViewTransistion>
     </div>
   </q-page>
 </template>
@@ -74,6 +68,7 @@ import StolpersteinSlider from 'src/components/StolpersteinSlider.vue';
 import { usePages } from 'src/common/PageList';
 import { useStolpersteinStore } from 'src/store/stolperstein-store';
 import { storeToRefs } from 'pinia';
+import RouterViewTransistion from 'src/plugins/RouterViewTransistion.vue';
 
 const store = useStolpersteinStore();
 const router = useRouter();

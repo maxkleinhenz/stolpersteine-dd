@@ -1,7 +1,6 @@
 import { usePages } from 'src/common/PageList';
 import { RouteRecordRaw } from 'vue-router';
 
-export const withTransitionParam = { withTransitionParam: 1 };
 const { pageRecord } = usePages();
 
 const routes: RouteRecordRaw[] = [

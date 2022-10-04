@@ -19,18 +19,7 @@ const InfoMenuRouteNameTypeArray = [
 ] as const;
 type InfoMenuRouteNameType = typeof InfoMenuRouteNameTypeArray[number];
 
-const InfoRouteNameTypeArray = [
-  'Info',
-  'Info_Verein',
-  'Info_Stolpersteine',
-  'Info_Research',
-  'Info_Glossary',
-  'Info_Help',
-  'Info_Contact',
-  'Info_Privacy',
-  'Info_Imprint',
-] as const;
-// type InfoRouteNameType = typeof InfoRouteNameTypeArray[number];
+const InfoRouteNameTypeArray = ['Info', ...InfoMenuRouteNameTypeArray] as const;
 
 const RouteNameTypeArray = [
   'Home',
