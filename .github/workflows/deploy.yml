@@ -13,9 +13,9 @@ jobs:
 
       - name: create env file
         run: |
-        touch .env
-        echo MAPTILER_API_KEY=${{ secrets.MAPTILER_API_KEY }} >> .env
-        echo FUNCTION_CODE=${{ secrets.FUNCTION_CODE }} >> .env
+          touch .env
+          echo MAPTILER_API_KEY=${{ secrets.MAPTILER_API_KEY }} >> .env
+          echo FUNCTION_CODE=${{ secrets.FUNCTION_CODE }} >> .env
 
       - name: Install and Build 🔧
         run: |
