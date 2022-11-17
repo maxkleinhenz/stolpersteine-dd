@@ -72,7 +72,7 @@ const { watchPosition, clearPositionWatch } = usePosition();
 const { followPosition, watchActiv } = storeToRefs(positionStore);
 
 const dresden = new LngLat(13.7372621, 51.0504088);
-const apiKey = process.env.MAPTILER_API_KEY ?? '';
+const apiKey = process.env.VUE_APP_MAPTILER_API_KEY ?? '';
 
 const isLoading = ref(true);
 

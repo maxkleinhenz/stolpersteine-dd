@@ -20,19 +20,19 @@ concurrency:
 jobs:
   build-and-deploy:
     env:
-      FUNCTION_CODE: ${{ secrets.MAPTILER_API_KEY }}
+      VUE_APP_FUNCTION_CODE: ${{ secrets.FUNCTION_CODE }}
     runs-on: ubuntu-latest
     concurrency: ci-${{ github.ref }}
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
 
-      - name: Create .env File
-        run: |
-          touch .env
-          echo "MAPTILER_API_KEY=${{ secrets.MAPTILER_API_KEY }}" >> .env
-          echo "FUNCTION_CODE=${{ secrets.MAPTILER_API_KEY }}" >> .env
-          cat .env
+      # - name: Create .env File
+      #   run: |
+      #     touch .env
+      #     echo "MAPTILER_API_KEY=${{ secrets.MAPTILER_API_KEY }}" >> .env
+      #     echo "FUNCTION_CODE=${{ secrets.MAPTILER_API_KEY }}" >> .env
+      #     cat .env
 
       - name: Install and Build 🔧
         run: |
