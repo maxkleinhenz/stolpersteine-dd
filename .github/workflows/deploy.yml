@@ -19,6 +19,8 @@ concurrency:
 
 jobs:
   build-and-deploy:
+    env:
+      FUNCTION_CODE: ${{ secrets.MAPTILER_API_KEY }}
     runs-on: ubuntu-latest
     concurrency: ci-${{ github.ref }}
     steps:
