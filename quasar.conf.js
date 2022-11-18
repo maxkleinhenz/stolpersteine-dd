@@ -11,8 +11,6 @@
 const { configure } = require('quasar/wrappers');
 
 module.exports = configure(function (ctx) {
-  require('dotenv').config({ debug: true });
-
   return {
     // https://quasar.dev/quasar-cli/supporting-ts
     supportTS: {
@@ -54,11 +52,7 @@ module.exports = configure(function (ctx) {
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
     build: {
       vueRouterMode: 'hash', // available values: 'hash', 'history'
-      env: {
-        VUE_APP_MAPTILER_API_KEY: process.env.VUE_APP_MAPTILER_API_KEY,
-        VUE_APP_FUNCTION_CODE: process.env.VUE_APP_FUNCTION_CODE,
-        FOO: 'hello',
-      },
+      env: require('dotenv').config().parsed,
 
       // transpile: false,
       // publicPath: '/',
