@@ -377,6 +377,7 @@ const imageSlide = ref(1);
 
 const loadBiography = async (stolperstein: StolpersteinFeature) => {
   const code = process.env.FUNCTION_CODE ?? '';
+
   const url = `https://stolperstein-proxy.azurewebsites.net/api/proxy?code=${code}&url=${stolperstein.stolperstein.url}`;
 
   var response = await axios.get<string>(url);
