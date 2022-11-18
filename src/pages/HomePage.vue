@@ -9,6 +9,7 @@
           <h1><strong>Stolpersteine</strong> Dresden</h1>
           <p class="subtitle">Es waren unsere Nachbarn</p>
           <p>foo: {{ foo }}</p>
+          <p>code: {{ code }}</p>
 
           <div class="map-container">
             <p>
@@ -161,6 +162,7 @@ const onClickExpand = () => {
 };
 
 const foo = ref(process.env.FOO);
+const code = ref(process.env.VUE_APP_FUNCTION_CODE);
 </script>
 
 <style scoped lang="scss">
