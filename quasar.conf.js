@@ -57,6 +57,7 @@ module.exports = configure(function (ctx) {
       env: {
         VUE_APP_MAPTILER_API_KEY: process.env.VUE_APP_MAPTILER_API_KEY,
         VUE_APP_FUNCTION_CODE: process.env.VUE_APP_FUNCTION_CODE,
+        FOO: 'hello',
       },
 
       // transpile: false,

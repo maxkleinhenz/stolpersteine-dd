@@ -8,6 +8,7 @@
         <div class="column justify-center items-center col-grow">
           <h1><strong>Stolpersteine</strong> Dresden</h1>
           <p class="subtitle">Es waren unsere Nachbarn</p>
+          <p>foo: {{ foo }}</p>
 
           <div class="map-container">
             <p>
@@ -158,6 +159,8 @@ const onClickExpand = () => {
   const offset = timelineSectionRef.value?.offsetTop ?? window.innerHeight;
   setVerticalScrollPosition(window, offset, duration);
 };
+
+const foo = ref(process.env.FOO);
 </script>
 
 <style scoped lang="scss">
