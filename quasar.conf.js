@@ -11,7 +11,7 @@
 const { configure } = require('quasar/wrappers');
 
 module.exports = configure(function (ctx) {
-  require('dotenv').config();
+  require('dotenv').config({ debug: true });
 
   return {
     // https://quasar.dev/quasar-cli/supporting-ts
