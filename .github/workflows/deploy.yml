@@ -21,6 +21,7 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     concurrency: ci-${{ github.ref }}
+    environment: github-pages
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
