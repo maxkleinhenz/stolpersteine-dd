@@ -302,13 +302,12 @@
 <script setup lang="ts">
 import axios from 'axios';
 import { StolpersteinFeature } from 'src/models/stolperstein.model';
-import { PropType, ref, watch, onMounted } from 'vue';
+import { PropType, ref, watch, onMounted, computed } from 'vue';
 import { parse } from 'node-html-parser';
 import { useQuasar } from 'quasar';
 import { useStolpersteinUtils } from 'src/common/StolpersteinUtils';
 import StolpersteinListItem from './StolpersteinListItem.vue';
 import StolpersteinDetailsActionButton from './StolpersteinDetailsActionButton.vue';
-import { computed } from '@vue/reactivity';
 import { useStolpersteinStore } from 'src/store/stolperstein-store';
 const props = defineProps({
   stolperstein: {
@@ -377,7 +376,6 @@ const imageSlide = ref(1);
 
 const loadBiography = async (stolperstein: StolpersteinFeature) => {
   const code = process.env.FUNCTION_CODE ?? '';
-
   const url = `https://stolperstein-proxy.azurewebsites.net/api/proxy?code=${code}&url=${stolperstein.stolperstein.url}`;
 
   var response = await axios.get<string>(url);
@@ -484,7 +482,7 @@ section {
   color: white;
   .app-card {
     background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)),
-      url('~assets/images/candle.jpg');
+      url('images/candle.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
