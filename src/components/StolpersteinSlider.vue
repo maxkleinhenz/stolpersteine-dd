@@ -46,6 +46,9 @@
 </template>
 
 <script setup lang="ts">
+import 'swiper/scss';
+import 'swiper/scss/navigation';
+
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Navigation, Mousewheel } from 'swiper';
 import { Swiper as SwiperType } from 'swiper/types';
@@ -87,9 +90,6 @@ const isSlideable = computed(() => {
 </script>
 
 <style lang="scss">
-@import 'swiper/scss';
-@import 'swiper/scss/navigation';
-
 .stolperstein-swiper {
   > .swiper-wrapper {
     align-items: center;

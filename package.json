@@ -1,57 +1,44 @@
 {
   "name": "stolpersteine-dd",
   "version": "0.0.1",
-  "description": "A Quasar Framework app",
-  "productName": "Stolpersteine DD",
-  "author": "Max Kleinhenz",
+  "description": "A Quasar Project",
+  "productName": "Quasar App",
+  "author": "Max Kleinhenz <max.github@outlook.de>",
   "private": true,
   "scripts": {
     "lint": "eslint --ext .js,.ts,.vue ./",
     "format": "prettier --write \"**/*.{js,ts,vue,scss,html,md,json}\" --ignore-path .gitignore",
-    "test": "echo \"No test specified\" && exit 0",
-    "dev": "quasar dev",
-    "build": "quasar build"
+    "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
-    "@quasar/extras": "^1.15.4",
+    "@quasar/extras": "^1.0.0",
     "@turf/turf": "^6.5.0",
     "@types/geojson": "^7946.0.10",
-    "@vueuse/core": "^9.3.0",
-    "axios": "^0.27.2",
-    "core-js": "^3.25.5",
+    "@vueuse/core": "^9.6.0",
+    "axios": "^1.2.0",
     "dotenv": "^16.0.3",
     "maplibre-gl": "^2.4.0",
-    "node-html-parser": "^5.4.2",
-    "pinia": "^2.0.22",
-    "quasar": "^2.9.1",
-    "swiper": "^8.4.2",
-    "vue": "^3.2.40",
-    "vue-router": "^4.1.5"
+    "node-html-parser": "^6.1.4",
+    "pinia": "^2.0.11",
+    "quasar": "^2.6.0",
+    "swiper": "^8.4.5",
+    "vue": "^3.0.0",
+    "vue-router": "^4.0.0"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.19.1",
-    "@quasar/app-webpack": "^3.6.1",
-    "@types/node": "^12.20.55",
-    "@typescript-eslint/eslint-plugin": "^5.39.0",
-    "@typescript-eslint/parser": "^5.39.0",
-    "eslint": "^7.14.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-vue": "^7.0.0",
-    "prettier": "^2.7.1"
+    "@quasar/app-vite": "^1.0.0",
+    "@types/node": "^12.20.21",
+    "@typescript-eslint/eslint-plugin": "^5.10.0",
+    "@typescript-eslint/parser": "^5.10.0",
+    "autoprefixer": "^10.4.2",
+    "eslint": "^8.10.0",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-vue": "^9.0.0",
+    "prettier": "^2.5.1",
+    "typescript": "^4.5.4"
   },
-  "browserslist": [
-    "last 10 Chrome versions",
-    "last 10 Firefox versions",
-    "last 4 Edge versions",
-    "last 7 Safari versions",
-    "last 8 Android versions",
-    "last 8 ChromeAndroid versions",
-    "last 8 FirefoxAndroid versions",
-    "last 10 iOS versions",
-    "last 5 Opera versions"
-  ],
   "engines": {
-    "node": ">= 12.22.1",
+    "node": "^18 || ^16 || ^14.19",
     "npm": ">= 6.13.4",
     "yarn": ">= 1.21.1"
   }

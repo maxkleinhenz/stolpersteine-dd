@@ -54,6 +54,8 @@
 </template>
 
 <script setup lang="ts">
+import 'maplibre-gl/dist/maplibre-gl.css';
+
 import { onMounted, onBeforeUnmount, ref, onDeactivated } from 'vue';
 import { Map as MaplibreMap, LngLat, MapLibreEvent } from 'maplibre-gl';
 import { useStolpersteinMap } from 'src/common/StolpersteinMap';
@@ -131,8 +133,6 @@ const startWatchLocation = () => {
 </script>
 
 <style lang="scss" scoped>
-@import '~maplibre-gl/dist/maplibre-gl.css';
-
 .map-wrap {
   position: relative;
   width: 100%;
