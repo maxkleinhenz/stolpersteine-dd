@@ -58,13 +58,13 @@ module.exports = configure(function (/* ctx */) {
       },
 
       vueRouterMode: 'hash', // available values: 'hash', 'history'
-      // vueRouterBase,
+      //vueRouterBase,
       // vueDevtools,
       // vueOptionsAPI: false,
 
       // rebuildCache: true, // rebuilds Vite/linter/etc cache on startup
 
-      // publicPath: '/',
+      publicPath: 'stolpersteine-dd',
       // analyze: true,
       // env: {},
       // rawDefine: {}
