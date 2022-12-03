@@ -116,6 +116,6 @@ onMounted(async () => {
 
 .footer,
 .nav-tabs {
-  border-radius: $app-card-border-radius $app-card-border-radius 0 0;
+  border-radius: 15px 15px 0 0;
 }
 </style>
