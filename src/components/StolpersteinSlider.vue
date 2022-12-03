@@ -1,48 +1,59 @@
 <template>
-  <Swiper
-    class="stolperstein-swiper"
-    :class="{ 'centered-swiper': !isSlideable }"
-    :slides-per-view="'auto'"
-    :centered-slides="quasar.screen.xs"
-    :mousewheel="quasar.screen.gt.xs"
-    :modules="[Navigation, Mousewheel]"
-    :initial-slide="0"
-    @swiper="onSwiper"
+  <transition
+    enter-active-class="animated slideInUp"
+    leave-active-class="animated slideOutDown"
   >
-    <template v-if="showNavigation" #container-start>
-      <q-btn
-        class="arrow prev"
-        icon="chevron_left"
-        elevated
-        round
-        color="primary"
-        @click="swiper?.slidePrev()"
-      >
-      </q-btn
-    ></template>
-    <template v-if="showNavigation" #container-end
-      ><q-btn
-        class="arrow next"
-        icon="chevron_right"
-        elevated
-        round
-        color="primary"
-        @click="swiper?.slideNext()"
-      ></q-btn
-    ></template>
-
-    <SwiperSlide
-      v-for="stolperstein in props.stolpersteine"
-      :key="stolperstein.stolperstein.id"
-      class="stolperstein-slide"
+    <div
+      v-if="(props.stolpersteine?.length ?? 0) > 1"
+      class="stolperstein-slider-container absolute-bottom"
+      :class="{ 'footer-space': $q.screen.lt.sm }"
     >
-      <StolpersteinListItem
-        :stolperstein-feature="stolperstein"
-        :show-arrow="false"
-        :show-shadow="true"
-      ></StolpersteinListItem>
-    </SwiperSlide>
-  </Swiper>
+      <Swiper
+        class="stolperstein-swiper"
+        :class="{ 'centered-swiper': !isSlideable }"
+        :slides-per-view="'auto'"
+        :centered-slides="quasar.screen.xs"
+        :mousewheel="quasar.screen.gt.xs"
+        :modules="[Navigation, Mousewheel]"
+        :initial-slide="0"
+        @swiper="onSwiper"
+      >
+        <template v-if="showNavigation" #container-start>
+          <q-btn
+            class="arrow prev"
+            icon="chevron_left"
+            elevated
+            round
+            color="primary"
+            @click="swiper?.slidePrev()"
+          >
+          </q-btn
+        ></template>
+        <template v-if="showNavigation" #container-end
+          ><q-btn
+            class="arrow next"
+            icon="chevron_right"
+            elevated
+            round
+            color="primary"
+            @click="swiper?.slideNext()"
+          ></q-btn
+        ></template>
+
+        <SwiperSlide
+          v-for="stolperstein in props.stolpersteine"
+          :key="stolperstein.stolperstein.id"
+          class="stolperstein-slide"
+        >
+          <StolpersteinListItem
+            :stolperstein-feature="stolperstein"
+            :show-arrow="false"
+            :show-shadow="true"
+          ></StolpersteinListItem>
+        </SwiperSlide>
+      </Swiper>
+    </div>
+  </transition>
 </template>
 
 <script setup lang="ts">
@@ -90,6 +101,15 @@ const isSlideable = computed(() => {
 </script>
 
 <style lang="scss">
+.stolperstein-slider-container {
+  z-index: 50;
+  margin-bottom: 100px;
+
+  @media (min-width: $breakpoint-sm-min) {
+    margin-bottom: 16px;
+  }
+}
+
 .stolperstein-swiper {
   > .swiper-wrapper {
     align-items: center;

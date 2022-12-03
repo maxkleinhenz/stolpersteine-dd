@@ -21,7 +21,7 @@ const routes: RouteRecordRaw[] = [
           {
             path: ':id',
             name: pageRecord.Map_Details.routeName,
-            component: () => import('components/StolpersteinDetailsDialog.vue'),
+            component: () => import('pages/MapPage.vue'),
           },
         ],
       },
