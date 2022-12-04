@@ -4,7 +4,7 @@
     role="navigation"
     aria-label="Hauptmenu"
   >
-    <q-tabs no-caps>
+    <q-tabs no-caps indicator-color="primary">
       <q-route-tab
         label="Start"
         class="nav-link"

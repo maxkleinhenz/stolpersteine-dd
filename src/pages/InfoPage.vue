@@ -6,8 +6,38 @@
       { 'mobile-menu': isMenuMobile },
     ]"
   >
-    <div class="column items-center">
-      <RouterViewTransistion name="fade"></RouterViewTransistion>
+    <div class="column items-center app-bg">
+      <div class="content-container">
+        <Transition
+          enter-active-class="animated fadeIn"
+          leave-active-class="animated fadeOut"
+          mode="out-in"
+        >
+          <div
+            class="back-button-container"
+            v-show="$route.name !== pageRecord.Info.routeName"
+          >
+            <q-btn
+              :size="$q.screen.gt.xs ? 'lg' : 'md'"
+              round
+              text-color="black"
+              color="white"
+              icon="arrow_back"
+              @click="
+                $router.push({
+                  name: pageRecord.Info.routeName,
+                })
+              "
+            />
+          </div>
+        </Transition>
+
+        <RouterViewTransistion
+          enter-active-class="animated fadeIn"
+          leave-active-class="animated fadeOut"
+          mode="out-in"
+        ></RouterViewTransistion>
+      </div>
     </div>
   </q-page>
 </template>
@@ -29,6 +59,19 @@ const isMenuMobile = computed(() => {
 </script>
 
 <style scoped lang="scss">
+.content-container {
+  width: min(100%, #{$breakpoint-lg-min});
+  min-height: 100vh;
+  background-color: var(--app-bg-light);
+}
+
+.back-button-container {
+  position: fixed;
+  z-index: 11;
+  padding-left: 2rem;
+  padding-top: 2rem;
+}
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.2s ease-out, transform 0.2s ease-out;

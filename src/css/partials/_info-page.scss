@@ -1,16 +1,21 @@
 .info-page {
+  background-color: var(--app-bg-light);
+
   article {
     section {
-      padding: 0rem 1rem 6rem;
+      padding: 0rem 1rem;
 
       &:first-child {
         padding-top: 6rem;
       }
 
+      &:last-child {
+        padding-bottom: 6rem;
+      }
+
       h1,
       h3 {
-        //padding-top: 2rem;
-        margin-top: 0;
+        margin-top: 2rem;
         margin-bottom: 2rem;
       }
 
@@ -27,11 +32,16 @@
 
       section {
         border-radius: 15px;
-        padding: 3rem 2rem 3rem 2rem;
-        margin-top: 1rem;
-        margin-bottom: 4rem;
-        margin-left: 1rem;
-        margin-right: 1rem;
+        padding: 0rem 2rem;
+        margin: 1rem;
+      }
+    }
+  }
+
+  @media (min-width: $breakpoint-md-min) {
+    article {
+      section {
+        padding: 0rem 3rem;
       }
     }
   }

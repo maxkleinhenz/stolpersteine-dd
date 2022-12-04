@@ -305,7 +305,7 @@ import { StolpersteinFeature } from 'src/models/stolperstein.model';
 import { PropType, ref, watch, onMounted, computed } from 'vue';
 import { parse } from 'node-html-parser';
 import { useQuasar } from 'quasar';
-import { useStolpersteinUtils } from 'src/common/StolpersteinUtils';
+import { useStolpersteinUtils } from 'src/use/useStolpersteinUtils';
 import StolpersteinListItem from './StolpersteinListItem.vue';
 import StolpersteinDetailsActionButton from './StolpersteinDetailsActionButton.vue';
 import { useStolpersteinStore } from 'src/store/stolperstein-store';

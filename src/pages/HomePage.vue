@@ -2,7 +2,7 @@
   <q-page class="full-width column items-center">
     <article class="full-width">
       <section
-        class="header-section column justify-center items-center"
+        class="header-section app-bg column justify-center items-center"
         :style="{ 'min-height': landingPageHeightCss }"
       >
         <div class="column justify-center items-center col-grow">

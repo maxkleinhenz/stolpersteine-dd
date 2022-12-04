@@ -62,7 +62,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { useMeta, scroll, useQuasar, QBtn } from 'quasar';
 import { usePages } from 'src/common/PageList';
 import { useStolpersteinStore } from 'src/store/stolperstein-store';
-import { useStolpersteinUtils } from 'src/common/StolpersteinUtils';
+import { useStolpersteinUtils } from 'src/use/useStolpersteinUtils';
 import { transition } from 'dom7';
 
 const props = defineProps({
