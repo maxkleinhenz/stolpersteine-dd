@@ -1,4 +1,4 @@
-import { usePages } from 'src/common/PageList';
+import { usePages } from 'src/use/usePages';
 import { RouteRecordRaw } from 'vue-router';
 
 const { pageRecord } = usePages();
@@ -21,7 +21,7 @@ const routes: RouteRecordRaw[] = [
           {
             path: ':id',
             name: pageRecord.Map_Details.routeName,
-            component: () => import('components/StolpersteinDetailsDialog.vue'),
+            component: () => import('pages/MapPage.vue'),
           },
         ],
       },
@@ -32,50 +32,50 @@ const routes: RouteRecordRaw[] = [
           {
             path: '',
             name: pageRecord.Info.routeName,
-            component: () => import('src/components/InfoMenu.vue'),
+            component: () => import('src/components/Info/InfoMenu.vue'),
           },
           {
             path: 'ueber-stolpersteine-fuer-dresden',
             name: pageRecord.Info_Verein.routeName,
             component: () =>
-              import('components/InfoUeberStolpersteinVerein.vue'),
+              import('components/Info/InfoUeberStolpersteinVerein.vue'),
           },
           {
             path: 'stolpersteine',
             name: pageRecord.Info_Stolpersteine.routeName,
-            component: () => import('components/InfoStolpersteine.vue'),
+            component: () => import('components/Info/InfoStolpersteine.vue'),
           },
           {
             path: 'recherche',
             name: pageRecord.Info_Research.routeName,
 
-            component: () => import('components/InfoResearch.vue'),
+            component: () => import('components/Info/InfoResearch.vue'),
           },
           {
             path: 'glossar',
             name: pageRecord.Info_Glossary.routeName,
 
-            component: () => import('components/InfoGlossary.vue'),
+            component: () => import('components/Info/InfoGlossary.vue'),
           },
           {
             path: 'hilfe-und-faq',
             name: pageRecord.Info_Help.routeName,
-            component: () => import('components/InfoHelp.vue'),
+            component: () => import('components/Info/InfoHelp.vue'),
           },
           {
             path: 'kontakt',
             name: pageRecord.Info_Contact.routeName,
-            component: () => import('components/InfoContact.vue'),
+            component: () => import('components/Info/InfoContact.vue'),
           },
           {
             path: 'datenschutz',
             name: pageRecord.Info_Privacy.routeName,
-            component: () => import('components/InfoPrivacy.vue'),
+            component: () => import('components/Info/InfoPrivacy.vue'),
           },
           {
             path: 'impressum',
             name: pageRecord.Info_Imprint.routeName,
-            component: () => import('components/InfoImprint.vue'),
+            component: () => import('components/Info/InfoImprint.vue'),
           },
         ],
       },

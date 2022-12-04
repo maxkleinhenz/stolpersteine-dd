@@ -1,119 +1,36 @@
 // app global css in SCSS form
 
+@import 'partials/variables';
+@import 'partials/map-marker';
+@import 'partials/card';
+@import 'partials/info-page';
+
+:root {
+  --app-bg: #{$app-background-color};
+  --app-bg-light: #{$app-background-color-light};
+  --app-stolperstein-bg-color: #b5a642;
+}
+
 .body--light {
-  background-color: $app-background-color;
+  background-color: var(--app-bg-light);
 }
 
 .body--dark {
-  background-color: $app-background-color;
+  background-color: var(--app-bg);
 }
 
 .app-bg {
-  background-color: $app-background-color;
+  background-color: var(--app-bg);
 }
 
 .app-bg-light {
-  background-color: $app-background-color-light;
-}
-
-.app-card {
-  background-color: $app-card-background-color;
-  border-radius: $app-card-border-radius;
-}
-
-.app-card-bg {
-  background-color: $app-card-background-color;
+  background-color: var(--app-bg-light);
 }
 
 .app-action-button {
   padding: 1rem 2rem !important;
 }
 
-.position-marker {
-  width: 1.5rem;
-  height: 1.5rem;
-  background-color: $blue-7;
-  border-radius: 2rem;
-  border: 0.2rem solid white;
-  box-shadow: 0 0 7px 3px #0000002e;
-  z-index: 11;
-
-  &:focus,
-  &:hover {
-    background-color: $blue-8;
-    cursor: pointer;
-  }
-}
-
-.selected-stolperstein-marker {
-  width: 2rem;
-  height: 2rem;
-  background-color: $stolperstein-color;
-  border: 0.4rem solid black;
-  border-radius: $stolperstein-border-radius;
-  z-index: 10;
-
-  &:focus,
-  &:hover {
-    background-color: darken($stolperstein-color, 5%);
-    cursor: pointer;
-  }
-}
-
 .footer-space {
   padding-bottom: $app-footer-height;
-}
-
-.info-page {
-  background-color: $app-background-color-light;
-
-  article {
-    section {
-      background-color: $app-background-color-light;
-      padding: 0rem 1rem 6rem;
-
-      &:first-child {
-        padding-top: 6rem;
-      }
-
-      h1,
-      h3 {
-        //padding-top: 2rem;
-        margin-top: 0;
-        margin-bottom: 2rem;
-      }
-
-      p {
-        margin-bottom: 0;
-        padding-bottom: 1rem;
-      }
-    }
-  }
-
-  @media (min-width: $breakpoint-sm-min) {
-    background-color: $app-background-color;
-
-    article {
-      padding-top: 3rem;
-
-      section {
-        border-radius: 15px;
-        padding: 3rem 2rem 3rem 2rem;
-        margin-top: 1rem;
-        margin-bottom: 4rem;
-        margin-left: 1rem;
-        margin-right: 1rem;
-      }
-    }
-  }
-}
-
-.mobile-menu {
-  background-color: $app-background-color;
-
-  & article {
-    section {
-      background-color: $app-background-color !important;
-    }
-  }
 }

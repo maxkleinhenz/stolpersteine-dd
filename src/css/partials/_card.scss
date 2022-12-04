@@ -1,0 +1,10 @@
+$app-card-border-radius: 15px;
+
+.app-card {
+  background-color: var(--app-bg-light);
+  border-radius: $app-card-border-radius;
+}
+
+.app-card-bg {
+  background-color: var(--app-bg-light);
+}

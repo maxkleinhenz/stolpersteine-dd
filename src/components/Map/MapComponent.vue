@@ -58,12 +58,12 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 
 import { onMounted, onBeforeUnmount, ref, onDeactivated } from 'vue';
 import { Map as MaplibreMap, LngLat, MapLibreEvent } from 'maplibre-gl';
-import { useStolpersteinMap } from 'src/common/StolpersteinMap';
 import { useQuasar } from 'quasar';
 import { usePosition } from 'src/use/usePosition';
 import { useStolpersteinStore } from 'src/store/stolperstein-store';
 import { usePositionStore } from 'src/store/position-store';
 import { storeToRefs } from 'pinia';
+import { useStolpersteinMap } from 'src/use/useStolpersteinMap';
 
 const quasar = useQuasar();
 const store = useStolpersteinStore();

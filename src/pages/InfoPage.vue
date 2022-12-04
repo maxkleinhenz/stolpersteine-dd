@@ -7,17 +7,47 @@
     ]"
   >
     <div class="column items-center">
-      <RouterViewTransistion name="fade"></RouterViewTransistion>
+      <div class="content-container">
+        <Transition
+          enter-active-class="animated fadeIn"
+          leave-active-class="animated fadeOut"
+          mode="out-in"
+        >
+          <div
+            class="fixed q-pt-lg q-pl-lg"
+            v-show="$route.name !== pageRecord.Info.routeName"
+          >
+            <q-btn
+              :size="$q.screen.gt.xs ? 'lg' : 'md'"
+              round
+              text-color="black"
+              color="white"
+              icon="arrow_back"
+              @click="
+                $router.push({
+                  name: pageRecord.Info.routeName,
+                })
+              "
+            />
+          </div>
+        </Transition>
+
+        <RouterViewTransistion
+          enter-active-class="animated fadeIn"
+          leave-active-class="animated fadeOut"
+          mode="out-in"
+        ></RouterViewTransistion>
+      </div>
     </div>
   </q-page>
 </template>
 
 <script setup lang="ts">
 import { useQuasar } from 'quasar';
-import { usePages } from 'src/common/PageList';
+import { usePages } from 'src/use/usePages';
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
-import RouterViewTransistion from 'src/plugins/RouterViewTransistion.vue';
+import RouterViewTransistion from 'src/components/Common/RouterViewTransistion.vue';
 
 const quasar = useQuasar();
 const route = useRoute();
@@ -29,6 +59,13 @@ const isMenuMobile = computed(() => {
 </script>
 
 <style scoped lang="scss">
+.back-button-container {
+  position: fixed;
+  z-index: 11;
+  padding-left: 2rem;
+  padding-top: 2rem;
+}
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.2s ease-out, transform 0.2s ease-out;

@@ -19,9 +19,9 @@
 </template>
 
 <script setup lang="ts">
-import StolpersteinList from './StolpersteinList.vue';
-import StolpersteinSearchBox from './StolpersteinSearchBox.vue';
-import BottomSheet from 'src/plugins/BottomSheet.vue';
+import StolpersteinList from 'src/components/StolpersteinList/StolpersteinList.vue';
+import StolpersteinSearchBox from 'src/components/StolpersteinList/StolpersteinSearchBox.vue';
+import BottomSheet from 'src/components/Common/BottomSheet.vue';
 </script>
 
 <style scoped lang="scss">

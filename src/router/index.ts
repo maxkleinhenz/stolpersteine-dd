@@ -1,6 +1,6 @@
 import { useMeta } from 'quasar';
 import { route } from 'quasar/wrappers';
-import { usePages, RouteNameType } from 'src/common/PageList';
+import { usePages, RouteNameType } from 'src/use/usePages';
 import {
   createMemoryHistory,
   createRouter,

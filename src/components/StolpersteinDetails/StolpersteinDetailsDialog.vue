@@ -1,61 +1,79 @@
 <template>
-  <div
-    ref="dialogRef"
-    v-scroll="onScroll"
-    v-touch-pan.horizontal.prevent="handlePan"
-    class="dialog-content shadow-5 full-height app-bg scroll"
+  <Transition
+    :enter-active-class="
+      quasar.screen.gt.xs ? 'animated slideInLeft' : 'animated slideInRight'
+    "
+    :leave-active-class="
+      quasar.screen.gt.xs ? 'animated slideOutLeft' : 'animated slideOutRight'
+    "
   >
-    <div class="absolute flex justify-end full-width z-top">
-      <q-btn
-        class="fixed q-ma-md"
-        :size="$q.screen.gt.xs ? 'lg' : 'md'"
-        round
-        text-color="black"
-        color="white"
-        icon="close"
-        @click="goToMap()"
-      />
-    </div>
-    <div v-if="stolperstein" class="full-width full-height">
-      <StolpersteinDetail :stolperstein="stolperstein"></StolpersteinDetail>
-    </div>
-
-    <transition
-      enter-active-class="animated fadeIn"
-      leave-active-class="animated fadeOut"
+    <div
+      v-if="props.stolpersteinId"
+      ref="dialogRef"
+      v-scroll="onScroll"
+      v-touch-pan.horizontal.prevent="handlePan"
+      class="dialog-content shadow-5 full-height app-bg scroll"
     >
-      <div
-        v-show="showPageScroller"
-        class="page-scroller absolute flex justify-center full-width z-top"
-        :class="{ 'footer-space': $q.screen.lt.sm }"
-      >
+      <div class="absolute flex justify-end full-width z-top">
         <q-btn
           class="fixed q-ma-md"
           :size="$q.screen.gt.xs ? 'lg' : 'md'"
           round
           text-color="black"
           color="white"
-          icon="expand_less"
-          @click="goToTop()"
+          icon="close"
+          @click="goToMap()"
         />
       </div>
-    </transition>
-  </div>
+      <div v-if="stolperstein" class="full-width full-height">
+        <StolpersteinDetails :stolperstein="stolperstein"></StolpersteinDetails>
+      </div>
+
+      <transition
+        enter-active-class="animated fadeIn"
+        leave-active-class="animated fadeOut"
+      >
+        <div
+          v-show="showPageScroller"
+          class="page-scroller absolute flex justify-center full-width z-top"
+          :class="{ 'footer-space': $q.screen.lt.sm }"
+        >
+          <q-btn
+            class="fixed q-ma-md"
+            :size="$q.screen.gt.xs ? 'lg' : 'md'"
+            round
+            text-color="black"
+            color="white"
+            icon="expand_less"
+            @click="goToTop()"
+          />
+        </div>
+      </transition>
+    </div>
+  </Transition>
+  <div v-show="props.stolpersteinId" class="backdrop" @click="goToMap()"></div>
 </template>
 
 <script setup lang="ts">
 import { StolpersteinFeature } from 'src/models/stolperstein.model';
-import StolpersteinDetail from 'src/components/StolpersteinDetails.vue';
+import StolpersteinDetails from 'src/components/StolpersteinDetails/StolpersteinDetails.vue';
 import { onMounted, ref, watch } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
-import { useMeta, scroll, useQuasar } from 'quasar';
-import { usePages } from 'src/common/PageList';
+import { useRouter } from 'vue-router';
+import { useMeta, scroll, useQuasar, QBtn } from 'quasar';
+import { usePages } from 'src/use/usePages';
 import { useStolpersteinStore } from 'src/store/stolperstein-store';
-import { useStolpersteinUtils } from 'src/common/StolpersteinUtils';
+import { useStolpersteinUtils } from 'src/use/useStolpersteinUtils';
+
+const props = defineProps({
+  stolpersteinId: {
+    type: Number,
+    required: true,
+    default: undefined,
+  },
+});
 
 const quasar = useQuasar();
 const store = useStolpersteinStore();
-const route = useRoute();
 const router = useRouter();
 const { setVerticalScrollPosition } = scroll;
 const { pageRecord } = usePages();
@@ -69,13 +87,13 @@ onMounted(async () => {
   if (!store.stolpersteine.length) {
     await store.loadStolpersteineFeatures();
   }
-  setDetailStolperstein(Number(route.params.id));
+  if (props.stolpersteinId) setDetailStolperstein(props.stolpersteinId);
 });
 
 watch(
-  () => route.params.id,
+  () => props.stolpersteinId,
   (value) => {
-    setDetailStolperstein(Number(value));
+    if (value) setDetailStolperstein(value);
   }
 );
 
@@ -158,6 +176,35 @@ const handlePan = (ev: {
 
   @media (min-width: $breakpoint-sm-min) {
     bottom: 100px;
+  }
+}
+
+.backdrop {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 100;
+  background-color: $dark;
+  opacity: $backdrop-opacity;
+
+  @media (min-width: $breakpoint-sm-min) {
+    z-index: 7000;
+  }
+
+  .backdrop-enter-active,
+  .backdrop-leave-active {
+    transition: opacity 0.2s ease-out;
+  }
+  .backdrop-enter-from,
+  .backdrop-leave-to {
+    opacity: 0;
+  }
+
+  .backdrop-enter-to,
+  .backdrop-leave-from {
+    opacity: $backdrop-opacity;
   }
 }
 </style>

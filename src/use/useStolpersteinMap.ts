@@ -16,7 +16,7 @@ import {
 import { usePositionStore } from 'src/store/position-store';
 import { useStolpersteinStore } from 'src/store/stolperstein-store';
 import { watch } from 'vue';
-import { useStolpersteinUtils } from './StolpersteinUtils';
+import { useStolpersteinUtils } from './useStolpersteinUtils';
 
 const StolpersteinSource = 'stolpersteine';
 const StolpersteinClusterLayer = 'clusters';
