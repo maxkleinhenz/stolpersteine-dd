@@ -1,12 +1,20 @@
 .info-page {
-  background-color: var(--app-bg-light);
+  background-color: var(--app-bg);
+
+  .content-container {
+    width: min(100%, #{$breakpoint-lg-min});
+    background-color: var(--app-bg-light);
+    min-height: calc(100vh - #{$app-footer-height});
+  }
 
   article {
+    padding-top: 3rem;
+
     section {
       padding: 0rem 1rem;
 
       &:first-child {
-        padding-top: 6rem;
+        padding-top: 1rem;
       }
 
       &:last-child {
@@ -27,9 +35,13 @@
   }
 
   @media (min-width: $breakpoint-sm-min) {
-    article {
-      padding-top: 3rem;
+    padding: 1rem;
 
+    .content-container {
+      min-height: calc(100vh - 2rem);
+    }
+
+    article {
       section {
         border-radius: 15px;
         padding: 0rem 2rem;
@@ -39,6 +51,12 @@
   }
 
   @media (min-width: $breakpoint-md-min) {
+    padding: 3rem 2rem;
+
+    .content-container {
+      min-height: calc(100vh - 6rem);
+    }
+
     article {
       section {
         padding: 0rem 3rem;

@@ -6,7 +6,7 @@
       { 'mobile-menu': isMenuMobile },
     ]"
   >
-    <div class="column items-center app-bg">
+    <div class="column items-center">
       <div class="content-container">
         <Transition
           enter-active-class="animated fadeIn"
@@ -14,7 +14,7 @@
           mode="out-in"
         >
           <div
-            class="back-button-container"
+            class="fixed q-pt-lg q-pl-lg"
             v-show="$route.name !== pageRecord.Info.routeName"
           >
             <q-btn
@@ -59,12 +59,6 @@ const isMenuMobile = computed(() => {
 </script>
 
 <style scoped lang="scss">
-.content-container {
-  width: min(100%, #{$breakpoint-lg-min});
-  min-height: 100vh;
-  background-color: var(--app-bg-light);
-}
-
 .back-button-container {
   position: fixed;
   z-index: 11;
