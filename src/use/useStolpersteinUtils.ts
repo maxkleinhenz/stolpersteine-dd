@@ -5,16 +5,16 @@ import {
   StolpersteinFeature,
 } from 'src/models/stolperstein.model';
 
-export const useStolpersteinUtils = () => {
+export function useStolpersteinUtils() {
   return {
     loadStolpersteine,
     groupStolpersteinByCoords,
     findStolpersteinById,
     findStolpersteineAtCoords,
   };
-};
+}
 
-const loadStolpersteine = async () => {
+async function loadStolpersteine() {
   return await axios
     .get<StolpersteinResult>('data/stolpersteine.json')
     .then((response) => {
@@ -56,11 +56,11 @@ const loadStolpersteine = async () => {
         a.stolperstein.sortValue < b.stolperstein.sortValue ? -1 : 1
       );
     });
-};
+}
 
-const groupStolpersteinByCoords = (
+function groupStolpersteinByCoords(
   stolpersteinFeatures: Array<StolpersteinFeature>
-) => {
+) {
   const grouped: Array<GroupedStolpersteinFeature> = [];
 
   stolpersteinFeatures.forEach((stolpersteinFeature) => {
@@ -87,28 +87,28 @@ const groupStolpersteinByCoords = (
   });
 
   return grouped;
-};
+}
 
-const findStolpersteinById = (
+function findStolpersteinById(
   id: number,
   source: StolpersteinFeature[]
-): StolpersteinFeature | undefined => {
+): StolpersteinFeature | undefined {
   const found = source.filter((s) => {
     return s.stolperstein.id === id;
   });
   if ((found?.length ?? 0) > 0) return found[0];
 
   return undefined;
-};
+}
 
-const findStolpersteineAtCoords = (
+function findStolpersteineAtCoords(
   coordinates: [number, number],
   source: StolpersteinFeature[]
-) => {
+) {
   return source.filter((feature) => {
     return (
       feature.geometry.coordinates[0] === coordinates[0] &&
       feature.geometry.coordinates[1] === coordinates[1]
     );
   });
-};
+}

@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { useStolpersteinUtils } from 'src/common/StolpersteinUtils';
+import { useStolpersteinUtils } from 'src/use/useStolpersteinUtils';
 import { StolpersteinFeature } from 'src/models/stolperstein.model';
 
 export const useStolpersteinStore = defineStore('stolperstein', {
