@@ -18,7 +18,7 @@
 <script setup lang="ts">
 import { useStolpersteinStore } from 'src/store/stolperstein-store';
 import { computed } from 'vue';
-import StolpersteinListItem from './StolpersteinListItem.vue';
+import StolpersteinListItem from 'src/components/StolpersteinList/StolpersteinListItem.vue';
 import { useVirtualList } from '@vueuse/core';
 
 const store = useStolpersteinStore();

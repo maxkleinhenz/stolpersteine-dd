@@ -1,4 +1,4 @@
-import { usePages } from 'src/common/PageList';
+import { usePages } from 'src/use/usePages';
 import { RouteRecordRaw } from 'vue-router';
 
 const { pageRecord } = usePages();

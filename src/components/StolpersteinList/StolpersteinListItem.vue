@@ -48,7 +48,7 @@
 <script setup lang="ts">
 import { StolpersteinFeature } from 'src/models/stolperstein.model';
 import { useRouter } from 'vue-router';
-import { usePages } from 'src/common/PageList';
+import { usePages } from 'src/use/usePages';
 
 interface Props {
   stolpersteinFeature: StolpersteinFeature;

@@ -44,10 +44,10 @@
 
 <script setup lang="ts">
 import { useQuasar } from 'quasar';
-import { usePages } from 'src/common/PageList';
+import { usePages } from 'src/use/usePages';
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
-import RouterViewTransistion from 'src/plugins/RouterViewTransistion.vue';
+import RouterViewTransistion from 'src/components/Common/RouterViewTransistion.vue';
 
 const quasar = useQuasar();
 const route = useRoute();

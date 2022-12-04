@@ -26,7 +26,7 @@
         />
       </div>
       <div v-if="stolperstein" class="full-width full-height">
-        <StolpersteinDetail :stolperstein="stolperstein"></StolpersteinDetail>
+        <StolpersteinDetails :stolperstein="stolperstein"></StolpersteinDetails>
       </div>
 
       <transition
@@ -56,14 +56,13 @@
 
 <script setup lang="ts">
 import { StolpersteinFeature } from 'src/models/stolperstein.model';
-import StolpersteinDetail from 'src/components/StolpersteinDetails.vue';
-import { onMounted, PropType, ref, watch } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import StolpersteinDetails from 'src/components/StolpersteinDetails/StolpersteinDetails.vue';
+import { onMounted, ref, watch } from 'vue';
+import { useRouter } from 'vue-router';
 import { useMeta, scroll, useQuasar, QBtn } from 'quasar';
-import { usePages } from 'src/common/PageList';
+import { usePages } from 'src/use/usePages';
 import { useStolpersteinStore } from 'src/store/stolperstein-store';
 import { useStolpersteinUtils } from 'src/use/useStolpersteinUtils';
-import { transition } from 'dom7';
 
 const props = defineProps({
   stolpersteinId: {
@@ -75,7 +74,6 @@ const props = defineProps({
 
 const quasar = useQuasar();
 const store = useStolpersteinStore();
-const route = useRoute();
 const router = useRouter();
 const { setVerticalScrollPosition } = scroll;
 const { pageRecord } = usePages();

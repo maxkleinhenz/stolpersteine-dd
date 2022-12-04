@@ -141,8 +141,8 @@
 <script setup lang="ts">
 import { useQuasar } from 'quasar';
 import { scroll } from 'quasar';
-import { useLandingPageHeight } from 'src/common/LandingPageUtils';
-import { usePages } from 'src/common/PageList';
+import { useLandingPageHeight } from 'src/use/useLandingPageHeight';
+import { usePages } from 'src/use/usePages';
 import { ref } from 'vue';
 
 const quasar = useQuasar();

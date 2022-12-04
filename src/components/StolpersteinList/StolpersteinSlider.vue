@@ -64,7 +64,7 @@ import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Navigation, Mousewheel } from 'swiper';
 import { Swiper as SwiperType } from 'swiper/types';
 import { useQuasar } from 'quasar';
-import StolpersteinListItem from 'src/components/StolpersteinListItem.vue';
+import StolpersteinListItem from './StolpersteinListItem.vue';
 import { StolpersteinFeature } from 'src/models/stolperstein.model';
 import { computed, PropType, ref } from 'vue';
 

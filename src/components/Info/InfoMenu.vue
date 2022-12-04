@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { usePages } from 'src/common/PageList';
+import { usePages } from 'src/use/usePages';
 
 const { pageRecord, infoMenuRecord } = usePages();
 </script>

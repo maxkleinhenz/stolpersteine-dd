@@ -31,13 +31,13 @@
 
 <script setup lang="ts">
 import { watch } from 'vue';
-import MapComponent from 'components/MapComponent.vue';
+import MapComponent from 'src/components/Map/MapComponent.vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useQuasar } from 'quasar';
-import StolpersteinBottomSheet from 'src/components/StolpersteinBottomSheet.vue';
-import StolpersteinSlider from 'src/components/StolpersteinSlider.vue';
-import StolpersteinDetailsDialog from 'src/components/StolpersteinDetailsDialog.vue';
-import { usePages } from 'src/common/PageList';
+import StolpersteinBottomSheet from 'src/components/StolpersteinList/StolpersteinBottomSheet.vue';
+import StolpersteinSlider from 'src/components/StolpersteinList/StolpersteinSlider.vue';
+import StolpersteinDetailsDialog from 'src/components/StolpersteinDetails/StolpersteinDetailsDialog.vue';
+import { usePages } from 'src/use/usePages';
 import { useStolpersteinStore } from 'src/store/stolperstein-store';
 import { storeToRefs } from 'pinia';
 
