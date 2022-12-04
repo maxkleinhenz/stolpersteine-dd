@@ -50,14 +50,6 @@ const { pageRecord } = usePages();
 const { selectedStolpersteine } = storeToRefs(store);
 
 watch(
-  () => route.params.id,
-  (value) => {
-    console.log('map route', value);
-    console.log('map route', Number(route.params.id));
-  }
-);
-
-watch(
   () => store.selectedStolpersteine,
   async (value) => {
     if (value && value.length === 1) {
