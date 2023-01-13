@@ -482,7 +482,7 @@ section {
   color: white;
   .app-card {
     background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)),
-      url('images/candle.jpg');
+      url('/images/candle.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
