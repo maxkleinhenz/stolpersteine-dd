@@ -1,27 +1,23 @@
 <script lang="ts" setup></script>
 
 <template>
-  <div class="bg-base-1 px-4">
-    <section class="flex min-h-screen flex-col items-center justify-center text-center">
-      <div class="flex flex-1 flex-col justify-center gap-12">
-        <div class="space-y-3">
-          <h1 class="text-4xl"><span class="font-bold">Stolpersteine</span> Dresden</h1>
-          <p class="text-xl font-normal dark:text-gray-400">Es waren unsere Nachbaren</p>
-        </div>
-        <div class="space-y-5">
-          <p>
-            Erkunde fast 300 Stolpersteine in Dresden und erfahre welche Lebensgeschichten hinter den Steinen stehen
-          </p>
-          <AppButton intent="hero" to="/karte" class="btn btn--hero inline-block">
-            Zur interaktiven Karte <AppIcon name="ic:baseline-chevron-right" size="small" />
-          </AppButton>
-        </div>
+  <section class="mx-auto flex min-h-screen max-w-2xl flex-col items-center justify-center px-4 text-center">
+    <div class="flex flex-1 flex-col justify-center gap-12">
+      <div class="space-y-3">
+        <h1 class="text-4xl"><span class="font-bold">Stolpersteine</span> Dresden</h1>
+        <p class="text-xl font-normal dark:text-gray-400">Es waren unsere Nachbaren</p>
       </div>
-      <div class="p-6">
-        <AppButton intent="primary" shape="rounded" title="Nach unten scrollen" class="p-2">
-          <AppIcon name="ic:baseline-arrow-downward" />
+      <div class="space-y-5">
+        <p>Erkunde fast 300 Stolpersteine in Dresden und erfahre welche Lebensgeschichten hinter den Steinen stehen</p>
+        <AppButton intent="hero" to="/karte" class="btn btn--hero inline-block">
+          Zur interaktiven Karte <AppIcon name="ic:baseline-chevron-right" size="small" />
         </AppButton>
       </div>
-    </section>
-  </div>
+    </div>
+    <div class="p-6">
+      <AppButton intent="primary" shape="rounded" title="Nach unten scrollen" class="p-2">
+        <AppIcon name="ic:baseline-arrow-downward" />
+      </AppButton>
+    </div>
+  </section>
 </template>
