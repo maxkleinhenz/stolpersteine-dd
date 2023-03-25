@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --base-1-color: 245 224 183;
+    --base-2-color: 248 234 205;
+    --accent-1-color: 255 140 90;
+    --accent-2-color: 161 105 81;
+    --accent-3-color: 85 67 59;
+  }
+}
