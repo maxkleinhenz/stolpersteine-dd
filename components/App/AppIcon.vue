@@ -22,8 +22,8 @@ type IconProps = Required<VariantProps<typeof iconClass>>;
 withDefaults(
   defineProps<{
     name: string;
-    intent: IconProps["intent"];
-    size: IconProps["size"];
+    intent?: IconProps["intent"];
+    size?: IconProps["size"];
   }>(),
   {
     intent: "primary",

@@ -12,12 +12,14 @@ const items = [
 </script>
 
 <template>
-  <section class="flex min-h-screen flex-col items-center justify-center gap-12 p-8 text-center">
-    <h1 class="text-5xl">Information</h1>
-    <ul class="space-y-6">
-      <li v-for="item in items" :key="item.to">
-        <AppButton intent="link" size="large" :to="item.to">{{ item.text }}</AppButton>
-      </li>
-    </ul>
-  </section>
+  <main class="min-h-screen">
+    <section class="flex min-h-screen flex-col items-center justify-center gap-12 p-8 text-center">
+      <h1 class="text-5xl">Information</h1>
+      <ul class="space-y-6">
+        <li v-for="item in items" :key="item.to">
+          <AppButton intent="link" size="large" :to="item.to">{{ item.text }}</AppButton>
+        </li>
+      </ul>
+    </section>
+  </main>
 </template>

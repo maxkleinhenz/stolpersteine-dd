@@ -1,9 +1,13 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+definePageMeta({
+  layout: "map",
+});
+</script>
 
 <template>
-  <div class="flex flex-col justify-center items-center min-h-screen">
+  <main class="flex min-h-screen flex-col items-center justify-center">
     <h1>Karte</h1>
-  </div>
+  </main>
 </template>
 
 <style scoped></style>

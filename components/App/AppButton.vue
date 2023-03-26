@@ -30,9 +30,9 @@ const buttonClass = cva("transform active:scale-95 transition-colors duration-30
 type ButtonProps = Required<VariantProps<typeof buttonClass>>;
 withDefaults(
   defineProps<{
-    intent: ButtonProps["intent"];
-    shape: ButtonProps["shape"];
-    size: ButtonProps["size"];
+    intent?: ButtonProps["intent"];
+    shape?: ButtonProps["shape"];
+    size?: ButtonProps["size"];
   }>(),
   {
     intent: "primary",
@@ -49,5 +49,5 @@ const component = computed(() => {
 </script>
 
 <template>
-  <component :is="component" :class="buttonClass({ intent, shape, size })"> <slot /></component>
+  <component :is="component" :class="buttonClass({ intent, shape, size })" v-bind="$attrs"> <slot /></component>
 </template>
