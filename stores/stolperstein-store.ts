@@ -30,7 +30,7 @@ export const useStolpersteinStore = defineStore("stolperstein", () => {
         geometry: feature.geometry,
       } as StolpersteinFeature;
     });
-    this.stolpersteine = stolpersteinFeatures.sort((a, b) =>
+    stolpersteine.value = stolpersteinFeatures.sort((a, b) =>
       a.stolperstein.sortValue < b.stolperstein.sortValue ? -1 : 1
     );
   }
