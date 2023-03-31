@@ -7,7 +7,7 @@ const links = {
 </script>
 
 <template>
-  <nav class="fixed right-0 top-0 z-50 m-8 flex rounded-full bg-white px-9 text-lg drop-shadow-md">
+  <nav class="fixed right-0 top-0 z-10 m-8 flex rounded-full bg-white px-9 text-lg drop-shadow-md">
     <AppButton
       v-for="link in links"
       class="border-b-4 border-transparent py-5 px-6 hover:border-accent-2"

@@ -1,7 +1,16 @@
 <script lang="ts" setup>
 import { breakpointsTailwind } from "@vueuse/core";
 
-var sidebarOpen = ref(true);
+var sidebarOpenRef = ref(true);
+var sidebarOpen = computed({
+  get() {
+    if (sidebarFixed.value) return true;
+    return sidebarOpenRef.value;
+  },
+  set(newValue) {
+    sidebarOpenRef.value = newValue;
+  },
+});
 const sidebarFixed = useBreakpoints(breakpointsTailwind).greater("lg");
 </script>
 
@@ -18,7 +27,7 @@ const sidebarFixed = useBreakpoints(breakpointsTailwind).greater("lg");
     /></AppButton>
     <AppSidebar v-model:open="sidebarOpen" :overlay="!sidebarFixed">
       <template v-slot:sidebar>
-        <aside class="w-screen max-w-sm">
+        <aside class="w-screen max-w-[400px]">
           <MapSidebar />
         </aside>
       </template>

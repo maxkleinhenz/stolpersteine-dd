@@ -6,7 +6,7 @@ const buttonClass = cva("transform active:scale-95 transition-colors duration-30
     intent: {
       hero: "rounded-full bg-white py-3 px-5 text-base font-semibold uppercase drop-shadow-lg hover:bg-accent-2 hover:text-white",
       primary: "hover:bg-accent-2 hover:text-white",
-      secondary: "secondary",
+      secondary: "",
       link: "hover:underline underline-offset-4 p-2",
       default: "",
     },

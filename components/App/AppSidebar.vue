@@ -12,7 +12,7 @@ const isOpen = useVModel(props, "open", emit);
 <template>
   <div class="flex min-h-screen flex-row">
     <div
-      class="left-0 z-10 min-h-screen bg-cyan-300 transition-transform duration-300"
+      class="left-0 z-30 min-h-screen transition-transform duration-300"
       :class="{ '-translate-x-full': !isOpen, absolute: overlay }"
     >
       <slot name="sidebar" />
@@ -29,7 +29,7 @@ const isOpen = useVModel(props, "open", emit);
       >
         <div
           v-show="overlay && open"
-          class="absolute inset-0 cursor-pointer bg-gray-700/30"
+          class="absolute inset-0 z-20 cursor-pointer bg-gray-700/30"
           @click="() => (isOpen = false)"
         ></div>
       </Transition>
