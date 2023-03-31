@@ -3,6 +3,25 @@ import { StolpersteinFeature, StolpersteinResult } from "~~/models/stolperstein.
 
 export const useStolpersteinStore = defineStore("stolperstein", () => {
   const stolpersteine = ref<StolpersteinFeature[]>([]);
+  const searchText = ref<string>("");
+
+  const filteredStolpersteine = computed(() => {
+    console.log("searchText", searchText.value);
+    if (searchText.value.length <= 0) {
+      return stolpersteine.value;
+    }
+
+    const lowerSearchText = searchText.value.toLowerCase();
+
+    return stolpersteine.value.filter((s) => {
+      const containsName = s.stolperstein.name.toLowerCase().includes(lowerSearchText);
+
+      const anschrift = `${s.stolperstein.strasse} ${s.stolperstein.hausnummer} ${s.stolperstein.plz}`;
+      const containAnschrift = anschrift ? anschrift.toLowerCase().includes(lowerSearchText) : false;
+
+      return containsName || containAnschrift;
+    });
+  });
 
   async function fetchStolpersteine() {
     const data = await $fetch<StolpersteinResult>("/stolpersteine/stolpersteine.json");
@@ -35,5 +54,5 @@ export const useStolpersteinStore = defineStore("stolperstein", () => {
     );
   }
 
-  return { stolpersteine, fetchStolpersteine };
+  return { stolpersteine, searchText, filteredStolpersteine, fetchStolpersteine };
 });

@@ -21,7 +21,7 @@ const sidebarFixed = useBreakpoints(breakpointsTailwind).greater("lg");
       v-if="!sidebarFixed"
       intent="default"
       shape="rounded"
-      class="absolute m-8 bg-white p-4 drop-shadow-md"
+      class="absolute m-8 bg-white p-4 shadow-md hover:bg-gray-200"
       @click="() => (sidebarOpen = true)"
       ><AppIcon name="ic:baseline-menu"
     /></AppButton>

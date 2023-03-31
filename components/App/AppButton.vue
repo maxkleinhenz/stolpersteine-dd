@@ -4,7 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 const buttonClass = cva("transform active:scale-95 transition-colors duration-300", {
   variants: {
     intent: {
-      hero: "rounded-full bg-white py-3 px-5 text-base font-semibold uppercase drop-shadow-lg hover:bg-accent-2 hover:text-white",
+      hero: "rounded-full bg-white py-3 px-5 text-base font-semibold uppercase shadow-lg hover:bg-accent-2 hover:text-white",
       primary: "hover:bg-accent-2 hover:text-white",
       secondary: "",
       link: "hover:underline underline-offset-4 p-2",
