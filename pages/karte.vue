@@ -6,13 +6,13 @@ const store = useStolpersteinStore();
 const stolpersteine = computed(() => store.stolpersteine);
 
 definePageMeta({
-  layout: "map",
+  layout: "map-layout",
 });
 </script>
 
 <template>
   <main class="flex min-h-screen flex-col items-center justify-center">
-    <h1>Karte</h1>
+    <StolpersteinMap />
   </main>
 </template>
 

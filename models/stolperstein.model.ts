@@ -35,6 +35,14 @@ export interface Feature {
   geometry: Geometry;
 }
 
+export interface GroupedStolpersteinFeature {
+  properties: Array<StolpersteinFeature>;
+  geometry: {
+    type: string;
+    coordinates: [number, number];
+  };
+}
+
 interface Property {
   id: number;
   einrichtung: string;

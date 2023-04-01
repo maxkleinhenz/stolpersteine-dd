@@ -4,6 +4,7 @@ import { StolpersteinFeature, StolpersteinResult } from "~~/models/stolperstein.
 export const useStolpersteinStore = defineStore("stolperstein", () => {
   const stolpersteine = ref<StolpersteinFeature[]>([]);
   const searchText = ref<string>("");
+  const selectedStolpersteine = ref<StolpersteinFeature[] | undefined>(undefined);
 
   const filteredStolpersteine = computed(() => {
     console.log("searchText", searchText.value);
@@ -54,5 +55,5 @@ export const useStolpersteinStore = defineStore("stolperstein", () => {
     );
   }
 
-  return { stolpersteine, searchText, filteredStolpersteine, fetchStolpersteine };
+  return { stolpersteine, searchText, selectedStolpersteine, filteredStolpersteine, fetchStolpersteine };
 });
