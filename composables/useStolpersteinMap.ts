@@ -31,7 +31,7 @@ export function useStolpersteinMap() {
       style: "/map/map-style.json",
       center: center,
       zoom: 12,
-      trackResize: true,
+      trackResize: false,
       attributionControl: false,
     });
 
@@ -55,6 +55,14 @@ export function useStolpersteinMap() {
 
     return map;
   }
+
+  const debounceResize = useDebounceFn(
+    () => {
+      if (map?.loaded) map?.resize();
+    },
+    500,
+    { maxWait: 5000 }
+  );
 
   function initMap(map: MaplibreMap | undefined) {
     if (!map) return;
@@ -176,6 +184,10 @@ export function useStolpersteinMap() {
     });
   }
 
+  onUnmounted(() => {
+    map?.remove();
+  });
+
   watchEffect(() => {
     setStolpersteinSource(map, store.filteredStolpersteine);
   });
@@ -222,5 +234,5 @@ export function useStolpersteinMap() {
     }
   }
 
-  return { map, createMap };
+  return { map, createMap, debounceResize };
 }

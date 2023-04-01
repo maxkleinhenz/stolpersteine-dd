@@ -24,15 +24,18 @@ const dresden = new LngLat(13.7372621, 51.0504088);
 const apiKey = config.public.MAPTILER_API_KEY;
 
 const store = useStolpersteinStore();
-useResizeObserver(mapContainer, (entries) => {
-  map?.resize();
-});
 
-const { createMap, map } = useStolpersteinMap();
+const { createMap, map, debounceResize } = useStolpersteinMap();
 
 onMounted(() => {
   createMap(apiKey, dresden);
 });
+
+useResizeObserver(mapContainer, (entries) => {
+  debounceResize();
+});
+
+watchEffect(() => {});
 
 // map.on('dragstart', () => {
 //   followPosition.value = false;
