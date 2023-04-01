@@ -1,11 +1,13 @@
 <template>
-  <div class="relative flex h-full w-full flex-1">
+  <div class="relative flex h-full w-full flex-1 overflow-hidden">
     <div id="map" ref="mapContainer" class="flex-1"></div>
     <div class="absolute bottom-0 left-0">
       <a href="https://www.maptiler.com"
         ><img src="https://api.maptiler.com/resources/logo.svg" alt="MapTiler logo"
       /></a>
     </div>
+
+    <StolpersteinSlider class="absolute inset-x-0 bottom-0 z-10 overflow-hidden" />
 
     <!-- <div class="map-controls column absolute-bottom-right"></div> -->
   </div>
@@ -15,15 +17,12 @@
 import "maplibre-gl/dist/maplibre-gl.css";
 
 import { LngLat } from "maplibre-gl";
-import { useStolpersteinStore } from "~~/stores/stolperstein-store";
 
 const mapContainer = ref(null);
 
 const config = useRuntimeConfig();
 const dresden = new LngLat(13.7372621, 51.0504088);
 const apiKey = config.public.MAPTILER_API_KEY;
-
-const store = useStolpersteinStore();
 
 const { createMap, map, debounceResize } = useStolpersteinMap();
 

@@ -6,9 +6,13 @@
 
 <script setup lang="ts">
 import { useStolpersteinStore } from "~~/stores/stolperstein-store";
+import { register } from "swiper/element/bundle";
 
 const store = useStolpersteinStore();
 store.fetchStolpersteine();
+
+// register Swiper custom elements
+register();
 
 useHead({
   bodyAttrs: {
