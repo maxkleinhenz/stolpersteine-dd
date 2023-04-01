@@ -1,4 +1,8 @@
 <script lang="ts" setup>
+useHead({
+  title: "Information",
+});
+
 const items = [
   { text: "Stolpersteine für Dresden e. V.", to: "/info" },
   { text: "Die Stolpersteine", to: "/info" },

@@ -8,6 +8,10 @@ const stolpersteine = computed(() => store.stolpersteine);
 definePageMeta({
   layout: "map-layout",
 });
+
+useHead({
+  title: "Karte",
+});
 </script>
 
 <template>
