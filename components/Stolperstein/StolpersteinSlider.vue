@@ -10,11 +10,13 @@
     <div v-show="selectedStolpersteine?.length" v-bind="$attrs">
       <ClientOnly>
         <swiper-container
+          swiperElement
+          ref="swiperRef"
+          class="py-8"
           slides-per-view="auto"
           :centered-slides="isSmallScreen"
           initial-slide="0"
           :modules="[Navigation, Mousewheel]"
-          class="py-8"
         >
           <swiper-slide
             v-for="stolperstein in swipableStolpersteine"
@@ -31,9 +33,14 @@
 
 <script setup lang="ts">
 import { breakpointsTailwind } from "@vueuse/core";
+import Swiper from "swiper";
 import { Navigation, Mousewheel } from "swiper";
 import { StolpersteinFeature } from "~~/models/stolperstein.model";
 import { useStolpersteinStore } from "~~/stores/stolperstein-store";
+
+type SwiperRef = HTMLElement & { swiper: Swiper; initialize: () => void };
+
+const swiperRef = ref<SwiperRef | null>(null);
 
 const store = useStolpersteinStore();
 const selectedStolpersteine = computed(() => store.selectedStolpersteine);
@@ -51,6 +58,13 @@ const breakpoints = useBreakpoints(breakpointsTailwind);
 
 const isBiggerScreen = breakpoints.greater("sm");
 const isSmallScreen = computed(() => !isBiggerScreen.value);
+
+watchEffect(() => {
+  if (swiperRef.value) {
+    swiperRef.value.initialize();
+    swiperRef.value.swiper.wrapperEl.style.alignItems = "center";
+  }
+});
 </script>
 
 <style scoped></style>

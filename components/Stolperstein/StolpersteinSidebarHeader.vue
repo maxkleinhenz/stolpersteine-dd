@@ -10,7 +10,6 @@ function search() {
 }
 
 function reset() {
-  console.log("reset");
   searchText.value = "";
   search();
 }

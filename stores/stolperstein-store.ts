@@ -7,7 +7,6 @@ export const useStolpersteinStore = defineStore("stolperstein", () => {
   const selectedStolpersteine = ref<StolpersteinFeature[] | undefined>(undefined);
 
   const filteredStolpersteine = computed(() => {
-    console.log("searchText", searchText.value);
     if (searchText.value.length <= 0) {
       return stolpersteine.value;
     }
