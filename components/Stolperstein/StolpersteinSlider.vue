@@ -10,7 +10,6 @@
     <div v-show="selectedStolpersteine?.length" v-bind="$attrs">
       <ClientOnly>
         <swiper-container
-          swiperElement
           ref="swiperRef"
           class="py-8"
           slides-per-view="auto"
@@ -38,32 +37,54 @@ import { Navigation, Mousewheel } from "swiper";
 import { StolpersteinFeature } from "~~/models/stolperstein.model";
 import { useStolpersteinStore } from "~~/stores/stolperstein-store";
 
-type SwiperRef = HTMLElement & { swiper: Swiper; initialize: () => void };
-
-const swiperRef = ref<SwiperRef | null>(null);
-
 const store = useStolpersteinStore();
 const selectedStolpersteine = computed(() => store.selectedStolpersteine);
 
-const stolpersteine = ref<StolpersteinFeature[]>([]);
+const tempStolpersteine = ref<StolpersteinFeature[]>([]);
 const swipableStolpersteine = computed(() => {
   if (store.selectedStolpersteine?.length) {
-    stolpersteine.value = store.selectedStolpersteine;
+    tempStolpersteine.value = store.selectedStolpersteine;
     return store.selectedStolpersteine;
   }
-  return stolpersteine.value;
+  return tempStolpersteine.value;
 });
 
 const breakpoints = useBreakpoints(breakpointsTailwind);
-
 const isBiggerScreen = breakpoints.greater("sm");
 const isSmallScreen = computed(() => !isBiggerScreen.value);
 
-watchEffect(() => {
-  if (swiperRef.value) {
+type SwiperRef = HTMLElement & { swiper: Swiper; initialize: () => void };
+const swiperRef = ref<SwiperRef | null>(null);
+const isSwiperInitilizied = ref(false);
+
+watchEffect((onCleanup) => {
+  if (!isSwiperInitilizied.value && swiperRef.value) {
     swiperRef.value.initialize();
+    isSwiperInitilizied.value = true;
     swiperRef.value.swiper.wrapperEl.style.alignItems = "center";
+    swiperRef.value.swiper.on("slidesLengthChange", handleSlidesLendthChanged);
   }
+  onCleanup(() => swiperRef.value?.swiper.off("slidesLengthChange", handleSlidesLendthChanged));
+});
+
+function handleSlidesLendthChanged(swiper: Swiper | undefined) {
+  if (swiper == undefined) return;
+
+  const canSwipe = !!swiper.allowSlidePrev || !!swiper.allowSlideNext;
+  swiper.wrapperEl.style.justifyContent = canSwipe ? "flex-start" : "center";
+}
+
+const debounce = useDebounceFn(
+  () => {
+    console.log("debounce");
+    handleSlidesLendthChanged(swiperRef.value?.swiper);
+  },
+  500,
+  { maxWait: 5000 }
+);
+
+useResizeObserver(swiperRef, (entries) => {
+  debounce();
 });
 </script>
 
