@@ -8,49 +8,51 @@
     leave-to-class="transform translate-y-full"
   >
     <div v-show="selectedStolpersteine?.length" v-bind="$attrs">
-      <Swiper
-        class="!py-8 !px-2 sm:!px-12"
-        slides-per-view="auto"
-        :centered-slides="true"
-        :center-insufficient-slides="true"
-        :initial-slide="0"
-        :modules="[SwiperNavigation, SwiperMousewheel]"
-        :navigation="false"
-        :mousewheel="true"
-        :breakpoints="{
-          [tabletWidth]: {
-            centeredSlides: false,
-            navigation: { enabled: true, prevEl: '.prev-button', nextEl: '.next-button' },
-          },
-        }"
-        @update="(e) => swiperRef?.slideTo(0)"
-        @swiper="onSwiper"
-      >
-        <SwiperSlide
-          v-for="stolperstein in swipableStolpersteine"
-          :key="stolperstein.stolperstein.id"
-          class="w-4/5 max-w-[370px] px-2"
+      <ClientOnly>
+        <Swiper
+          class="!py-8 !px-2 sm:!px-12"
+          slides-per-view="auto"
+          :centered-slides="true"
+          :center-insufficient-slides="true"
+          :initial-slide="0"
+          :modules="[SwiperNavigation, SwiperMousewheel]"
+          :navigation="false"
+          :mousewheel="true"
+          :breakpoints="{
+            [tabletWidth]: {
+              centeredSlides: false,
+              navigation: { prevEl: '.prev-button', nextEl: '.next-button' },
+            },
+          }"
+          @update="(e) => swiperRef?.slideTo(0)"
+          @swiper="onSwiper"
         >
-          <div class="h-full">
-            <StolpersteinListItem :stolperstein="stolperstein" />
-          </div>
-        </SwiperSlide>
+          <SwiperSlide
+            v-for="stolperstein in swipableStolpersteine"
+            :key="stolperstein.stolperstein.id"
+            class="w-4/5 max-w-[370px] px-2"
+          >
+            <div class="h-full">
+              <StolpersteinListItem :stolperstein="stolperstein" />
+            </div>
+          </SwiperSlide>
 
-        <template v-slot:container-start>
-          <div class="absolute left-0 bottom-8 top-8 z-10 flex items-center p-2">
-            <AppButton class="prev-button rounded-full bg-accent-2 text-white" @click="(e) => swiperRef?.slidePrev()"
-              ><AppIcon name="ic:baseline-chevron-left"
-            /></AppButton>
-          </div>
-        </template>
-        <template v-slot:container-end>
-          <div class="absolute right-0 bottom-8 top-8 z-10 flex items-center p-2">
-            <AppButton class="next-button rounded-full bg-accent-2 text-white" @click="(e) => swiperRef?.slideNext()"
-              ><AppIcon name="ic:baseline-chevron-right"
-            /></AppButton>
-          </div>
-        </template>
-      </Swiper>
+          <template v-slot:container-start>
+            <div class="absolute left-0 bottom-8 top-8 z-10 hidden items-center p-2 sm:flex">
+              <AppButton class="prev-button rounded-full bg-accent-2 text-white" @click="(e) => swiperRef?.slidePrev()"
+                ><AppIcon name="ic:baseline-chevron-left"
+              /></AppButton>
+            </div>
+          </template>
+          <template v-slot:container-end>
+            <div class="absolute right-0 bottom-8 top-8 z-10 hidden items-center p-2 sm:flex">
+              <AppButton class="next-button rounded-full bg-accent-2 text-white" @click="(e) => swiperRef?.slideNext()"
+                ><AppIcon name="ic:baseline-chevron-right"
+              /></AppButton>
+            </div>
+          </template>
+        </Swiper>
+      </ClientOnly>
     </div>
   </Transition>
 </template>
