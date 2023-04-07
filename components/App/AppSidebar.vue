@@ -5,18 +5,20 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits(["update:open"]);
-
 const isOpen = useVModel(props, "open", emit);
 </script>
 
 <template>
   <div class="flex min-h-screen flex-row">
-    <div
-      class="left-0 z-30 min-h-screen transition-transform duration-300"
-      :class="{ '-translate-x-full': !isOpen, absolute: overlay }"
-    >
-      <slot name="sidebar" />
-    </div>
+    <ClientOnly>
+      <div
+        class="absolute left-0 z-30 min-h-screen transition-transform duration-300 lg:relative"
+        :class="{ '-translate-x-full': !isOpen, absolute: overlay }"
+      >
+        <slot name="sidebar" />
+      </div>
+    </ClientOnly>
+
     <div class="flex-1">
       <slot name="main" />
       <Transition
