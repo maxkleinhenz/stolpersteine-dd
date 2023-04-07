@@ -6,7 +6,10 @@ export default defineNuxtConfig({
     },
   },
   css: ["~/assets/css/main.css"],
-  modules: ["@pinia/nuxt", "@vueuse/nuxt", "nuxt-icon"],
+  modules: ["@pinia/nuxt", "@vueuse/nuxt", "nuxt-icon", "nuxt-swiper"],
+  swiper: {
+    modules: ["navigation", "mousewheel"],
+  },
   postcss: {
     plugins: {
       "postcss-import": {},

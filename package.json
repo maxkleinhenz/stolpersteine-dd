@@ -24,8 +24,8 @@
     "@pinia/nuxt": "^0.4.7",
     "class-variance-authority": "^0.4.0",
     "maplibre-gl": "^2.4.0",
-    "pinia": "^2.0.33",
-    "swiper": "^9.2.0"
+    "nuxt-swiper": "^1.1.0",
+    "pinia": "^2.0.33"
   },
   "overrides": {
     "vue": "latest"
