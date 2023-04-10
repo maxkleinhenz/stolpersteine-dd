@@ -38,7 +38,7 @@ const sidebarFixed = isMinDesktop;
             @click="() => (sidebarOpen = false)"
             ><AppIcon size="small" name="ic:baseline-close"
           /></AppButton>
-          <StolpersteinSidebar />
+          <StolpersteinListSidebar />
         </aside>
       </template>
 

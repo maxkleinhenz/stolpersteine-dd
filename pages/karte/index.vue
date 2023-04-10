@@ -1,10 +1,4 @@
 <script lang="ts" setup>
-import { useStolpersteinStore } from "~~/stores/stolperstein-store";
-
-const store = useStolpersteinStore();
-
-const stolpersteine = computed(() => store.stolpersteine);
-
 definePageMeta({
   layout: "map-layout",
 });
