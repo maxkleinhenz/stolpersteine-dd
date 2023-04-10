@@ -69,7 +69,7 @@ export function useStolpersteinMap() {
     const stolpersteine = store.filteredStolpersteine;
     setStolpersteinSource(map, stolpersteine);
 
-    map.loadImage("images/stolperstein-glyph.png", (error, image) => {
+    map.loadImage("/images/stolperstein-glyph.png", (error, image) => {
       if (error) {
         console.log("error loadimage images/stolperstein-glyph.png", error);
         return;
