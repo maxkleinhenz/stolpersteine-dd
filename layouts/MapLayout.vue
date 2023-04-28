@@ -16,18 +16,6 @@ const sidebarFixed = isMinDesktop;
 
 <template>
   <div>
-    <AppTopNavigation />
-    <div class="absolute z-10">
-      <AppButton
-        v-if="!sidebarFixed"
-        intent="default"
-        shape="rounded"
-        class="m-8 bg-white p-4 shadow-md hover:bg-gray-200"
-        @click="() => (sidebarOpen = true)"
-        ><AppIcon name="ic:baseline-menu"
-      /></AppButton>
-    </div>
-
     <AppSidebar v-model:open="sidebarOpen" :overlay="!sidebarFixed">
       <template v-slot:sidebar>
         <aside class="relative w-screen max-w-[420px]">
@@ -46,6 +34,16 @@ const sidebarFixed = isMinDesktop;
         <slot />
       </template>
     </AppSidebar>
+
+    <AppTopNavigation />
+    <AppButton
+      v-if="!sidebarFixed"
+      intent="default"
+      shape="rounded"
+      class="absolute left-8 top-8 bg-white p-4 shadow-md hover:bg-gray-200"
+      @click="() => (sidebarOpen = true)"
+      ><AppIcon name="ic:baseline-menu"
+    /></AppButton>
   </div>
 </template>
 
