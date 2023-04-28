@@ -2,7 +2,7 @@
   <div>
     <AppButton
       class="flex gap-3 rounded-2xl bg-base-2 p-3 ring-accent-2 transition-shadow hover:shadow-lg hover:ring-1"
-      to="/karte"
+      :to="`/karte/${stolperstein.stolperstein.id}`"
       intent="secondary"
     >
       <div class="flex-initial place-self-center">

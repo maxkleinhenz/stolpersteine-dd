@@ -10,10 +10,6 @@ const isOpen = useVModel(props, "open", emit);
 
 <template>
   <div class="flex min-h-screen flex-row">
-    <div class="flex-1">
-      <slot name="main" />
-    </div>
-
     <ClientOnly>
       <Teleport to="body" :disabled="!overlay">
         <Transition
@@ -39,5 +35,9 @@ const isOpen = useVModel(props, "open", emit);
         </div>
       </Teleport>
     </ClientOnly>
+
+    <div class="flex-1">
+      <slot name="main" />
+    </div>
   </div>
 </template>
