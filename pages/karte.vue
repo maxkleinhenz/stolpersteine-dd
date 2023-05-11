@@ -1,30 +1,18 @@
 <script lang="ts" setup>
 useRouter();
-const params = toRef(useRoute(), "params");
-const stolpersteinIdParam = computed(() => params.value.stolpersteinId);
-
-const stolpersteinId = computed(() => {
-  if (typeof stolpersteinIdParam.value === "string") {
-    const parsed = Number(stolpersteinIdParam.value);
-    console.log("id", parsed);
-    if (!isNaN(parsed)) return parsed;
-  }
-  return undefined;
-});
-
-const isOpen = computed(() => {
-  const open = (stolpersteinId.value ?? 0) > 0;
-  console.log("open", open);
-  return open;
-});
-
-function goBack() {
-  navigateTo("/karte");
-}
 
 definePageMeta({
   layout: "map-layout",
   keepalive: true,
+  // pageTransition: {
+  //   enterActiveClass: "transform-transition duration-1000 ease-out",
+  //   enterFromClass: "-translate-x-full",
+  //   enterToClass: "translate-x-0",
+  //   leaveActiveClass: "transform-transition duration-300 ease",
+  //   leaveFromClass: "translate-x-0",
+  //   leaveToClass: "-translate-x-full",
+  //   mode: "out-in",
+  // },
 });
 
 useHead({
@@ -46,9 +34,22 @@ useHead({
   </main>
   <!-- </template>
   </AppSidebar> -->
-  <div class="absolute inset-0">
-    <NuxtPage></NuxtPage>
-  </div>
+  <ClientOnly>
+    <Teleport to="body">
+      <NuxtPage
+        :keepalive="true"
+        :transition="{
+          enterActiveClass: 'transform-transition duration-1000 ease-out',
+          enterFromClass: '-translate-x-full',
+          enterToClass: 'translate-x-0',
+          leaveActiveClass: 'transform-transition duration-300 ease',
+          leaveFromClass: 'translate-x-0',
+          leaveToClass: '-translate-x-full',
+          mode: 'out-in',
+        }"
+      ></NuxtPage>
+    </Teleport>
+  </ClientOnly>
 </template>
 
 <style scoped></style>
