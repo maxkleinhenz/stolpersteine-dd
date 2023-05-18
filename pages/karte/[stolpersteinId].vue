@@ -22,15 +22,18 @@
 </template>
 
 <script setup lang="ts">
+import { RouteLocationNormalized } from "vue-router";
+import { useStolpersteinStore } from "~~/stores/stolperstein-store";
+
+const store = useStolpersteinStore();
+
 const isSidebarOpen = ref(true);
 
 const routeParams = toRef(useRoute(), "params");
 const stolpersteinId = computed(() => {
-  const stolpersteinIdParam = routeParams.value.stolpersteinId;
-  if (typeof stolpersteinIdParam === "string") {
-    const parsed = Number(stolpersteinIdParam);
-    if (!isNaN(parsed)) return parsed;
-  }
+  const stolpersteinIdParam = routeParams.value.stolpersteinId.toString();
+  const parsed = Number(stolpersteinIdParam);
+  if (!isNaN(parsed)) return parsed;
   onAfterLeave();
 });
 
@@ -43,6 +46,18 @@ function onUpdateOpen(open: boolean) {
 function onAfterLeave() {
   navigateTo("/karte");
 }
-</script>
 
-<style scoped></style>
+definePageMeta({
+  middleware: (to: RouteLocationNormalized) => {
+    const store = useStolpersteinStore();
+    const isNumber = /^\d+$/.test(to.params.stolpersteinId.toString());
+    if (isNumber) {
+      const stolpersteinId = Number(to.params.stolpersteinId);
+      const valid = store.stolpersteine.some((s) => s.stolperstein.id === stolpersteinId);
+      if (valid) return true;
+    }
+
+    return "/karte";
+  },
+});
+</script>
