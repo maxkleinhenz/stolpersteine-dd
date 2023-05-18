@@ -7,7 +7,7 @@
     @on-after-leave="onAfterLeave"
   >
     <template v-slot:sidebar>
-      <aside class="relative w-screen max-w-[420px]">
+      <aside class="relative min-h-screen w-screen max-w-2xl">
         <AppButton
           intent="white"
           shape="rounded"
