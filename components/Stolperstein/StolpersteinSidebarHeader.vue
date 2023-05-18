@@ -34,8 +34,9 @@ function reset() {
         <AppButton
           v-show="searchText"
           type="button"
-          class="aspect-square h-8 rounded-full text-gray-500 hover:bg-gray-200 hover:text-gray-500"
+          shape="rounded"
           intent="default"
+          class="h-8 text-gray-500 hover:bg-gray-200 hover:text-gray-500"
           @click="reset"
         >
           <span class="sr-only">Setze Suche zurück</span>
@@ -43,8 +44,9 @@ function reset() {
         </AppButton>
         <AppButton
           type="button"
-          class="aspect-square h-8 rounded-full text-gray-500 hover:bg-gray-200 hover:text-gray-500"
+          shape="rounded"
           intent="default"
+          class="h-8 text-gray-500 hover:bg-gray-200 hover:text-gray-500"
           @click="search"
         >
           <span class="sr-only">Suche</span>

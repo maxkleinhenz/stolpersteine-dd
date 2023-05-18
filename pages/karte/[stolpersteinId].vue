@@ -9,12 +9,14 @@
     <template v-slot:sidebar>
       <aside class="relative w-screen max-w-[420px]">
         <AppButton
-          intent="default"
+          intent="white"
           shape="rounded"
-          class="absolute right-0 top-0 m-4 aspect-square w-10 bg-white shadow-md hover:bg-gray-200 sm:hidden"
+          size="medium"
+          class="absolute right-0 top-0 m-6 shadow-md"
           @click="onUpdateOpen(false)"
-          ><AppIcon size="small" name="ic:baseline-close"
+          ><AppIcon size="medium" name="ic:baseline-close"
         /></AppButton>
+
         <StolpersteinDetails :stolperstein-id="stolpersteinId"></StolpersteinDetails>
       </aside>
     </template>
@@ -24,8 +26,6 @@
 <script setup lang="ts">
 import { RouteLocationNormalized } from "vue-router";
 import { useStolpersteinStore } from "~~/stores/stolperstein-store";
-
-const store = useStolpersteinStore();
 
 const isSidebarOpen = ref(true);
 

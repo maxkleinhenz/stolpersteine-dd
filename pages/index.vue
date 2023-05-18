@@ -1,5 +1,4 @@
-<script lang="ts" setup>
-</script>
+<script lang="ts" setup></script>
 
 <template>
   <main class="min-h-screen">
@@ -19,8 +18,8 @@
         </div>
       </div>
       <div class="p-6">
-        <AppButton intent="primary" shape="rounded" title="Nach unten scrollen" class="p-2">
-          <AppIcon name="ic:baseline-arrow-downward" />
+        <AppButton intent="primary" shape="rounded" size="medium" title="Nach unten scrollen">
+          <AppIcon size="medium" name="ic:baseline-arrow-downward" />
         </AppButton>
       </div>
     </section>

@@ -39,14 +39,22 @@
 
           <template v-slot:container-start>
             <div class="absolute left-0 bottom-8 top-8 z-10 hidden items-center p-2 sm:flex">
-              <AppButton class="prev-button rounded-full bg-accent-2 text-white" @click="(e) => swiperRef?.slidePrev()"
+              <AppButton
+                shape="rounded"
+                size="small"
+                class="prev-button bg-accent-2 text-white"
+                @click="(e) => swiperRef?.slidePrev()"
                 ><AppIcon name="ic:baseline-chevron-left"
               /></AppButton>
             </div>
           </template>
           <template v-slot:container-end>
             <div class="absolute right-0 bottom-8 top-8 z-10 hidden items-center p-2 sm:flex">
-              <AppButton class="next-button rounded-full bg-accent-2 text-white" @click="(e) => swiperRef?.slideNext()"
+              <AppButton
+                shape="rounded"
+                size="small"
+                class="next-button bg-accent-2 text-white"
+                @click="(e) => swiperRef?.slideNext()"
                 ><AppIcon name="ic:baseline-chevron-right"
               /></AppButton>
             </div>
