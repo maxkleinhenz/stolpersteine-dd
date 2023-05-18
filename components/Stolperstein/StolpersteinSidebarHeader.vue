@@ -26,17 +26,18 @@ function reset() {
         type="type"
         placeholder="Suche"
         v-model="searchText"
-        class="border-1 w-full rounded-full border p-2 pr-[72px] transition-shadow focus:shadow-md focus:outline-none focus:ring-1 focus:ring-accent-2"
+        class="border-1 w-full rounded-full border py-3 px-4 pr-[72px] transition-shadow focus:shadow-md focus:outline-none focus:ring-1 focus:ring-accent-2"
         @keyup.enter="search"
         @keyup.esc="reset"
       />
-      <div class="absolute inset-y-0 right-0 mx-2 grid h-auto grid-flow-col place-content-center">
+      <div class="absolute inset-y-0 right-0 mr-2 grid grid-flow-col place-content-center">
         <AppButton
           v-show="searchText"
           type="button"
-          shape="rounded"
           intent="default"
-          class="h-8 text-gray-500 hover:bg-gray-200 hover:text-gray-500"
+          shape="rounded"
+          size="xs"
+          class="h-8 w-8 p-0 text-gray-500 hover:bg-gray-200 hover:text-gray-500"
           @click="reset"
         >
           <span class="sr-only">Setze Suche zurück</span>
@@ -44,9 +45,10 @@ function reset() {
         </AppButton>
         <AppButton
           type="button"
-          shape="rounded"
           intent="default"
-          class="h-8 text-gray-500 hover:bg-gray-200 hover:text-gray-500"
+          shape="rounded"
+          size="xs"
+          class="h-8 w-8 p-0 text-gray-500 hover:bg-gray-200 hover:text-gray-500"
           @click="search"
         >
           <span class="sr-only">Suche</span>

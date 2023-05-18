@@ -16,6 +16,7 @@ const buttonClass = cva("transform active:scale-95 transition-colors duration-30
       rounded: "rounded-full aspect-square",
     },
     size: {
+      xs: "",
       small: "p-2 min-w-[44px] min-h-[44px]",
       medium: "p-4",
       large: "text-xl",
