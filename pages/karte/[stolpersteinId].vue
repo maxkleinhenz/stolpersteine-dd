@@ -1,51 +1,48 @@
 <template>
-  <aside class="absolute top-0 left-0 z-50 h-screen w-screen max-w-2xl items-center justify-center bg-base-1">
-    <AppButton
-      intent="default"
-      shape="rounded"
-      size="small"
-      class="absolute top-0 right-0 m-4 flex aspect-square items-center justify-center bg-white p-4 shadow-md hover:bg-gray-200"
-      :to="`/karte`"
-      ><AppIcon size="small" name="ic:baseline-close"
-    /></AppButton>
-    <StolpersteinDetails :stolperstein-id="stolpersteinId"></StolpersteinDetails>
-  </aside>
+  <AppSidebar
+    :appear="true"
+    :open="isSidebarOpen"
+    @update:open="onUpdateOpen"
+    :overlay="true"
+    @on-after-leave="onAfterLeave"
+  >
+    <template v-slot:sidebar>
+      <aside class="relative w-screen max-w-[420px]">
+        <AppButton
+          intent="default"
+          shape="rounded"
+          class="absolute right-0 top-0 m-4 aspect-square w-10 bg-white shadow-md hover:bg-gray-200 sm:hidden"
+          @click="onUpdateOpen(false)"
+          ><AppIcon size="small" name="ic:baseline-close"
+        /></AppButton>
+        <StolpersteinDetails :stolperstein-id="stolpersteinId"></StolpersteinDetails>
+      </aside>
+    </template>
+  </AppSidebar>
 </template>
 
 <script setup lang="ts">
-// const router = useRouter();
-// router.removeRoute;
+const isSidebarOpen = ref(true);
 
 const routeParams = toRef(useRoute(), "params");
 const stolpersteinId = computed(() => {
   const stolpersteinIdParam = routeParams.value.stolpersteinId;
   if (typeof stolpersteinIdParam === "string") {
     const parsed = Number(stolpersteinIdParam);
-    console.log("id", parsed);
     if (!isNaN(parsed)) return parsed;
   }
-  return undefined;
+  onAfterLeave();
 });
 
-onMounted(() => {
-  console.log("onMounted");
-});
+function onUpdateOpen(open: boolean) {
+  if (!open) {
+    isSidebarOpen.value = false;
+  }
+}
 
-onActivated(() => {
-  console.log("onActivated");
-});
-
-// definePageMeta({
-//   pageTransition: {
-//     // enterActiveClass: "transform duration-300 ease-out",
-//     // enterFromClass: "-translate-x-full",
-//     // enterToClass: "translate-x-0",
-//     // leaveActiveClass: "transform duration-300 ease",
-//     // leaveFromClass: "translate-x-0",
-//     // leaveToClass: "-translate-x-full",
-//     mode: "out-in",
-//   },
-// });
+function onAfterLeave() {
+  navigateTo("/karte");
+}
 </script>
 
 <style scoped></style>

@@ -16,7 +16,7 @@ const sidebarFixed = isMinDesktop;
 
 <template>
   <div>
-    <AppSidebar v-model:open="sidebarOpen" :overlay="!sidebarFixed">
+    <AppSidebarContainer v-model:open="sidebarOpen" :overlay="!sidebarFixed">
       <template v-slot:sidebar>
         <aside class="relative w-screen max-w-[420px]">
           <AppButton
@@ -33,7 +33,7 @@ const sidebarFixed = isMinDesktop;
       <template v-slot:main>
         <slot />
       </template>
-    </AppSidebar>
+    </AppSidebarContainer>
 
     <AppTopNavigation />
     <AppButton
@@ -46,5 +46,3 @@ const sidebarFixed = isMinDesktop;
     /></AppButton>
   </div>
 </template>
-
-<style scoped></style>
