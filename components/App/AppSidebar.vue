@@ -16,7 +16,7 @@ const isOpen = useVModel(props, "open", emit);
           enter-active-class="duration-300 ease-out"
           enter-from-class="transform opacity-0"
           enter-to-class="opacity-100"
-          leave-active-class="duration-200 ease-in"
+          leave-active-class="duration-300 ease-in"
           leave-from-class="opacity-100"
           leave-to-class="transform opacity-0"
         >
@@ -27,12 +27,22 @@ const isOpen = useVModel(props, "open", emit);
           ></div>
         </Transition>
 
-        <div
-          class="left-0 top-0 z-20 min-h-screen transition-transform duration-300"
-          :class="{ '-translate-x-full': !isOpen, absolute: overlay, relative: !overlay }"
+        <Transition
+          enter-active-class="duration-300 ease-out"
+          enter-from-class="transform -translate-x-full"
+          enter-to-class=""
+          leave-active-class="duration-300 ease-in"
+          leave-from-class=""
+          leave-to-class="transform -translate-x-full"
         >
-          <slot name="sidebar" />
-        </div>
+          <div
+            v-show="isOpen || !overlay"
+            class="left-0 top-0 z-20 min-h-screen"
+            :class="{ absolute: overlay, relative: !overlay }"
+          >
+            <slot name="sidebar" />
+          </div>
+        </Transition>
       </Teleport>
     </ClientOnly>
 
