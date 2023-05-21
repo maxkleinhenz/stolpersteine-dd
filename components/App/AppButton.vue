@@ -5,7 +5,7 @@ const buttonClass = cva("transform active:scale-95 transition-colors duration-30
   variants: {
     intent: {
       hero: "rounded-full bg-white py-4 px-7 text-base font-semibold uppercase shadow-lg hover:bg-accent-2 hover:text-white",
-      primary: "hover:bg-accent-2 hover:text-white",
+      primary: "text-accent-2 border-accent-2 hover:bg-accent-2 hover:text-white",
       secondary: "",
       link: "hover:underline underline-offset-4 p-2",
       default: "",
@@ -14,12 +14,13 @@ const buttonClass = cva("transform active:scale-95 transition-colors duration-30
     shape: {
       default: "",
       rounded: "rounded-full aspect-square",
+      pill: "rounded-full border",
     },
     size: {
-      xs: "",
-      small: "p-2 min-w-[44px] min-h-[44px]",
+      xs: "px-2 py-1 text-sm",
+      small: "p-2",
       medium: "p-4",
-      large: "text-xl",
+      large: "text-xl p-6",
     },
   },
   defaultVariants: {

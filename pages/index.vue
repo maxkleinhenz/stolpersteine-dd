@@ -18,7 +18,7 @@
         </div>
       </div>
       <div class="p-6">
-        <AppButton intent="primary" shape="rounded" size="medium" title="Nach unten scrollen">
+        <AppButton intent="primary" shape="rounded" size="medium" title="Nach unten scrollen" class="text-black">
           <AppIcon size="medium" name="ic:baseline-arrow-downward" />
         </AppButton>
       </div>

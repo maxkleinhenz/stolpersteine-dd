@@ -8,6 +8,7 @@ const iconClass = cva("", {
       secondary: "secondary",
     },
     size: {
+      xs: "h-5 w-5",
       small: "h-6 w-6",
       medium: "h-8 w-8",
     },
