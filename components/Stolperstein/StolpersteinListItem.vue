@@ -6,7 +6,10 @@
       intent="secondary"
     >
       <div class="flex-initial place-self-center">
-        <img class="aspect-square w-14 rounded-full object-cover" src="/stolpersteine/images/default.jpg" />
+        <img
+          class="aspect-square w-14 rounded-full object-cover"
+          :src="stolperstein.stolperstein.stolpersteinThumbImage"
+        />
       </div>
       <div class="flex-1">
         <p class="text-lg font-semibold">{{ stolperstein.stolperstein.name }}</p>
