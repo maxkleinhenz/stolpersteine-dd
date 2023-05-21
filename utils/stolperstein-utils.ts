@@ -27,13 +27,16 @@ export function groupStolpersteinByCoords(stolpersteinFeatures: StolpersteinFeat
   return grouped;
 }
 
-export function findStolpersteinById(id: number, source: StolpersteinFeature[]): StolpersteinFeature | undefined {
-  const found = source.filter((s) => {
+export function findStolpersteinById(
+  id: number | undefined,
+  source: StolpersteinFeature[]
+): StolpersteinFeature | undefined {
+  if (!id) return undefined;
+
+  const stolperstein = source.find((s) => {
     return s.stolperstein.id === id;
   });
-  if ((found?.length ?? 0) > 0) return found[0];
-
-  return undefined;
+  return stolperstein;
 }
 
 export function findStolpersteineAtCoords(coordinates: [number, number], source: StolpersteinFeature[]) {
