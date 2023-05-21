@@ -10,7 +10,7 @@ if (!stolperstein) navigateTo("/karte");
 </script>
 
 <template>
-  <div v-if="stolperstein" class="min-h-screen bg-base-1">
+  <div v-if="stolperstein" class="h-screen overflow-y-scroll bg-base-1">
     <section>
       <img :src="stolperstein.stolperstein.stolpersteinImage" class="object-cover" />
     </section>
@@ -33,29 +33,25 @@ if (!stolperstein) navigateTo("/karte");
       <AppButton intent="primary" shape="pill" size="small" class="flex-1 border-0 sm:border" title="Verlegeort"
         ><AppIcon name="ic:baseline-zoom-in-map" size="small" />
         <span class="block sm:inline"> Verlegeort</span>
-        <!-- Verlegeort -->
       </AppButton>
       <AppButton intent="primary" shape="pill" size="small" class="flex-1 border-0 sm:border" title="Navigation"
         ><AppIcon name="ic:baseline-directions" size="small" />
         <span class="block sm:inline"> Navigation</span>
-        <!-- Navigation -->
       </AppButton>
       <AppButton intent="primary" shape="pill" size="small" class="flex-1 border-0 sm:border" title="Teilen"
         ><AppIcon name="ic:baseline-share" size="small" />
         <span class="block sm:inline"> Teilen</span>
-        <!-- Teilen -->
       </AppButton>
       <AppButton intent="primary" shape="pill" size="small" class="flex-1 border-0 sm:border" title="Merken"
         ><AppIcon name="ic:baseline-bookmark-add" size="small" />
         <span class="block sm:inline"> Merken</span>
-        <!-- Merken -->
       </AppButton>
     </section>
 
     <section class="py-6 px-3 sm:px-6">
       <div class="min-h-fit rounded-2xl bg-[url('/images/candle.jpg')] bg-cover text-center text-white">
         <div class="from-15% rounded-2xl bg-gradient-to-t from-black">
-          <h3 class="py-6 px-3 text-2xl font-semibold">Anteil nehmen</h3>
+          <h3 class="py-6 text-2xl font-semibold">Anteil nehmen</h3>
           <p class="flex-1 px-3 pt-14 pb-4">
             Zünde eine virtuelle Kerze an, um Anteil zu nehmen. 12 Personen haben an diesem Ort eine Kerze angezündet.
           </p>
@@ -71,6 +67,18 @@ if (!stolperstein) navigateTo("/karte");
           </div>
         </div>
       </div>
+    </section>
+
+    <section class="bg-base-2 py-6 px-3 text-center sm:px-6">
+      <h3 class="py-6 text-2xl font-semibold">Inschrift</h3>
+      <p class="text-lg">
+        HIER WOHNTE<br />
+        JOSEF ALTBACH<br />
+        JG. 1886<br />
+        POLENAKTION 1938<br />
+        ERMORDET IM<br />
+        BESETZTEN POLEN<br />
+      </p>
     </section>
   </div>
 </template>
