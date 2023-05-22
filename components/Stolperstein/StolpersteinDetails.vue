@@ -7,6 +7,8 @@ const store = useStolpersteinStore();
 const stolperstein = findStolpersteinById(props.stolpersteinId, store.stolpersteine);
 
 if (!stolperstein) navigateTo("/karte");
+
+const sourceExpanded = ref(false);
 </script>
 
 <template>
@@ -15,7 +17,7 @@ if (!stolperstein) navigateTo("/karte");
       <img :src="stolperstein.stolperstein.stolpersteinImage" class="object-cover" />
     </section>
 
-    <section class="flex flex-col gap-8 bg-base-2 py-6 px-3 sm:flex-row sm:px-6">
+    <section class="flex flex-col gap-8 bg-base-2 px-3 py-6 sm:flex-row sm:px-6">
       <div class="flex-1">
         <h2 class="pb-4 text-3xl font-semibold">{{ stolperstein.stolperstein.name }}</h2>
         <p>{{ stolperstein.stolperstein.strasseHausnummer }}</p>
@@ -29,7 +31,7 @@ if (!stolperstein) navigateTo("/karte");
       </div>
     </section>
 
-    <section class="flex flex-wrap justify-center gap-4 bg-base-2 py-6 px-3 sm:justify-start sm:px-6">
+    <section class="flex flex-wrap justify-center gap-4 bg-base-2 px-3 py-6 sm:justify-start sm:px-6">
       <AppButton intent="primary" shape="pill" size="small" class="flex-1 border-0 sm:border" title="Verlegeort"
         ><AppIcon name="ic:baseline-zoom-in-map" size="small" />
         <span class="block sm:inline"> Verlegeort</span>
@@ -48,14 +50,14 @@ if (!stolperstein) navigateTo("/karte");
       </AppButton>
     </section>
 
-    <section class="py-6 px-3 sm:px-6">
+    <section class="px-3 py-6 sm:px-6">
       <div class="min-h-fit rounded-2xl bg-[url('/images/candle.jpg')] bg-cover text-center text-white">
-        <div class="from-15% rounded-2xl bg-gradient-to-t from-black">
+        <div class="rounded-2xl bg-gradient-to-t from-black from-15%">
           <h3 class="py-6 text-2xl font-semibold">Anteil nehmen</h3>
-          <p class="flex-1 px-3 pt-14 pb-4">
+          <p class="flex-1 px-3 pb-4 pt-14">
             Zünde eine virtuelle Kerze an, um Anteil zu nehmen. 12 Personen haben an diesem Ort eine Kerze angezündet.
           </p>
-          <div class="py-6 px-3">
+          <div class="px-3 py-6">
             <AppButton
               intent="white"
               shape="pill"
@@ -69,7 +71,7 @@ if (!stolperstein) navigateTo("/karte");
       </div>
     </section>
 
-    <section class="bg-base-2 py-6 px-3 text-center sm:px-6">
+    <section class="bg-base-2 px-3 py-6 text-center sm:px-6">
       <h3 class="py-6 text-2xl font-semibold">Inschrift</h3>
       <p class="text-lg">
         HIER WOHNTE<br />
@@ -79,6 +81,45 @@ if (!stolperstein) navigateTo("/karte");
         ERMORDET IM<br />
         BESETZTEN POLEN<br />
       </p>
+    </section>
+
+    <section class="bg-white px-3 py-6 sm:px-6">
+      <h3 class="py-6 text-center text-2xl font-semibold">Biografie</h3>
+      <p class="pb-4">Josef Altbach wurde am 28. Oktober 1886 in Wyszków geboren.</p>
+      <p class="pb-4">
+        Seine zweite Frau Sarah wurde am 5. Juli 1882 geboren. Die Ehe, die nach jüdischem Ritus geschlossen wurde,
+        wurde in Deutschland nicht anerkannt. Josef Altbach lebte seit 1926 in Deutschland und war Inhaber eines
+        Zigarren- und Tabakgeschäfts. Im Zuge der sogenannten Polen-Aktion wurde die Familie am 28. Oktober 1938 nach
+        Polen zwangsausgewiesen. Die Familie ging vermutlich über das oberschlesische Beuthen (Bytom) nach Lemberg
+        (Lviv) zu Verwandten. Die genauen Todesumstände der beiden sind unbekannt.
+      </p>
+      <p class="pb-4">Die Enkelinnen von Sarah und Josef Altbach spendeten die Stolpersteine 2012.</p>
+      <div class="pt-4">
+        <AppAccordion v-model:expanded="sourceExpanded">
+          <template v-slot:header>
+            <div class="flex gap-2">
+              <AppIcon name="ic:baseline-link" size="small" />
+              <h4 class="inline-block flex-1 text-left">Quellenangabe</h4>
+              <AppIcon
+                name="ic:baseline-expand-more"
+                size="small"
+                class="transition-transform duration-300"
+                :class="{ '-rotate-180': sourceExpanded }"
+              />
+            </div>
+          </template>
+          <template v-slot:content>
+            <ul class="p-4">
+              <li class="pb-6">Angaben der Familie</li>
+              <li>
+                Arbeitskreis Gedenkbuch der Gesellschaft für Christlich-Jüdische Zusammenarbeit Dresden e.V. (2006):
+                <span class="italic">Buch der Erinnerung. Juden in Dresden: Deportiert, ermordet, verschollen.</span>
+                1933-1945. Thelem Universitätsverlag Dresden, S. 26.
+              </li>
+            </ul>
+          </template>
+        </AppAccordion>
+      </div>
     </section>
   </div>
 </template>
