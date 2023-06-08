@@ -17,7 +17,7 @@ const sourceExpanded = ref(false);
       <img :src="stolperstein.stolperstein.stolpersteinImage" class="object-cover" />
     </section>
 
-    <section class="flex flex-col gap-8 bg-base-2 px-3 py-6 sm:flex-row sm:px-6">
+    <StolpersteinDetailsSection color="light" class="flex flex-col gap-8 sm:flex-row">
       <div class="flex-1">
         <h2 class="pb-4 text-3xl font-semibold">{{ stolperstein.stolperstein.name }}</h2>
         <p>{{ stolperstein.stolperstein.strasseHausnummer }}</p>
@@ -29,9 +29,9 @@ const sourceExpanded = ref(false);
           class="aspect-square rounded-full object-cover object-center"
         />
       </div>
-    </section>
+    </StolpersteinDetailsSection>
 
-    <section class="flex flex-wrap justify-center gap-4 bg-base-2 px-3 py-6 sm:justify-start sm:px-6">
+    <StolpersteinDetailsSection color="light" class="flex flex-wrap justify-center gap-4 sm:justify-start">
       <AppButton intent="primary" shape="pill" size="small" class="flex-1 border-0 sm:border" title="Verlegeort"
         ><AppIcon name="ic:baseline-zoom-in-map" size="small" />
         <span class="block sm:inline"> Verlegeort</span>
@@ -48,10 +48,10 @@ const sourceExpanded = ref(false);
         ><AppIcon name="ic:baseline-bookmark-add" size="small" />
         <span class="block sm:inline"> Merken</span>
       </AppButton>
-    </section>
+    </StolpersteinDetailsSection>
 
-    <section class="px-3 py-6 sm:px-6">
-      <div class="min-h-fit rounded-2xl bg-[url('/images/candle.jpg')] bg-cover text-center text-white">
+    <StolpersteinDetailsSection color="medium"
+      ><div class="min-h-fit rounded-2xl bg-[url('/images/candle.jpg')] bg-cover text-center text-white">
         <div class="rounded-2xl bg-gradient-to-t from-black from-15%">
           <h3 class="py-6 text-2xl font-semibold">Anteil nehmen</h3>
           <p class="flex-1 px-3 pb-4 pt-14">
@@ -68,10 +68,10 @@ const sourceExpanded = ref(false);
             </AppButton>
           </div>
         </div>
-      </div>
-    </section>
+      </div></StolpersteinDetailsSection
+    >
 
-    <section class="bg-base-2 px-3 py-6 text-center sm:px-6">
+    <StolpersteinDetailsSection color="light" class="text-center">
       <h3 class="py-6 text-2xl font-semibold">Inschrift</h3>
       <p class="text-lg">
         HIER WOHNTE<br />
@@ -81,9 +81,9 @@ const sourceExpanded = ref(false);
         ERMORDET IM<br />
         BESETZTEN POLEN<br />
       </p>
-    </section>
+    </StolpersteinDetailsSection>
 
-    <section class="bg-white px-3 py-6 sm:px-6">
+    <StolpersteinDetailsSection color="white">
       <h3 class="py-6 text-center text-2xl font-semibold">Biografie</h3>
       <p class="pb-4">Josef Altbach wurde am 28. Oktober 1886 in Wyszków geboren.</p>
       <p class="pb-4">
@@ -120,6 +120,6 @@ const sourceExpanded = ref(false);
           </template>
         </AppAccordion>
       </div>
-    </section>
+    </StolpersteinDetailsSection>
   </div>
 </template>
