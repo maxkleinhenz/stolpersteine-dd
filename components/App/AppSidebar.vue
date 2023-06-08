@@ -30,7 +30,7 @@ function onAfterLeave() {
       >
         <div
           v-if="overlay && open"
-          class="absolute inset-0 min-h-screen cursor-pointer bg-gray-700/30"
+          class="absolute inset-0 z-20 min-h-screen cursor-pointer bg-gray-700/30"
           @click="() => (isOpen = false)"
         ></div>
       </Transition>
