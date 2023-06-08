@@ -121,5 +121,10 @@ const sourceExpanded = ref(false);
         </AppAccordion>
       </div>
     </StolpersteinDetailsSection>
+
+    <StolpersteinDetailsSection color="medium" class="!px-0">
+      <h3 class="py-6 text-center text-2xl font-semibold">Gallerie</h3>
+      <StolpersteinGallery :stolperstein="stolperstein"></StolpersteinGallery>
+    </StolpersteinDetailsSection>
   </div>
 </template>
