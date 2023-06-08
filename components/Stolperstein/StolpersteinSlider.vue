@@ -10,7 +10,7 @@
     <div v-show="selectedStolpersteine?.length" v-bind="$attrs">
       <ClientOnly>
         <Swiper
-          class="!py-8 !px-2 sm:!px-12"
+          class="!px-2 !py-8 sm:!px-12"
           slides-per-view="auto"
           :centered-slides="true"
           :center-insufficient-slides="true"
@@ -24,7 +24,7 @@
               navigation: { prevEl: '.prev-button', nextEl: '.next-button' },
             },
           }"
-          @update="(e) => swiperRef?.slideTo(0)"
+          @update="() => swiperRef?.slideTo(0)"
           @swiper="onSwiper"
         >
           <SwiperSlide
@@ -38,23 +38,23 @@
           </SwiperSlide>
 
           <template v-slot:container-start>
-            <div class="absolute left-0 bottom-8 top-8 z-10 hidden items-center p-2 sm:flex">
+            <div class="absolute bottom-8 left-0 top-8 z-10 hidden items-center p-2 sm:flex">
               <AppButton
                 shape="rounded"
                 size="small"
                 class="prev-button bg-accent-2 text-white"
-                @click="(e) => swiperRef?.slidePrev()"
+                @click="() => swiperRef?.slidePrev()"
                 ><AppIcon name="ic:baseline-chevron-left"
               /></AppButton>
             </div>
           </template>
           <template v-slot:container-end>
-            <div class="absolute right-0 bottom-8 top-8 z-10 hidden items-center p-2 sm:flex">
+            <div class="absolute bottom-8 right-0 top-8 z-10 hidden items-center p-2 sm:flex">
               <AppButton
                 shape="rounded"
                 size="small"
                 class="next-button bg-accent-2 text-white"
-                @click="(e) => swiperRef?.slideNext()"
+                @click="() => swiperRef?.slideNext()"
                 ><AppIcon name="ic:baseline-chevron-right"
               /></AppButton>
             </div>
@@ -90,5 +90,3 @@ function onSwiper(swiper: SwiperClass) {
   swiper.wrapperEl.style.alignItems = "center";
 }
 </script>
-
-<style scoped></style>

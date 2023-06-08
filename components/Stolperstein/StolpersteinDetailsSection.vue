@@ -23,8 +23,6 @@ withDefaults(
     color: "light",
   }
 );
-
-const attrs = useAttrs();
 </script>
 
 <template>
