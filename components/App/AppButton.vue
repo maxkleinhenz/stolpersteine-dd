@@ -52,5 +52,7 @@ const component = computed(() => {
 </script>
 
 <template>
-  <component :is="component" :class="buttonClass({ intent, shape, size })" v-bind="$attrs"> <slot /></component>
+  <component :is="component" :class="buttonClass({ intent, shape, size })" v-bind="$attrs">
+    <slot
+  /></component>
 </template>

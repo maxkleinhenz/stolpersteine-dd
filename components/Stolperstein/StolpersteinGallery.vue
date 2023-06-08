@@ -1,12 +1,6 @@
 <template>
   <ClientOnly>
-    <Swiper
-      :loop="true"
-      :spaceBetween="10"
-      :navigation="false"
-      @update="() => swiperRef?.slideTo(0)"
-      @swiper="onSwiper"
-    >
+    <Swiper :loop="true" :navigation="false" @update="() => swiperRef?.slideTo(0)" @swiper="onSwiper">
       <template v-slot:container-start>
         <div class="absolute bottom-8 left-0 top-8 z-10 hidden items-center p-2 sm:flex">
           <AppButton
@@ -42,8 +36,6 @@ import { Swiper as SwiperClass } from "swiper/types";
 import { StolpersteinFeature } from "~~/models/stolperstein.model";
 
 const props = defineProps<{ stolperstein?: StolpersteinFeature }>();
-
-console.log("props", props.stolperstein);
 
 const images = ref([
   props.stolperstein?.stolperstein.stolpersteinImage,
