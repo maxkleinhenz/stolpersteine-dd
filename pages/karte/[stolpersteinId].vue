@@ -1,14 +1,8 @@
 <template>
-  <AppSidebar
-    :appear="true"
-    :open="isSidebarOpen"
-    @update:open="onUpdateOpen"
-    :overlay="true"
-    @on-after-leave="onAfterLeave"
-  >
+  <AppSidebar :appear="true" :open="isSidebarOpen" @update:open="onUpdateOpen" :overlay="true">
     <template v-slot:sidebar>
       <aside class="relative min-h-screen w-screen max-w-2xl shadow-[15px_0_15px_0_rgba(0,0,0,0.1)]">
-        <StolpersteinDetails :stolperstein-id="stolpersteinId"></StolpersteinDetails>
+        <StolpersteinDetails :stolperstein="stolperstein"></StolpersteinDetails>
         <AppButton
           intent="white"
           shape="rounded"
@@ -26,25 +20,40 @@
 import { RouteLocationNormalized } from "vue-router";
 import { useStolpersteinStore } from "~~/stores/stolperstein-store";
 
+const store = useStolpersteinStore();
+
 const isSidebarOpen = ref(true);
 
 const routeParams = toRef(useRoute(), "params");
-const stolpersteinId = computed(() => {
+const stolperstein = computed(() => {
   const stolpersteinIdParam = routeParams.value.stolpersteinId.toString();
   const parsed = Number(stolpersteinIdParam);
-  if (!isNaN(parsed)) return parsed;
-  onAfterLeave();
+  if (!isNaN(parsed)) {
+    return findStolpersteinById(parsed, store.stolpersteine);
+  }
+  navigateToKarte();
 });
 
 function onUpdateOpen(open: boolean) {
   if (!open) {
     isSidebarOpen.value = false;
+    dbNavigateToKarte();
   }
 }
 
-function onAfterLeave() {
+const dbNavigateToKarte = useDebounceFn(() => navigateToKarte(), 300, { maxWait: 500 });
+
+function navigateToKarte() {
   navigateTo("/karte");
 }
+
+onActivated(() => (isSidebarOpen.value = true));
+
+onDeactivated(() => (isSidebarOpen.value = false));
+
+useHead({
+  title: stolperstein.value?.stolperstein.name,
+});
 
 definePageMeta({
   middleware: (to: RouteLocationNormalized) => {

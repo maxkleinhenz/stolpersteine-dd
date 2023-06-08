@@ -3,6 +3,7 @@
     <AppButton
       class="flex gap-3 rounded-2xl bg-base-2 p-3 ring-accent-2 transition-shadow hover:shadow-lg hover:ring-1"
       :to="`/karte/${stolperstein.stolperstein.id}`"
+      :replace="replace"
       intent="secondary"
     >
       <div class="flex-initial place-self-center">
@@ -24,5 +25,5 @@
 <script setup lang="ts">
 import { StolpersteinFeature } from "~~/models/stolperstein.model";
 
-defineProps<{ stolperstein: StolpersteinFeature }>();
+defineProps<{ stolperstein: StolpersteinFeature; replace?: boolean }>();
 </script>

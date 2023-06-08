@@ -1,14 +1,24 @@
 <script setup lang="ts">
+import { StolpersteinFeature } from "~~/models/stolperstein.model";
 import { useStolpersteinStore } from "~~/stores/stolperstein-store";
 
-const props = defineProps<{ stolpersteinId?: number }>();
+const { stolperstein } = defineProps<{ stolperstein?: StolpersteinFeature }>();
 
 const store = useStolpersteinStore();
-const stolperstein = findStolpersteinById(props.stolpersteinId, store.stolpersteine);
 
 if (!stolperstein) navigateTo("/karte");
 
 const sourceExpanded = ref(false);
+
+const otherStolpersteine = computed(() => {
+  if (stolperstein) {
+    var stolpersteineAtCoords = findStolpersteineAtCoords(stolperstein?.geometry.coordinates, store.stolpersteine);
+    var other = stolpersteineAtCoords.filter((e) => e.stolperstein.id !== stolperstein.stolperstein.id);
+    return other?.length >= 1 ? other : null;
+  }
+
+  return null;
+});
 </script>
 
 <template>
@@ -125,6 +135,17 @@ const sourceExpanded = ref(false);
     <StolpersteinDetailsSection color="medium" class="!px-0">
       <h3 class="py-6 text-center text-2xl font-semibold">Gallerie</h3>
       <StolpersteinGallery :stolperstein="stolperstein"></StolpersteinGallery>
+    </StolpersteinDetailsSection>
+
+    <StolpersteinDetailsSection color="medium" v-if="otherStolpersteine">
+      <h3 class="py-6 text-center text-2xl font-semibold">Stolpersteine am gleichen Ort</h3>
+      <div class="mx-auto flex max-w-md flex-col gap-4">
+        <StolpersteinListItem
+          v-for="other in otherStolpersteine"
+          :stolperstein="other"
+          :replace="true"
+        ></StolpersteinListItem>
+      </div>
     </StolpersteinDetailsSection>
   </div>
 </template>
