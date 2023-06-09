@@ -19,10 +19,16 @@ const otherStolpersteine = computed(() => {
 
   return null;
 });
+
+const container = ref<HTMLElement | null>();
+const { y: scrollingY } = useScroll(container);
+function scrollToTop() {
+  container.value?.scrollTo({ top: 0, behavior: "smooth" });
+}
 </script>
 
 <template>
-  <div v-if="stolperstein" class="h-screen overflow-y-scroll bg-base-1">
+  <div v-if="stolperstein" class="h-screen overflow-y-scroll bg-base-1" ref="container">
     <section>
       <img :src="stolperstein.stolperstein.stolpersteinImage" class="object-cover" />
     </section>
@@ -81,8 +87,7 @@ const otherStolpersteine = computed(() => {
       </div></StolpersteinDetailsSection
     >
 
-    <StolpersteinDetailsSection color="light" class="text-center">
-      <h3 class="py-6 text-2xl font-semibold">Inschrift</h3>
+    <StolpersteinDetailsSection header="Inschrift" color="light" class="text-center">
       <p class="text-lg">
         HIER WOHNTE<br />
         JOSEF ALTBACH<br />
@@ -93,8 +98,7 @@ const otherStolpersteine = computed(() => {
       </p>
     </StolpersteinDetailsSection>
 
-    <StolpersteinDetailsSection color="white">
-      <h3 class="py-6 text-center text-2xl font-semibold">Biografie</h3>
+    <StolpersteinDetailsSection header="Biografie" color="white">
       <p class="pb-4">Josef Altbach wurde am 28. Oktober 1886 in Wyszków geboren.</p>
       <p class="pb-4">
         Seine zweite Frau Sarah wurde am 5. Juli 1882 geboren. Die Ehe, die nach jüdischem Ritus geschlossen wurde,
@@ -132,13 +136,11 @@ const otherStolpersteine = computed(() => {
       </div>
     </StolpersteinDetailsSection>
 
-    <StolpersteinDetailsSection color="medium" class="!px-0">
-      <h3 class="py-6 text-center text-2xl font-semibold">Gallerie</h3>
+    <StolpersteinDetailsSection header="Gallerie" color="medium" class="!px-0">
       <StolpersteinGallery :stolperstein="stolperstein"></StolpersteinGallery>
     </StolpersteinDetailsSection>
 
-    <StolpersteinDetailsSection color="medium" v-if="otherStolpersteine">
-      <h3 class="py-6 text-center text-2xl font-semibold">Stolpersteine am gleichen Ort</h3>
+    <StolpersteinDetailsSection header="Stolpersteine am gleichen Ort" color="medium" v-if="otherStolpersteine">
       <div class="mx-auto flex max-w-md flex-col gap-4">
         <StolpersteinListItem
           v-for="other in otherStolpersteine"
@@ -147,5 +149,34 @@ const otherStolpersteine = computed(() => {
         ></StolpersteinListItem>
       </div>
     </StolpersteinDetailsSection>
+
+    <StolpersteinDetailsSection color="medium" class="mb-24">
+      <div class="mx-auto max-w-sm">
+        <AppButton
+          shape="pill"
+          size="small"
+          intent="primary"
+          class="flex w-full items-center justify-center gap-2 bg-accent-2 text-white"
+          ><AppIcon name="ic:outline-mail" size="xs" /> Feedback zum Stolperstein</AppButton
+        >
+      </div>
+    </StolpersteinDetailsSection>
+
+    <div class="absolute inset-x-0 bottom-0 z-10 mx-auto w-20 overflow-hidden pb-8">
+      <Transition
+        enter-active-class="duration-300 ease-out"
+        enter-from-class="transform translate-y-full"
+        enter-to-class="translate-y-0"
+        leave-active-class="duration-200 ease-in"
+        leave-from-class="translate-y-0"
+        leave-to-class="transform translate-y-full"
+      >
+        <div class="flex justify-center" v-if="scrollingY >= 200">
+          <AppButton intent="white" shape="rounded" size="medium" class="shadow-md" @click="scrollToTop"
+            ><AppIcon name="ic:baseline-expand-less" size="medium"
+          /></AppButton>
+        </div>
+      </Transition>
+    </div>
   </div>
 </template>
