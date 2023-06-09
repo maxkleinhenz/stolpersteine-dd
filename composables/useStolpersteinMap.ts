@@ -234,5 +234,38 @@ export function useStolpersteinMap() {
     }
   }
 
+  const selectedStolpersteinMarker = (function () {
+    const el = document.createElement("div");
+    el.className = "selected-stolperstein-marker";
+
+    const marker = new Marker(el);
+    el.addEventListener("click", (event: MouseEvent) => {
+      event.stopPropagation();
+      flyToCoords(marker.getLngLat());
+    });
+
+    return marker;
+  })();
+
+  const selectedStolpersteine = computed(() => store.selectedStolpersteine);
+  watchEffect(() => {
+    const value = selectedStolpersteine.value;
+    selectedStolpersteinMarker.remove();
+    // center map on point
+    if (map && value && value.length > 0) {
+      const geometry = value[0].geometry;
+      flyToCoords(geometry.coordinates);
+
+      selectedStolpersteinMarker.setLngLat([geometry.coordinates[0], geometry.coordinates[1]]).addTo(map);
+    }
+  });
+
+  function flyToCoords(coordinates: LngLatLike) {
+    //positionStore.followPosition = false;
+    map?.flyTo({
+      center: coordinates,
+    });
+  }
+
   return { map, createMap, debounceResize };
 }

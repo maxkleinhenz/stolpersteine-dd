@@ -5,6 +5,7 @@ module.exports = {
     "./layouts/**/*.vue",
     "./pages/**/*.vue",
     "./plugins/**/*.{js,ts}",
+    "./composables/**/*.{js,ts}",
     "./nuxt.config.{js,ts}",
     "./app.vue",
   ],
@@ -14,6 +15,7 @@ module.exports = {
         screen: ["100vh", "100svh"],
       },
       colors: {
+        stolperstein: "rgb(var(--app-stolperstein-color) / <alpha-value>)",
         base: {
           1: "rgb(var(--base-1-color) / <alpha-value>)",
           2: "rgb(var(--base-2-color) / <alpha-value>)",

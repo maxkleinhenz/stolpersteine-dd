@@ -29,7 +29,12 @@ const stolperstein = computed(() => {
   const stolpersteinIdParam = routeParams.value.stolpersteinId.toString();
   const parsed = Number(stolpersteinIdParam);
   if (!isNaN(parsed)) {
-    return findStolpersteinById(parsed, store.stolpersteine);
+    const selected = findStolpersteinById(parsed, store.stolpersteine);
+    if (selected) {
+      var stolpersteineAtCoords = findStolpersteineAtCoords(selected.geometry.coordinates, store.stolpersteine);
+      store.selectedStolpersteine = stolpersteineAtCoords;
+    }
+    return selected;
   }
   navigateToKarte();
 });

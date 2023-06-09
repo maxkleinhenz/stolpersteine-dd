@@ -9,5 +9,13 @@
     --accent-1-color: 255 140 90;
     --accent-2-color: 161 105 81;
     --accent-3-color: 85 67 59;
+
+    --app-stolperstein-color: 181 166 66;
+  }
+}
+
+@layer components {
+  .selected-stolperstein-marker {
+    @apply h-7 w-7 cursor-pointer rounded-md border-4 border-black bg-stolperstein hover:bg-white/20;
   }
 }
