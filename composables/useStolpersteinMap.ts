@@ -267,5 +267,5 @@ export function useStolpersteinMap() {
     });
   }
 
-  return { map, createMap, debounceResize };
+  return { createMap, debounceResize };
 }

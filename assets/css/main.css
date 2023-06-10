@@ -18,4 +18,9 @@
   .selected-stolperstein-marker {
     @apply h-7 w-7 cursor-pointer rounded-md border-4 border-black bg-stolperstein hover:bg-white/20;
   }
+
+  .position-marker {
+    @apply z-10 h-6 w-6 rounded-full border-[3px] border-white bg-blue-700;
+    box-shadow: 0 0 7px 3px #0000002e;
+  }
 }

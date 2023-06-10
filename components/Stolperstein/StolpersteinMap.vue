@@ -7,7 +7,12 @@
       /></a>
     </div>
 
-    <div class="absolute bottom-0 right-0 grid gap-4 px-6 py-12">
+    <div class="absolute bottom-12 right-6 grid gap-2">
+      <AppButton intent="white" shape="rounded" size="medium" class="shadow-md" @click="positionStore.toggleWatch()"
+        ><AppIcon
+          :name="positionStore.watchActiv ? 'ic:baseline-my-location' : 'ic:baseline-location-searching'"
+          size="medium"
+      /></AppButton>
       <AppButton intent="white" shape="rounded" size="medium" class="shadow-md" @click="zoom('in')"
         ><AppIcon name="ic:baseline-plus" size="medium"
       /></AppButton>
@@ -17,15 +22,16 @@
     </div>
 
     <StolpersteinSlider class="absolute inset-x-0 bottom-0 overflow-hidden" />
-
-    <!-- <div class="map-controls column absolute-bottom-right"></div> -->
   </div>
 </template>
 
 <script setup lang="ts">
 import "maplibre-gl/dist/maplibre-gl.css";
-
 import { LngLat, Map } from "maplibre-gl";
+import { usePositionStore } from "~~/stores/position-store";
+
+const positionStore = usePositionStore();
+const { setMap } = usePosition();
 
 const mapContainer = ref(null);
 
@@ -38,13 +44,14 @@ const { createMap, debounceResize } = useStolpersteinMap();
 
 onMounted(() => {
   map = createMap(apiKey, dresden);
+  map.on("load", () => {
+    setMap(map);
+  });
 });
 
 useResizeObserver(mapContainer, (entries) => {
   debounceResize();
 });
-
-watchEffect(() => {});
 
 function zoom(z: "in" | "out") {
   if (z === "in") map?.zoomIn({ animate: true });
