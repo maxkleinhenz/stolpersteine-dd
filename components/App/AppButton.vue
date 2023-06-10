@@ -14,7 +14,7 @@ const buttonClass = cva("transform active:scale-95 transition-colors duration-30
     shape: {
       default: "",
       rounded: "rounded-full aspect-square",
-      pill: "rounded-full border",
+      pill: "rounded-full border hover:shadow-md",
     },
     size: {
       xs: "px-2 py-1 text-sm",
