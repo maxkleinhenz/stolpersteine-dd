@@ -2,25 +2,6 @@ import { GeoJSONSource, GeoJSONSourceSpecification, Map, Marker } from "maplibre
 import { usePositionStore } from "~~/stores/position-store";
 import * as turf from "@turf/turf";
 
-const positionMarker = (() => {
-  const el = document.createElement("div");
-  el.className = "position-marker";
-  const marker = new Marker(el);
-
-  // el.addEventListener('click', (event: MouseEvent) => {
-  //   event.stopPropagation();
-  //   flyToMarkerPostion();
-  // });
-
-  // el.addEventListener('dblclick', (event: MouseEvent) => {
-  //   event.stopPropagation();
-  //   flyToMarkerPostion();
-  //   mapInstance?.zoomIn({ animate: true });
-  // });
-
-  return marker;
-})();
-
 function posInRange(p: number) {
   return p >= -90 && p <= 90;
 }
@@ -32,6 +13,25 @@ const AccuracyPositionOutlineLayer = "accuracy-position-circle-outline-layer";
 export const usePosition = () => {
   const positionStore = usePositionStore();
   let myMap: Map;
+
+  const positionMarker = (() => {
+    const el = document.createElement("div");
+    el.className = "position-marker";
+    const marker = new Marker(el);
+
+    el.addEventListener("click", (event: MouseEvent) => {
+      event.stopPropagation();
+      followPosition();
+    });
+
+    el.addEventListener("dblclick", (event: MouseEvent) => {
+      event.stopPropagation();
+      followPosition();
+      myMap?.zoomIn({ animate: true });
+    });
+
+    return marker;
+  })();
 
   watchEffect(() => {
     const lon = positionStore.position?.longitude;
@@ -50,8 +50,9 @@ export const usePosition = () => {
     const lat = position?.latitude;
 
     positionMarker.setLngLat([lon, lat]).addTo(myMap);
-
     setAccuracyCircleSource([position.longitude, position.latitude], position.accuracy);
+
+    if (positionStore.followPosition) followPosition();
   }
 
   function setAccuracyCircleSource(postion: number[] | undefined, radius: number | undefined) {
@@ -110,6 +111,14 @@ export const usePosition = () => {
 
   function setMap(map: Map) {
     myMap = map;
+  }
+
+  function followPosition() {
+    positionStore.followPosition = true;
+    myMap?.flyTo({
+      center: positionMarker.getLngLat(),
+      animate: true,
+    });
   }
 
   return { setMap };

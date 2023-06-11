@@ -10,6 +10,7 @@ const buttonClass = cva("transform active:scale-95 transition-colors duration-30
       link: "hover:underline underline-offset-4 p-2",
       default: "",
       white: "bg-white hover:bg-gray-200",
+      black: "bg-black text-white hover:bg-neutral-700",
     },
     shape: {
       default: "",

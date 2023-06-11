@@ -6,8 +6,8 @@ export const usePositionStore = defineStore("position", () => {
     maximumAge: 60 * 1000, //1 min
   });
 
-  const followPosition = ref<boolean>();
-  const watchActiv = ref<boolean>();
+  const followPosition = ref<boolean>(false);
+  const watchActiv = ref<boolean>(false);
 
   async function startWatch() {
     resume();
@@ -22,7 +22,7 @@ export const usePositionStore = defineStore("position", () => {
   }
 
   function toggleWatch() {
-    if (watchActiv.value) pauseWatch();
+    if (watchActiv.value && followPosition.value) pauseWatch();
     else startWatch();
   }
 

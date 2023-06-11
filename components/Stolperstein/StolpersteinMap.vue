@@ -8,7 +8,12 @@
     </div>
 
     <div class="absolute bottom-12 right-6 grid gap-2">
-      <AppButton intent="white" shape="rounded" size="medium" class="shadow-md" @click="positionStore.toggleWatch()"
+      <AppButton
+        :intent="positionStore.followPosition ? 'black' : 'white'"
+        shape="rounded"
+        size="medium"
+        class="shadow-md"
+        @click="positionStore.toggleWatch()"
         ><AppIcon
           :name="positionStore.watchActiv ? 'ic:baseline-my-location' : 'ic:baseline-location-searching'"
           size="medium"
@@ -27,7 +32,7 @@
 
 <script setup lang="ts">
 import "maplibre-gl/dist/maplibre-gl.css";
-import { LngLat, Map } from "maplibre-gl";
+import { LngLat, Map, MapLibreEvent } from "maplibre-gl";
 import { usePositionStore } from "~~/stores/position-store";
 
 const positionStore = usePositionStore();
@@ -47,6 +52,15 @@ onMounted(() => {
   map.on("load", () => {
     setMap(map);
   });
+
+  map.on("dragstart", () => {
+    positionStore.followPosition = false;
+  });
+  map.on("zoomstart", (event: MapLibreEvent<MouseEvent | TouchEvent | WheelEvent | undefined>) => {
+    if (event.originalEvent) {
+      positionStore.followPosition = false;
+    }
+  });
 });
 
 useResizeObserver(mapContainer, (entries) => {
@@ -57,20 +71,6 @@ function zoom(z: "in" | "out") {
   if (z === "in") map?.zoomIn({ animate: true });
   else map?.zoomOut({ animate: true });
 }
-
-// map.on('dragstart', () => {
-//   followPosition.value = false;
-// });
-// map.on(
-//   'zoomstart',
-//   (
-//     event: MapLibreEvent<MouseEvent | TouchEvent | WheelEvent | undefined>
-//   ) => {
-//     if (event.originalEvent) {
-//       followPosition.value = false;
-//     }
-//   }
-// );
 </script>
 
 <style scoped></style>
