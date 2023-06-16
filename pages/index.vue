@@ -1,8 +1,10 @@
 <script lang="ts" setup></script>
 
 <template>
-  <main class="min-h-screen">
-    <section class="mx-auto flex min-h-screen max-w-2xl flex-col items-center justify-center px-4 text-center">
+  <main>
+    <section
+      class="mx-auto flex min-h-screen max-w-2xl flex-col items-center justify-center px-4 text-center pb-nav-save"
+    >
       <div class="flex flex-1 flex-col justify-center gap-12">
         <div class="space-y-3">
           <h1 class="text-4xl"><span class="font-bold">Stolpersteine</span> Dresden</h1>
@@ -12,7 +14,7 @@
           <p>
             Erkunde fast 300 Stolpersteine in Dresden und erfahre welche Lebensgeschichten hinter den Steinen stehen
           </p>
-          <AppButton intent="hero" to="/karte" class="btn btn--hero inline-block">
+          <AppButton intent="hero" to="/karte" class="inline-block">
             Zur interaktiven Karte <AppIcon name="ic:baseline-chevron-right" size="small" />
           </AppButton>
         </div>

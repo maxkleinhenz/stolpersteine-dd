@@ -2,8 +2,8 @@
 
 <template>
   <div>
-    <AppTopNavigation />
     <slot />
+    <AppNavigation />
   </div>
 </template>
 

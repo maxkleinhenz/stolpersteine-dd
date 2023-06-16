@@ -48,7 +48,7 @@ function onAfterLeave() {
       >
         <div
           v-show="isOpen || !overlay"
-          class="left-0 top-0 z-20 min-h-screen"
+          class="bottom-0 left-0 top-0 z-30"
           :class="{ absolute: overlay, relative: !overlay }"
         >
           <slot name="sidebar" />

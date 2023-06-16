@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-var sidebarOpenRef = ref(true);
+var sidebarOpenRef = ref(false);
 var sidebarOpen = computed({
   get() {
     if (sidebarFixed.value) return true;
@@ -36,7 +36,6 @@ const sidebarFixed = isMinDesktop;
       </template>
     </AppSidebarContainer>
 
-    <AppTopNavigation />
     <AppButton
       v-if="!sidebarFixed"
       intent="white"
@@ -46,5 +45,7 @@ const sidebarFixed = isMinDesktop;
       @click="() => (sidebarOpen = true)"
       ><AppIcon name="ic:baseline-menu"
     /></AppButton>
+
+    <AppNavigation />
   </div>
 </template>

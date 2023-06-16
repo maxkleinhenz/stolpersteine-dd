@@ -10,7 +10,7 @@
     <div v-show="selectedStolpersteine?.length" v-bind="$attrs">
       <ClientOnly>
         <Swiper
-          class="!px-2 !py-8 sm:!px-12"
+          class="!px-2 !py-12 sm:!px-12"
           slides-per-view="auto"
           :centered-slides="true"
           :center-insufficient-slides="true"

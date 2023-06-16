@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+
+const plugin = require("tailwindcss/plugin");
 module.exports = {
   content: [
     "./components/**/*.{js,vue,ts}",
@@ -26,7 +28,22 @@ module.exports = {
           3: "rgb(var(--accent-3-color) / <alpha-value>)",
         },
       },
+      boxShadow: {
+        // top: "0px 6px 30px 0px rgba(0,0,0,0.20)",
+        top: "0 10px 15px 10px rgb(0 0 0 / 0.1)",
+      },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(function ({ addUtilities }) {
+      addUtilities({
+        ".pb-nav-save": {
+          paddingBottom: "var(--nav-height)",
+        },
+        ".pb-nav-overlapping": {
+          paddingBottom: "var(--nav-height-overlapping)",
+        },
+      });
+    }),
+  ],
 };
