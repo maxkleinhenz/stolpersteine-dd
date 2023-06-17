@@ -1,6 +1,6 @@
 import { breakpointsTailwind } from "@vueuse/core";
 
-const tablet = "sm";
+const tablet = "md";
 const desktop = "lg";
 
 export const useAppBreakpoints = () => {
@@ -9,8 +9,8 @@ export const useAppBreakpoints = () => {
   return {
     tabletWidth: breakpointsTailwind[tablet],
     desktopWidth: breakpointsTailwind[desktop],
-    isMaxSmartphone: breakpoints.isSmaller(tablet),
-    isMinTablet: breakpoints.greater(tablet),
+    isMaxSmartphone: breakpoints.smaller(tablet),
+    isMinTablet: breakpoints.greaterOrEqual(tablet),
     isMinDesktop: breakpoints.greater(desktop),
   };
 };
