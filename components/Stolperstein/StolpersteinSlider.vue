@@ -10,9 +10,9 @@
     <div v-show="selectedStolpersteine?.length" v-bind="$attrs">
       <ClientOnly>
         <Swiper
-          class="!px-2 !py-12 sm:!px-12"
-          slides-per-view="auto"
-          :centered-slides="true"
+          class="!py-12 sm:!px-16"
+          slidesPerView="1.2"
+          :centeredSlides="true"
           :center-insufficient-slides="true"
           :initial-slide="0"
           :modules="[SwiperNavigation, SwiperMousewheel]"
@@ -21,6 +21,7 @@
           :breakpoints="{
             [tabletWidth]: {
               centeredSlides: false,
+              slidesPerView: 'auto',
               navigation: { prevEl: '.prev-button', nextEl: '.next-button' },
             },
           }"
@@ -38,7 +39,7 @@
           </SwiperSlide>
 
           <template v-slot:container-start>
-            <div class="absolute bottom-8 left-0 top-8 z-10 hidden items-center p-2 sm:flex">
+            <div class="absolute bottom-8 left-0 top-8 z-10 hidden items-center p-2 md:flex">
               <AppButton
                 shape="rounded"
                 size="small"
@@ -49,7 +50,7 @@
             </div>
           </template>
           <template v-slot:container-end>
-            <div class="absolute bottom-8 right-0 top-8 z-10 hidden items-center p-2 sm:flex">
+            <div class="absolute bottom-8 right-0 top-8 z-10 hidden items-center p-2 md:flex">
               <AppButton
                 shape="rounded"
                 size="small"
