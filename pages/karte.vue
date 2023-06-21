@@ -13,7 +13,9 @@ useHead({
 
 <template>
   <main class="flex min-h-screen flex-col items-center justify-center">
-    <StolpersteinMap />
+    <ClientOnly>
+      <StolpersteinMap />
+    </ClientOnly>
   </main>
   <ClientOnly>
     <Teleport to="body">
