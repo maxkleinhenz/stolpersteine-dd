@@ -61,12 +61,13 @@ useHead({
 });
 
 definePageMeta({
-  middleware: (to: RouteLocationNormalized) => {
-    const store = useStolpersteinStore();
+  middleware: async (to: RouteLocationNormalized) => {
     const isNumber = /^\d+$/.test(to.params.stolpersteinId.toString());
     if (isNumber) {
       const stolpersteinId = Number(to.params.stolpersteinId);
-      const valid = store.stolpersteine.some((s) => s.stolperstein.id === stolpersteinId);
+
+      const stolpersteine = await loadStolpersteine();
+      const valid = stolpersteine.some((s) => s.stolperstein.id === stolpersteinId);
       if (valid) return true;
     }
 

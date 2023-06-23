@@ -54,5 +54,11 @@ export const useStolpersteinStore = defineStore("stolperstein", () => {
     );
   }
 
-  return { stolpersteine, searchText, selectedStolpersteine, filteredStolpersteine, fetchStolpersteine };
+  return {
+    stolpersteine,
+    searchText,
+    selectedStolpersteine,
+    filteredStolpersteine,
+    fetchStolpersteine,
+  };
 });
