@@ -10,13 +10,13 @@ const { list, containerProps, wrapperProps } = useVirtualList(stolersteine, {
 </script>
 
 <template>
-  <div v-bind="containerProps">
+  <div v-bind="containerProps" class="overscroll-contain">
     <div v-bind="wrapperProps">
       <StolpersteinListItem
         v-for="stolperstein in list"
         :key="stolperstein.data.stolperstein.id"
         :stolperstein="stolperstein.data"
-        class="py-2 px-3"
+        class="px-3 py-2"
       />
     </div>
   </div>
