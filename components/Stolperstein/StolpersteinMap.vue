@@ -1,6 +1,6 @@
 <template>
   <div class="relative flex h-full w-full flex-1 overflow-hidden">
-    <div id="map" ref="mapContainer" class="flex-1 pb-nav-overlapping"></div>
+    <div id="map" ref="mapContainer" class="flex-1"></div>
     <div class="absolute bottom-0 left-0 m-1 pb-nav-save">
       <a href="https://www.maptiler.com"
         ><img src="https://api.maptiler.com/resources/logo.svg" alt="MapTiler logo"

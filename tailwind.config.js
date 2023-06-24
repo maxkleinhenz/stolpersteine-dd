@@ -40,9 +40,6 @@ module.exports = {
         ".pb-nav-save": {
           paddingBottom: "var(--nav-height)",
         },
-        ".pb-nav-overlapping": {
-          paddingBottom: "var(--nav-height-overlapping)",
-        },
       });
     }),
   ],

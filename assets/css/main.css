@@ -12,11 +12,9 @@
 
     --app-stolperstein-color: 181 166 66;
 
-    --nav-height: 72px;
-    --nav-height-overlapping: 56px;
+    --nav-height: 63px;
 
     @apply md:[--nav-height:0px];
-    @apply md:[--nav-height-overlapping:0px];
   }
 }
 
