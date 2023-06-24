@@ -4,7 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 const buttonClass = cva("transform active:scale-95 transition-colors duration-300", {
   variants: {
     intent: {
-      hero: "rounded-full bg-white py-4 px-7 text-base font-semibold uppercase shadow-lg hover:bg-accent-2 hover:text-white",
+      hero: "bg-white text-base font-semibold uppercase shadow-lg hover:bg-accent-2 hover:text-white inline-block",
       primary: "text-accent-2 border-accent-2 hover:bg-accent-2 hover:text-white",
       secondary: "",
       link: "hover:underline underline-offset-4 p-2",
@@ -19,9 +19,10 @@ const buttonClass = cva("transform active:scale-95 transition-colors duration-30
     },
     size: {
       xs: "px-2 py-1 text-sm",
-      small: "p-2",
-      medium: "p-4",
+      small: "p-3 flex justify-center items-center",
+      medium: "p-3 sm:p-4 flex justify-center items-center",
       large: "text-xl p-6",
+      hero: "py-4 px-7",
     },
   },
   defaultVariants: {

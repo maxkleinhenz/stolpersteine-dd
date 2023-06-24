@@ -14,7 +14,7 @@
           <p>
             Erkunde fast 300 Stolpersteine in Dresden und erfahre welche Lebensgeschichten hinter den Steinen stehen
           </p>
-          <AppButton intent="hero" to="/karte" class="inline-block">
+          <AppButton intent="hero" size="hero" shape="pill" to="/karte" class="">
             Zur interaktiven Karte <AppIcon name="ic:baseline-chevron-right" size="small" />
           </AppButton>
         </div>
