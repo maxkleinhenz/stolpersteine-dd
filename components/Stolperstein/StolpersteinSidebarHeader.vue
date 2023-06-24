@@ -26,7 +26,7 @@ function reset() {
         type="type"
         placeholder="Suche"
         v-model="searchText"
-        class="border-1 w-full rounded-full border py-3 px-4 pr-[72px] transition-shadow focus:shadow-md focus:outline-none focus:ring-1 focus:ring-accent-2"
+        class="border-1 w-full rounded-full border px-4 py-3 pr-[82px] transition-shadow focus:shadow-md focus:outline-none focus:ring-1 focus:ring-accent-2"
         @keyup.enter="search"
         @keyup.esc="reset"
       />
@@ -37,7 +37,7 @@ function reset() {
           intent="default"
           shape="rounded"
           size="xs"
-          class="h-8 w-8 p-0 text-gray-500 hover:bg-gray-200 hover:text-gray-500"
+          class="text-gray-500 hover:bg-gray-200 hover:text-gray-500"
           @click="reset"
         >
           <span class="sr-only">Setze Suche zurück</span>
@@ -48,7 +48,7 @@ function reset() {
           intent="default"
           shape="rounded"
           size="xs"
-          class="h-8 w-8 p-0 text-gray-500 hover:bg-gray-200 hover:text-gray-500"
+          class="text-gray-500 hover:bg-gray-200 hover:text-gray-500"
           @click="search"
         >
           <span class="sr-only">Suche</span>
