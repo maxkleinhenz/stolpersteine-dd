@@ -46,9 +46,9 @@ export function findStolpersteineAtCoords(coordinates: [number, number], source:
   });
 }
 
-export async function loadStolpersteine() {
+export async function loadStolpersteine(reload: boolean = false) {
   const store = useStolpersteinStore();
-  if (!store.stolpersteine || store.stolpersteine.length < 1) {
+  if (reload || !store.stolpersteine || store.stolpersteine.length < 1) {
     const { data } = await useFetch<StolpersteinResult>("/api/stolpersteine", {
       key: "stolpersteine",
       cache: "force-cache",
