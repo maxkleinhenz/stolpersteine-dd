@@ -23,7 +23,7 @@ const sidebarFixed = isMinDesktop;
             intent="white"
             shape="rounded"
             size="small"
-            class="absolute right-0 top-0 m-4 min-h-[44px] min-w-[44px] shadow-md sm:hidden"
+            class="absolute right-0 top-0 m-4 shadow-md sm:hidden"
             @click="() => (sidebarOpen = false)"
             ><AppIcon size="small" name="ic:baseline-close"
           /></AppButton>
@@ -45,7 +45,5 @@ const sidebarFixed = isMinDesktop;
       @click="() => (sidebarOpen = true)"
       ><AppIcon name="ic:baseline-menu"
     /></AppButton>
-
-    <AppNavigation />
   </div>
 </template>

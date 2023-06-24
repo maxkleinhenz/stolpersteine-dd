@@ -2,6 +2,7 @@
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>
+  <AppNavigation />
 </template>
 
 <script setup lang="ts">
