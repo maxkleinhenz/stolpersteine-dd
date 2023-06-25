@@ -8,7 +8,7 @@
       <div class="flex flex-1 flex-col justify-center gap-12">
         <div class="space-y-3">
           <h1 class="text-4xl"><span class="font-bold">Stolpersteine</span> Dresden</h1>
-          <p class="text-xl font-normal dark:text-gray-400">Es waren unsere Nachbaren</p>
+          <p class="text-xl font-normal">Es waren unsere Nachbaren</p>
         </div>
         <div class="space-y-5">
           <p>
