@@ -18,26 +18,9 @@
 
 <script setup lang="ts">
 import { RouteLocationNormalized } from "vue-router";
-import { useStolpersteinStore } from "~~/stores/stolperstein-store";
-
-const store = useStolpersteinStore();
 
 const isSidebarOpen = ref(true);
-
-const routeParams = toRef(useRoute(), "params");
-const stolperstein = computed(() => {
-  const stolpersteinIdParam = routeParams.value.stolpersteinId.toString();
-  const parsed = Number(stolpersteinIdParam);
-  if (!isNaN(parsed)) {
-    const selected = findStolpersteinById(parsed, store.stolpersteine);
-    if (selected) {
-      var stolpersteineAtCoords = findStolpersteineAtCoords(selected.geometry.coordinates, store.stolpersteine);
-      store.selectedStolpersteine = stolpersteineAtCoords;
-    }
-    return selected;
-  }
-  navigateToKarte();
-});
+const stolperstein = computed(() => useCurrentStolperstein().value);
 
 function onUpdateOpen(open: boolean) {
   if (!open) {
@@ -62,13 +45,14 @@ useHead({
 
 definePageMeta({
   middleware: async (to: RouteLocationNormalized) => {
-    const isNumber = /^\d+$/.test(to.params.stolpersteinId.toString());
-    if (isNumber) {
-      const stolpersteinId = Number(to.params.stolpersteinId);
-
-      const stolpersteine = await loadStolpersteine();
-      const valid = stolpersteine.some((s) => s.stolperstein.id === stolpersteinId);
-      if (valid) return true;
+    const id = parseInt(to.params.stolpersteinId.toString() ?? "") as number;
+    if (Number.isInteger(id)) {
+      const loaded = await loadStolperstein(id);
+      if (loaded) {
+        const currentStolperstein = useCurrentStolperstein();
+        currentStolperstein.value = loaded;
+        return true;
+      }
     }
 
     return "/karte";
