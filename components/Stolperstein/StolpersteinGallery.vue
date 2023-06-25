@@ -36,10 +36,11 @@ import { Swiper as SwiperClass } from "swiper/types";
 import { StolpersteinFeature } from "~~/models/stolperstein.model";
 
 const props = defineProps<{ stolperstein?: StolpersteinFeature }>();
+const config = useRuntimeConfig();
 
 const images = ref([
   props.stolperstein?.stolperstein.stolpersteinImage,
-  "/stolpersteine/images/portrait-placeholder.png",
+  config.app.baseURL + "stolpersteine/images/portrait-placeholder.png",
 ]);
 
 const swiperRef = ref<SwiperClass>();
