@@ -25,6 +25,9 @@ export default defineNuxtConfig({
   routeRules: {
     "/karte/**": { prerender: true },
   },
+  nitro: {
+    prerender: { crawlLinks: true },
+  },
   runtimeConfig: {
     public: {
       MAPTILER_API_KEY: "",
