@@ -18,6 +18,8 @@ export function getStolpersteine() {
 }
 
 function transformStolpersteine(result: StolpersteinResult): StolpersteinFeature[] {
+  const config = useRuntimeConfig();
+
   const features = result.features;
   const stolpersteinFeatures = features.map((feature) => {
     return {
@@ -35,8 +37,8 @@ function transformStolpersteine(result: StolpersteinResult): StolpersteinFeature
         ort: "Dresden",
         plzOrt: [feature.properties.plz, "Dresden"].join(" "),
         url: feature.properties.url,
-        stolpersteinImage: "/stolpersteine/images/default.jpg",
-        stolpersteinThumbImage: "/stolpersteine/images/thumb.jpg",
+        stolpersteinImage: config.app.baseURL + "stolpersteine/images/default.jpg",
+        stolpersteinThumbImage: config.app.baseURL + "/stolpersteine/images/thumb.jpg",
         sortValue: feature.properties.einrichtung.toLowerCase(),
       },
       geometry: feature.geometry,
