@@ -23,7 +23,7 @@ export default defineNuxtConfig({
     payloadExtraction: true,
   },
   nitro: {
-    prerender: { crawlLinks: true, routes: ["/karte/**"] },
+    prerender: { crawlLinks: true },
   },
   runtimeConfig: {
     public: {

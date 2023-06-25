@@ -51,7 +51,7 @@ export async function loadStolpersteine(reload: boolean = false) {
 
 export async function loadStolperstein(id: number) {
   const { data } = await useFetch<StolpersteinFeature>(`/api/stolpersteine/${id}`, {
-    key: "stolpersteine",
+    key: `stolperstein-${id}`,
     cache: "force-cache",
   });
 
