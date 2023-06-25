@@ -50,11 +50,15 @@ export async function loadStolpersteine(reload: boolean = false) {
 }
 
 export async function loadStolperstein(id: number) {
-  const { data } = await useFetch<StolpersteinFeature>(`/api/stolpersteine/${id}`, {
-    key: `stolperstein-${id}`,
-    cache: "force-cache",
-  });
+  const stolpersteine = await loadStolpersteine();
+  const stolperstein = stolpersteine.find((s) => s.stolperstein.id === id);
+  return stolperstein;
 
-  if (data.value) return data.value;
-  return undefined;
+  // const { data } = await useFetch<StolpersteinFeature>(`/api/stolpersteine/${id}`, {
+  //   key: `stolperstein-${id}`,
+  //   cache: "force-cache",
+  // });
+
+  // if (data.value) return data.value;
+  // return undefined;
 }
