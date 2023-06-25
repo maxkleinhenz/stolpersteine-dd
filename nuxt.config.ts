@@ -1,5 +1,25 @@
+import { StolpersteinResult } from "./models/stolperstein.model";
+import stolpersteinData from "./server/api/stolpersteine/stolpersteine.json";
+
+const getStolersteinRoutes = () => {
+  const result = stolpersteinData as unknown as StolpersteinResult;
+  return result.features.map((s) => `/karte/${s.properties.id}`);
+};
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  app: {
+    baseURL: "/stolpersteine-dd/",
+  },
+  ssr: true,
+  hooks: {
+    "nitro:config"(nitroConfig) {
+      const slugs = getStolersteinRoutes();
+      // add the routes to the nitro config
+      nitroConfig.prerender?.routes?.push(...slugs);
+    },
+  },
+  nitro: { preset: "github-pages" },
   runtimeConfig: {
     public: {
       MAPTILER_API_KEY: "",
