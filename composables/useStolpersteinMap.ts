@@ -22,13 +22,15 @@ interface GroupedGeoJsonFeature extends GroupedStolpersteinFeature {
 
 export function useStolpersteinMap() {
   const store = useStolpersteinStore();
+  const config = useRuntimeConfig();
+
   let map: MaplibreMap | undefined;
 
   function createMap(apiKey: string, center: LngLatLike) {
     map = new MaplibreMap({
       container: "map",
       // style: `https://api.maptiler.com/maps/e79c1d05-b6e6-4dcd-8aad-05d3ec97c7d5/style.json?key=${apiKey}`,
-      style: "/map/map-style.json",
+      style: `${config.app.baseURL}map/map-style.json`,
       center: center,
       zoom: 12,
       trackResize: false,
