@@ -19,7 +19,12 @@ export default defineNuxtConfig({
       nitroConfig.prerender?.routes?.push(...slugs);
     },
   },
-  nitro: { preset: "github-pages" },
+  experimental: {
+    payloadExtraction: true,
+  },
+  routeRules: {
+    "/karte/**": { prerender: true },
+  },
   runtimeConfig: {
     public: {
       MAPTILER_API_KEY: "",
