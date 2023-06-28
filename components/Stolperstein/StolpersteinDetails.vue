@@ -78,7 +78,7 @@ function scrollToTop() {
               intent="white"
               shape="pill"
               size="medium"
-              class="min-w-min border-0 text-black sm:w-3/5 sm:border"
+              class="mx-auto min-w-min border-0 text-black sm:w-3/5 sm:border"
               title="Merken"
               >Virtuelle Kerze anzünden
             </AppButton>

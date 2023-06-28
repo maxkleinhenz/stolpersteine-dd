@@ -10,10 +10,11 @@
     <div v-show="selectedStolpersteine?.length" v-bind="$attrs">
       <ClientOnly>
         <Swiper
-          class="!py-12 sm:!px-16"
-          slidesPerView="1.2"
+          class="!px-2 !py-12 sm:!px-16"
+          :slidesPerView="1.15"
           :centeredSlides="true"
-          :center-insufficient-slides="true"
+          :centered-slides-bounds="true"
+          :centerInsufficientSlides="true"
           :initial-slide="0"
           :modules="[SwiperNavigation, SwiperMousewheel]"
           :navigation="false"
@@ -31,9 +32,9 @@
           <SwiperSlide
             v-for="stolperstein in swipableStolpersteine"
             :key="stolperstein.stolperstein.id"
-            class="w-4/5 max-w-[370px] px-2"
+            class="w-4/5 max-w-[370px] pl-2 pr-2"
           >
-            <div class="h-full">
+            <div class="h-full w-full">
               <StolpersteinListItem :stolperstein="stolperstein" />
             </div>
           </SwiperSlide>

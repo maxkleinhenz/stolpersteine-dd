@@ -21,7 +21,7 @@ const buttonClass = cva("transform active:scale-95 transition-colors duration-30
       xs: "px-2 py-1 text-sm",
       small: "p-3 flex justify-center items-center",
       medium: "p-3 sm:p-4 flex justify-center items-center",
-      large: "text-xl p-6",
+      large: "flex justify-center items-center text-xl p-4 sm:p-5",
       hero: "py-4 px-7",
     },
   },
